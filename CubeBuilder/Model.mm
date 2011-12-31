@@ -59,7 +59,7 @@ void  Model::resolveCenter()
     }
     
     
-        centerOld.set(center);
+    centerOld.set(center);
         
 }
 

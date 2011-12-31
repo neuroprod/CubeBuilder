@@ -7,15 +7,19 @@
 //
 
 
-varying mediump vec3 uvVarying;
 
-uniform sampler2D texture; 
+
+varying mediump vec3 colorVarying;
+
 
 void main()
 {
     
     
-    gl_FragColor =texture2D(texture, uvVarying.xy);
-      gl_FragColor.xyz /=gl_FragColor.a ;
-     
+    
+    
+   gl_FragColor = vec4(colorVarying,1.0);
+   
+ 
+    
 }

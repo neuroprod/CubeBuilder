@@ -26,6 +26,10 @@
 		0187562014ADD50700E8CEFB /* ColorMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0187561F14ADD50400E8CEFB /* ColorMenu.mm */; };
 		0187562314AE0D2100E8CEFB /* ColorHolder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0187562214AE0D2100E8CEFB /* ColorHolder.mm */; };
 		0187562614AE0FB600E8CEFB /* ColorBtn.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0187562514AE0FB500E8CEFB /* ColorBtn.mm */; };
+		0187562914AF0C3B00E8CEFB /* ShaderCubeDepth.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 0187562714AF0C3A00E8CEFB /* ShaderCubeDepth.fsh */; };
+		0187562A14AF0C3B00E8CEFB /* ShaderCubeDepth.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 0187562814AF0C3B00E8CEFB /* ShaderCubeDepth.vsh */; };
+		0187562D14AF1CA900E8CEFB /* ShaderBlur1.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 0187562B14AF1CA700E8CEFB /* ShaderBlur1.fsh */; };
+		0187562E14AF1CA900E8CEFB /* ShaderBlur1.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 0187562C14AF1CA700E8CEFB /* ShaderBlur1.vsh */; };
 		018F872314A32DA5004C9D6F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 018F872214A32DA5004C9D6F /* UIKit.framework */; };
 		018F872514A32DA5004C9D6F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 018F872414A32DA5004C9D6F /* Foundation.framework */; };
 		018F872714A32DA5004C9D6F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 018F872614A32DA5004C9D6F /* CoreGraphics.framework */; };
@@ -95,6 +99,10 @@
 		0187562214AE0D2100E8CEFB /* ColorHolder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ColorHolder.mm; sourceTree = "<group>"; };
 		0187562414AE0DAF00E8CEFB /* ColorBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorBtn.h; sourceTree = "<group>"; };
 		0187562514AE0FB500E8CEFB /* ColorBtn.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ColorBtn.mm; sourceTree = "<group>"; };
+		0187562714AF0C3A00E8CEFB /* ShaderCubeDepth.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShaderCubeDepth.fsh; sourceTree = "<group>"; };
+		0187562814AF0C3B00E8CEFB /* ShaderCubeDepth.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShaderCubeDepth.vsh; sourceTree = "<group>"; };
+		0187562B14AF1CA700E8CEFB /* ShaderBlur1.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShaderBlur1.fsh; sourceTree = "<group>"; };
+		0187562C14AF1CA700E8CEFB /* ShaderBlur1.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShaderBlur1.vsh; sourceTree = "<group>"; };
 		018F871E14A32DA5004C9D6F /* CubeBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CubeBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		018F872214A32DA5004C9D6F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		018F872414A32DA5004C9D6F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -320,6 +328,10 @@
 		018F876914A480D7004C9D6F /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				0187562B14AF1CA700E8CEFB /* ShaderBlur1.fsh */,
+				0187562C14AF1CA700E8CEFB /* ShaderBlur1.vsh */,
+				0187562714AF0C3A00E8CEFB /* ShaderCubeDepth.fsh */,
+				0187562814AF0C3B00E8CEFB /* ShaderCubeDepth.vsh */,
 				018755E714AA07E500E8CEFB /* ShaderCubeID.fsh */,
 				018755E814AA07E500E8CEFB /* ShaderCubeID.vsh */,
 				018755D414A9B6E100E8CEFB /* ShaderFlatDPpng.fsh */,
@@ -443,6 +455,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0187562D14AF1CA900E8CEFB /* ShaderBlur1.fsh in Resources */,
+				0187562E14AF1CA900E8CEFB /* ShaderBlur1.vsh in Resources */,
+				0187562914AF0C3B00E8CEFB /* ShaderCubeDepth.fsh in Resources */,
+				0187562A14AF0C3B00E8CEFB /* ShaderCubeDepth.vsh in Resources */,
 				018755E914AA07E500E8CEFB /* ShaderCubeID.fsh in Resources */,
 				018755EA14AA07E500E8CEFB /* ShaderCubeID.vsh in Resources */,
 				018755D614A9B6E100E8CEFB /* ShaderFlatDPpng.fsh in Resources */,

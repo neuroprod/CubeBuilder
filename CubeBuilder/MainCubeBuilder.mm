@@ -108,6 +108,13 @@ void MainCubeBuilder::draw ()
     cubeRenderer->prepForFlatDraw();
     flatRenderer->draw();
     
+    if (cubeRenderer->useAO){
+    
+    cubeRenderer->prepForAODraw();
+    flatRenderer->draw();
+    }
+    
+    
     interfaceHandler->prepForFlatDraw();
     flatRenderer->draw();
     
@@ -197,6 +204,9 @@ void MainCubeBuilder::setOrientation(int orientation)
     flatRenderer->setOrientation(currentorientation);
     interfaceHandler->setOrientation(currentorientation);
    
+    
+    
+    
 
 }
 void MainCubeBuilder::becameActive(npEvent *e)

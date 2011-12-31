@@ -21,6 +21,13 @@ enum {
     NUM_ATTRIBUTES
 };
 
+enum {
+    ATTRIB_VERTEX_BLUR,
+    ATTRIB_UV_BLUR
+   
+};
+
+
 void CubeRenderer::setup(){
     
     model = Model::getInstance();
@@ -156,6 +163,10 @@ void CubeRenderer::setup(){
     
     glUseProgram(0);
     setupIDCubes();
+    
+    useAO=true;
+    if (useAO)setupAO();
+    
 };
 
 void CubeRenderer::update()
@@ -230,7 +241,7 @@ void CubeRenderer::renderTick(){
     glDisable (GL_DEPTH_TEST);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     
-  
+    if (useAO) renderAO();
 
 };
 void CubeRenderer::prepForFlatDraw(){
@@ -274,7 +285,7 @@ void CubeRenderer::drawIDcubes()
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     
     
-    glDisable(GL_BLEND);
+  // glDisable(GL_BLEND);
 
     glUseProgram(programID);
     
@@ -312,7 +323,7 @@ void CubeRenderer::drawIDcubes()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
     glUseProgram(0);
     glDisable (GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
+   // glEnable(GL_BLEND);
 
 
     glReadPixels(0, 0,  vpW,vpH, GL_RGBA,GL_UNSIGNED_BYTE, pixels);
@@ -359,4 +370,379 @@ void CubeRenderer::setOrientation(int orientation)
     }
     
     camera->setOrientation(orientation);
+    
+   
+    if (!useAO)return;
+    
+    float  uvX ;
+    float  uvY ;
+    float uvHeight ;
+    float uvWidth ;
+    float  h;
+    float  w;
+    
+    
+    float  h2;
+    float  w2;
+    
+    
+    
+    //landscape
+    if ( orientation==1)
+    {
+        
+        w=1024.0f;
+        h = 768.0f;
+        
+        w2= 1024;
+        h2 = 768;
+        
+        uvX = 0;
+        uvY = 0;
+        uvHeight =h/w;
+        uvWidth =1;
+    }
+    //portrait
+    if ( orientation ==0)
+    {
+        w = 768;
+        h = 1024;
+        
+        w2= 768;
+        h2 = 1024;
+        
+        uvX = 0;
+        uvY = 0;
+        uvHeight =1;
+        uvWidth =w/h;
+        
+    }
+ 
+    
+    
+    worldMatrixBlur.makeOrtho2DMatrix(0,w2,h2,0);
+    
+    
+    data[0] =0 ;
+    data[1] =0 ;
+    data[2] =0;
+    data[3] = uvX;
+    data[4] =uvY;
+    data[5] = 1;
+    
+    
+    data[6] = w ;
+    data[7] = 0 ;
+    data[8] = 0;
+    data[9] = uvX +uvWidth;
+    data[10] =uvY;
+    data[11] = 1;
+    
+    
+    
+    data[12] = 0 ;
+    data[13] = h ;
+    data[14] = 0;
+    data[15] = uvX ;
+    data[16] =  uvY +uvHeight;
+    data[17] = 1;
+    
+    
+    
+    
+    data[18] = w ;
+    data[19] = h ;
+    data[20] = 0;
+    data[21] =  uvX +uvWidth; 
+    data[22] = uvY +uvHeight;
+    data[23] = 1;
+    
+    
+    data[24] = data[12];
+    data[25] = data[13];
+    data[26] = data[14];
+    data[27] = data[15];
+    data[28] = data[16];
+    data[29] = data[17];
+    
+    
+    data[30] = data[6];
+    data[31] = data[7];
+    data[32] = data[8];
+    data[33] = data[9];
+    data[34] = data[10];
+    data[35] = data[11];
+    
 }
+
+
+
+
+
+
+
+//
+//
+//
+//
+
+
+void CubeRenderer::setupAO()
+{
+//// depth
+    
+    glGenTextures(1, &textureDepth);
+	glBindTexture(GL_TEXTURE_2D, textureDepth);
+	
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    
+    int width =1024;
+    int height =1024;
+	
+	
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    
+    
+    glGenRenderbuffers(1, &rbufferDepth);
+	glBindRenderbuffer(GL_RENDERBUFFER, rbufferDepth);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
+	
+	glGenFramebuffers(1, &fboDepth);
+	glBindFramebuffer(GL_FRAMEBUFFER, fboDepth);	
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureDepth, 0);
+    
+    npProgramLoader *pLoader = new npProgramLoader;
+    programDepth =    pLoader->loadProgram ("ShaderCubeDepth");
+    
+    
+    glBindAttribLocation(programDepth, ATTRIB_VERTEX, "position");
+  
+    pLoader->linkProgram();
+    
+    glUseProgram(programDepth);
+    
+    uWorldMatrixID= glGetUniformLocation(programDepth, "worldMatrix");
+    uPerspectiveMatrixID= glGetUniformLocation(programDepth, "perspectiveMatrix");
+    
+    
+    glUseProgram(0);
+    
+    
+    //// blur
+	int width2=1024;
+    int height2=1024;    
+    glGenTextures(1, &textureBlur);
+	glBindTexture(GL_TEXTURE_2D, textureBlur);
+	
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,  GL_LINEAR);
+    
+ 
+
+	
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,width2, height2, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    
+    
+    glGenRenderbuffers(1, &rbufferBlur);
+	glBindRenderbuffer(GL_RENDERBUFFER, rbufferBlur);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width2, height2);
+ 
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER,rbufferBlur);
+	
+	glGenFramebuffers(1, &fboBlur);
+	glBindFramebuffer(GL_FRAMEBUFFER, fboBlur);	
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureBlur, 0);
+    
+    
+    
+    
+    npProgramLoader *pLoaderBlur = new npProgramLoader;
+    programBlur =    pLoaderBlur->loadProgram ("ShaderBlur1");
+    
+    
+    
+    glBindAttribLocation(programBlur, ATTRIB_VERTEX_BLUR, "position");
+    
+    glBindAttribLocation(programBlur, ATTRIB_UV_BLUR, "uv");
+    pLoaderBlur->linkProgram();
+    
+    glUseProgram(programBlur);
+    
+    
+    uWorldMatrixBlur= glGetUniformLocation(programBlur, "worldMatrix");
+    
+    
+    worldMatrixBlur.makeOrtho2DMatrix(0,1024,768,0);
+    glUseProgram(0);
+    OpenGLErrorChek::chek("blursetup");
+    
+    data = new float [36];
+    
+    
+    float  uvX = 0;
+    float  uvY = 1;
+    float uvHeight =-1;
+    float uvWidth =1;
+    
+    data[0] =0 ;
+    data[1] =0 ;
+    data[2] =0;
+    data[3] = uvX;
+    data[4] = uvY;
+    data[5] = 1;
+    
+    
+    data[6] = 1024 ;
+    data[7] = 0 ;
+    data[8] = 0;
+    data[9] = uvX +uvWidth;
+    data[10] = uvY;
+    data[11] = 1;
+    
+    
+    
+    data[12] = 0 ;
+    data[13] = 1024 ;
+    data[14] = 0;
+    data[15] = uvX ;
+    data[16] = uvY +uvHeight;
+    data[17] = 1;
+    
+    
+    
+    
+    data[18] = 1024 ;
+    data[19] = 1024 ;
+    data[20] = 0;
+    data[21] =  uvX +uvWidth; 
+    data[22] = uvY +uvHeight;
+    data[23] = 1;
+    
+    
+    data[24] = data[12];
+    data[25] = data[13];
+    data[26] = data[14];
+    data[27] = data[15];
+    data[28] = data[16];
+    data[29] = data[17];
+    
+    
+    data[30] = data[6];
+    data[31] = data[7];
+    data[32] = data[8];
+    data[33] = data[9];
+    data[34] = data[10];
+    data[35] = data[11];
+
+}
+
+void CubeRenderer::prepForAODraw()
+{
+  glBindTexture(GL_TEXTURE_2D, textureBlur);
+
+}
+
+void CubeRenderer::renderAO()
+{
+        OpenGLErrorChek::chek("beforerrr");
+    glEnable (GL_DEPTH_TEST);
+    
+    
+    glViewport(0,vpY, vpW, vpH);
+     glBindFramebuffer(GL_FRAMEBUFFER, sampleFramebuffer);
+   //glBindFramebuffer(GL_FRAMEBUFFER,fboDepth);
+    glClearColor(1.0, 1.0, 1.0, 0.0);
+    
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    
+
+    glUseProgram(programDepth);
+    
+    glUniformMatrix4fv(uWorldMatrixID, 1,0, camera->worldMatrix.getPtr());
+    glUniformMatrix4fv(uPerspectiveMatrixID, 1, 0, camera->perspectiveMatrix.getPtr());
+    
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+
+    glEnableVertexAttribArray(ATTRIB_VERTEX);
+    glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 12,(GLvoid*) (sizeof(float) * 0));
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,indexBuffer);   
+    glDrawElements(GL_TRIANGLES, 36* cubeHandler->cubes.size(), GL_UNSIGNED_SHORT, (void*)0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
+    glDisableVertexAttribArray(ATTRIB_VERTEX);
+
+    glDisable (GL_DEPTH_TEST);
+    
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, fboDepth);
+    glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, sampleFramebuffer);
+    glResolveMultisampleFramebufferAPPLE();
+    
+   glBindFramebuffer(GL_FRAMEBUFFER, 0);
+ glUseProgram(0);
+    
+    ///
+    
+    
+    
+    
+     OpenGLErrorChek::chek("before");
+    
+     glBindFramebuffer(GL_FRAMEBUFFER, fboBlur);
+    //glBindFramebuffer(GL_FRAMEBUFFER, sampleFramebuffer);
+        glViewport(0,vpY, vpW, vpH);
+    
+    OpenGLErrorChek::chek("after");
+    
+     glClearColor(0.0, 0.0, 0.0, 0.0);
+     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glUseProgram(programBlur);
+    
+    glBindTexture(GL_TEXTURE_2D, textureDepth);
+    glUniformMatrix4fv(uWorldMatrixBlur, 1, 0, worldMatrixBlur.getPtr());
+    
+    
+    GLfloat *pointer =data;
+    
+    glVertexAttribPointer(ATTRIB_VERTEX_BLUR, 3, GL_FLOAT, 0, 6*sizeof(GLfloat), pointer);
+    glEnableVertexAttribArray(ATTRIB_VERTEX_BLUR);
+    
+    
+    pointer +=3;
+    glVertexAttribPointer(ATTRIB_UV_BLUR, 3, GL_FLOAT, 0, 6*sizeof(GLfloat), pointer);
+    glEnableVertexAttribArray(ATTRIB_UV_BLUR);
+    
+    
+    
+   
+    
+    
+
+
+    
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    
+
+
+
+    
+    glUseProgram(0);
+   
+    /*glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, fboBlur);
+    glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, sampleFramebuffer);
+    glResolveMultisampleFramebufferAPPLE();*/
+    
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    
+
+}
+
+
+

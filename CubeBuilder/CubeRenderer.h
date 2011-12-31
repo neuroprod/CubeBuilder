@@ -45,6 +45,24 @@ class CubeRenderer
     
     GLubyte *pixels;
     Model * model;
+    
+    
+    GLuint fboDepth;
+    GLuint rbufferDepth;
+    GLuint programDepth;
+     GLuint textureDepth;
+    GLint uWorldMatrixDepth;
+    GLint uPerspectiveMatrixDepth;
+    
+    
+    GLuint fboBlur;
+    GLuint rbufferBlur;
+    GLuint programBlur;
+    GLuint textureBlur;
+    GLint uWorldMatrixBlur;
+    
+    float *data;
+    ofMatrix4x4 worldMatrixBlur;
 public:
     
     
@@ -77,8 +95,16 @@ public:
     
     int vpW;
     int vpH;
-       int vpY;
-   
+    int vpY;
+    
+    
+    
+    
+    bool useAO ;
+    
+    void setupAO();
+    void renderAO();
+   void prepForAODraw();
 };
 
 #endif

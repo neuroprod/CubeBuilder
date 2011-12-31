@@ -38,9 +38,30 @@ void CubeHandler::touchedCube(int cubeIndex,int cubeSide,int touchPhase)
     
     }
 
+    if (model->currentState==STATE_REMOVE )
+    {
+        
+        if (touchPhase == NP_TOUCH_STOP)
+        {
+            //cout << " \ntouchADD" << touchPhase << " "<< cubeSide<<" "<<cubeIndex <<" \n";
+            removeCube(cubeIndex);
+           
+            
+        }
+        
+    }
 
 
-
+    if (model->currentState==STATE_PAINT )
+    {
+       ;
+        if (touchPhase == NP_TOUCH_STOP)
+        {
+            setCubeColor(cubeIndex);
+            
+        }
+        
+    }
 
 
 }
@@ -102,12 +123,42 @@ void CubeHandler::addCube(float x, float y, float z)
 void CubeHandler::removeCube(int index)
 {
 
-
+    int l =cubes.size();
+    if (l==1)return;
+    if (index+1 == l)
+    {
+        //last cube = no buffer update;
+        cubes.pop_back();
+    }else
+    {
+    
+        
+        for (int i =index; i<l;i++)
+        {
+        
+        
+        
+        }
+    
+    
+    
+    
+    
+    
+    }
+    model->renderHit =true;
     isDirty =true;
 }
-void CubeHandler::setCubeColor(int index,cbColor color)
+void CubeHandler::setCubeColor(int index)
 {
-
+    Cube *cube =cubes[index];
+    cube->setCubeColor(currentColor);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    
+    glBufferSubData(GL_ARRAY_BUFFER, sizeof( float) * 288 * cube->cubeIndex, sizeof( GLfloat)*288, cube->data);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+   
+    
     isDirty =true;
 
 }

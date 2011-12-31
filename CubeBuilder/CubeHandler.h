@@ -29,7 +29,7 @@ public:
     
     void addCube(float x, float y, float z);
     void removeCube(int index);
-    void setCubeColor(int index,cbColor color);
+    void setCubeColor(int index);
     
     void clean();
     
