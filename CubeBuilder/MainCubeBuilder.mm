@@ -92,7 +92,7 @@ void MainCubeBuilder::update ()
 void MainCubeBuilder::draw ()
 {
      
-    cout << frameCount << endl;
+    //cout << frameCount << endl;
    
     if (!cubeRenderer->isDirty && !interfaceHandler->isDirty && !backGround->isDirty)return;
     

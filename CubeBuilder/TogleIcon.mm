@@ -12,9 +12,13 @@ void TogleIcon::setup(int iconID)
 {
     setSize( 64, 64);
     setUVauto(iconID*64,0,2048,2048);
-   
+    touchChildren =false;
+    
     
     iconSel.setSize( 64, 64);
+    
+    iconSel.touchEnabled =false;
+    
     iconSel.setUVauto(iconID*64,64,2048,2048);
     addChild(iconSel);
     iconSel.visible =false;

@@ -137,17 +137,167 @@ void UIdisplaylist::setup()
     menuMenu.y =-64;
     addChild(menuMenu);
     
+    makeCallBack( UIdisplaylist,setOverlay ,overCall );
+    menuMenu.addEventListener( "setOverlay", overCall );   
     
+    makeCallBack( UIdisplaylist,setOverlay ,over2Call );
+   colorMenu.addEventListener( "setOverlay", over2Call );   
+    
+    
+
+    
+    
+    
+   
+    
+     mainInfoBack.setSize( 64, 64,-32,-32);
+     mainInfoBack.setUVauto(0,128,2048,2048);
+  
+    mainInfoBack.x =30;
+    mainInfoBack.y =30;
+     mainInfoBack.width =300;
+     mainInfoBack.height=400;
+     mainInfoBack.isDirty =true;
+    mainInfoBack.visible =false;
+    addChild( mainInfoBack); 
     
     colorHolder.setup();
     colorHolder.x =200;
     colorHolder.y =200;
     addChild(colorHolder);
-    colorHolder.visible =false;
+    colorHolder.visible =false;    
     
     model->colorHolder = &colorHolder;
        model->colorMenu = &colorMenu;
     
+}
+
+void UIdisplaylist::setOverlay(npEvent *e)
+{
+    OverlayEvent * overE = (OverlayEvent *) e; 
+    int type =  overE->overlayType;
+    
+    int tarW;
+    int tarH;
+    if (type == -1)
+    {
+        closeCurrentOverLay();
+        return;
+        
+    }  
+    currentOverLay = type;
+  
+   if (type == 1)
+    {
+        tarW =11*44+64;
+        
+        tarH =7*44 +64;
+        
+    }
+    else if (type == 10)
+    {
+        tarW =200;
+        tarH =150;
+    
+    }else  if (type == 11)
+    {
+        tarW =400;
+        tarH =400;
+        
+    }else  if (type == 12)
+    {
+        tarW =1060;
+        tarH =300;
+        
+    }else  if (type == 13)
+    {
+        tarW =1060;
+        tarH =300;
+        
+    }else  if (type == 14)
+    {
+        tarW =1060;
+        tarH =300;
+        
+    }else  if (type == 15)
+    {
+        tarW =1060;
+        tarH =300;
+        
+    }
+    
+    if (  mainInfoBack.visible)
+    {
+     
+    
+    }else
+    {
+    
+        mainInfoBack.visible =true;
+        mainInfoBack.alpha =0.5;
+        mainInfoBack.width =tarW -50;
+        mainInfoBack.height =tarH -50;
+    }
+    npTween mijnTween;
+    mijnTween.init(& mainInfoBack,NP_EASE_OUT_BACK,300,0);
+    
+    mijnTween.addProperty( &mainInfoBack.width,tarW );
+    mijnTween.addProperty( &mainInfoBack.height,tarH );
+      mijnTween.addProperty( &mainInfoBack.alpha,1.0 );
+  
+    
+    
+    makeCallBack(UIdisplaylist, openOverlayCompleet, openComp);
+    mijnTween.addEventListener(NP_TWEEN_COMPLETE, openComp);
+    npTweener::addTween(mijnTween);
+    
+    
+    menuMenu.setOverlay(currentOverLay);
+    colorMenu.setOverlay(currentOverLay);
+}
+void UIdisplaylist::openOverlayCompleet(npEvent *e)
+{
+   
+    if ( currentOverLay  ==1)
+    {
+        colorHolder.visible  =true;
+        colorHolder.isDirty =true;
+        
+    }
+
+}
+void UIdisplaylist::hideOverlayCompleet(npEvent *e)
+{
+    mainInfoBack.visible =false;
+    mainInfoBack.isDirty =true;
+}
+void UIdisplaylist::closeCurrentOverLay()
+{
+    // hide overlayView
+    if ( currentOverLay  ==1)
+    {
+       
+        colorHolder.visible  =false;
+            colorHolder.isDirty =true;
+            
+       
+    
+    }
+   menuMenu.setOverlay(-1);
+    colorMenu.setOverlay(-1);
+    npTween mijnTween;
+    int  tarW  =mainInfoBack.width -100;
+    int tarH = mainInfoBack.height -100;
+    
+    mijnTween.init(&mainInfoBack,NP_EASE_OUT_SINE,150,0);
+    
+    mijnTween.addProperty( &mainInfoBack.width,tarW );
+    mijnTween.addProperty( &mainInfoBack.height,tarH );
+    mijnTween.addProperty( &mainInfoBack.alpha,0 );
+    makeCallBack(UIdisplaylist, hideOverlayCompleet, openComp);
+    mijnTween.addEventListener(NP_TWEEN_COMPLETE, openComp);
+    npTweener::addTween(mijnTween);
+    currentOverLay = -1;
 }
 void UIdisplaylist::setPaint(npEvent *e )
 {
@@ -192,6 +342,7 @@ void UIdisplaylist::setAdd(npEvent *e )
 void UIdisplaylist::setRotate(npEvent *e )
 {
     if (rotateBtn.isSelected) return;
+    model->camera->touchPointer =NULL;/// clear pointer sometimes stays
     closeCurrentState();
     rotateBtn.setSelected(true);
     model->setCurrentState(STATE_ROTATE);
@@ -216,6 +367,8 @@ void UIdisplaylist::setView(npEvent *e )
     
     viewMenu.setSelected(true,delay);
     viewBtn.setSelected(true);
+    if (model->camera->didMove)viewMenu.clear();
+    
     model->setCurrentState(STATE_VIEW);
     
 }
@@ -252,13 +405,14 @@ void UIdisplaylist::closeCurrentState()
     else if (state ==STATE_VIEW)
     { viewBtn.setSelected(false);
         viewMenu.setSelected(false);
+        
     }
     else if (state ==STATE_MENU)
     { menuBtn.setSelected(false);
         menuMenu.setSelected(false);
     }
    // if(viewMenu.isSelected){viewMenu.setSelected(false);}
-    
+    if(currentOverLay != -1) closeCurrentOverLay();
     
     
 
@@ -267,11 +421,18 @@ void UIdisplaylist::closeCurrentState()
 
 void UIdisplaylist::setOrientation(int orientation)
 {
+    
+    
+    
+    
+    
+    
     int startLeftX  =32+16+8;
     int leftSpace  = 64+8;
     int startLeftY  ;
     int startRightX  ;
     int centerX;
+     int centerY;
     int bottom;
      //landscape
     if (orientation ==1)
@@ -280,6 +441,7 @@ void UIdisplaylist::setOrientation(int orientation)
         startLeftY  = 768 -128;  
         startRightX  = 1024-startLeftX;
         centerX =1024/2;
+         centerY =768/2;
         bottom =768+64;
     }
     // portrait
@@ -288,9 +450,19 @@ void UIdisplaylist::setOrientation(int orientation)
         startLeftY  = 1024 -128-64;
         startRightX  = 768-startLeftX;
         centerX =768/2;
+          centerY =1024/2;
         bottom =1024+64;
     }
 
+   mainInfoBack.x =centerX;
+    mainInfoBack.y =centerY;
+    mainInfoBack.isDirty =true;
+    
+    
+    colorHolder.x =centerX;
+    colorHolder.y =centerY;
+    
+    
     //
     // left
     //
@@ -361,6 +533,6 @@ void UIdisplaylist::setOrientation(int orientation)
     
     
     menuMenu.x= centerX- (menuMenu.w/2.0);
-   
+    menuMenu.isDirty =true;
     
 }

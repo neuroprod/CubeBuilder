@@ -13,11 +13,11 @@ void ColorHolder::setup()
 {
     model = Model::getInstance();
 
-    setSize( 64, 64,-32,-32);
-    setUVauto(0,128,2048,2048);
+    setSize( 1, 1);
+    setUVauto(0,0,2048,2048);
 
-    int  posStartX =16;
-    int posStartY =16;
+    int  posStartX =-11*22 +22;
+    int posStartY =-7*22 +22-4;
     
     // 11*7
     int count =0;

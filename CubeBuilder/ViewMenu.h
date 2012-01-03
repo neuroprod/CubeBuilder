@@ -66,7 +66,7 @@ class ViewMenu:public npDisplayObject
     void setBottom(int bot);
     float bottomPos;
     float w;
-
+    void clear();
 };
 
 #endif

@@ -7,6 +7,9 @@
 //
 
 #import "ViewController.h"
+#import "ClearView.h"
+#import "LoadView.h"
+
 #include "MainCubeBuilder.h"
 #include <iostream>
 #include <vector>
@@ -19,6 +22,8 @@
 
 @interface ViewController ()  {
   
+    ClearView *clearView;
+  // LoadView *loadView;
     MainCubeBuilder *main ;
     vector <UITouch *> itouches;
     vector <npTouch > ntouches;
@@ -27,17 +32,21 @@
 }
 @property (strong, nonatomic) EAGLContext *context;
 
+@property (retain,nonatomic) ClearView *clearView;
+//@property (retain,nonatomic) LoadView *loadView;
+
 
 - (void)setupGL;
 - (void)tearDownGL;
 -(void)  updateTouche:(int) index;
-
+-(void) showView:(NSInteger)viewID;
 @end
 
 @implementation ViewController
 
 @synthesize context = _context;
-
+@synthesize clearView;
+//@synthesize loadView;
 
 - (void)viewDidLoad
 {
@@ -59,10 +68,42 @@
     main->setup();
     
     
-  
+    
+
+    
+    
+  // [self showView:0];
     
 }
+-(void) showView:(NSInteger)viewID
+{
+    if (viewID==0)
+    {
+        if (self.clearView ==NULL){
+        ClearView *clearV = [[ClearView alloc] initWithNibName:@"ClearView" bundle:nil];
+        self.clearView = clearV;
+        clearView.view.frame = CGRectMake(100, 100, 400, 400);
+     
+        [clearV release];
+        }
+        
+        [self.view insertSubview:clearView.view atIndex:0];
+    }
+    
+  else  if (viewID==2)
+    {
+       /* if (self.loadView ==NULL){
+            LoadView *loadV = [[LoadView alloc] initWithNibName:@"LoadView" bundle:nil];
+            self.loadView = loadV;
+            loadView.view.frame = CGRectMake(100, 100, 400, 400);
+            
+            [loadV release];
+        }
+        
+        [self.view insertSubview:loadView.view atIndex:0];*/
+    }
 
+}
 - (void)viewDidUnload
 {    
     [super viewDidUnload];

@@ -24,6 +24,8 @@
 #include "MenuMenu.h"
 #include "ColorMenu.h"
 #include "ColorHolder.h"
+#include "Slice9Sprite.h"
+#include "OverlayEvent.h"
 
 class UIdisplaylist: public npBitmapSprite
 {
@@ -53,7 +55,14 @@ class UIdisplaylist: public npBitmapSprite
     MenuMenu menuMenu;
     
     ColorHolder colorHolder;
+    
+    Slice9Sprite mainInfoBack;
+    
 public :
+    
+    int  currentOverLay ;
+    void closeCurrentOverLay();
+    
     UIdisplaylist(){};
     void setup();
     
@@ -67,8 +76,9 @@ public :
      void setView(npEvent *e );
      void setMenu(npEvent *e );
     
-    
-    
+    void setOverlay(npEvent *e);
+    void openOverlayCompleet(npEvent *e);
+    void hideOverlayCompleet(npEvent *e);
     void closeCurrentState();
     
     

@@ -16,6 +16,10 @@
 #include "npTweener.h"
 #include "Model.h"
 #include "ColorBtn.h"
+
+#include "npEvent.h"
+#include "OverlayEvent.h"
+#include "TogleIcon.h"
 class ColorBtn;
 class ColorMenu:public npDisplayObject
 {
@@ -39,14 +43,18 @@ class ColorMenu:public npDisplayObject
  
      vector < ColorBtn* > btns;
     
- 
+ TogleIcon openColorsBtn ;
     
     void setBottom(int bot);
     float bottomPos;
     float w;
 
     
+    void onDownOverlay(npEvent *e);
+        
+ 
     
+    void setOverlay(int currentOverLay);
     
 };
 

@@ -40,8 +40,8 @@ Camera::Camera()
     isDirty =true;
     
     touchPointer =NULL;
-    slerp =0;
-    
+    slerp =-1;
+    didMove =true;
     
 };
 void Camera::update()
@@ -49,11 +49,11 @@ void Camera::update()
     if (!isDirty) return;
 
     
-    if (slerp != 0)
+    if (slerp != -1)
     {
         quatFinal.slerp(slerp,    quatTarget,quatStart);        
         quatFinal.get(objectMatrixTemp);
-
+        if(slerp ==0)slerp=-1;
     }
    // cout<<"\n\n" << objectMatrixTemp;
     
@@ -97,6 +97,7 @@ void Camera::checkTouch(npTouch &touch)
             if( touch.phase==1)
             {
                 setRotate(touch.x,touch.y);
+                 didMove =true;
             }
             if( touch.phase==2)
             {
@@ -140,7 +141,7 @@ void Camera::checkTouch(npTouch &touch)
             prevX =touch.x;
             prevY =touch.y;  
 
-            
+             didMove =true;
             isDirty =true;
             if( touch.phase==2)
             {   
@@ -164,7 +165,8 @@ void Camera::setRotate(int lx,int ly)
     prevX =lx;
     prevY =ly;
     isDirty =true;
-    
+   
+
 }
 ofVec4f Camera::trackBallMapping(int pointX,int pointY)
 {
@@ -286,7 +288,7 @@ void Camera::setView(int viewID){
    
     
     
-   
+  
 
 
 }
@@ -306,7 +308,7 @@ void Camera::fit(){
     mijnTween.addEventListener( NP_TWEEN_COMPLETE , call);
       
     npTweener::addTween(mijnTween);
-
+didMove =false;
 
 
 }
@@ -325,7 +327,7 @@ void Camera::addjustCenter( ofVec3f adj)
     mijnTween.addEventListener( NP_TWEEN_COMPLETE , call);
     
     npTweener::addTween(mijnTween);
-
+    didMove =true;
 }
 
 
@@ -338,7 +340,8 @@ void   Camera::setZoomMove(float move)
 {
     zoom+= move/20;
     if (zoom>-2)zoom =-2;
- isDirty =true;
+    isDirty =true;
+    didMove =true;
 }
 
 

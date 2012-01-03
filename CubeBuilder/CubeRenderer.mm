@@ -185,7 +185,7 @@ void CubeRenderer::renderTick(){
     if(!cubeHandler->isDirty && !isDirty )return;
     isDirty =true;
     cubeHandler->isDirty =false;
-    cout << "\ndrawCubes\n";
+    
      glBindFramebuffer(GL_FRAMEBUFFER, sampleFramebuffer);
     
   // glBindFramebuffer(GL_FRAMEBUFFER, fbo);
@@ -289,7 +289,7 @@ void CubeRenderer::setupIDCubes()
 void CubeRenderer::drawIDcubes()
 {
     
-  cout << "drawID";
+ // cout << "drawID";
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     
     

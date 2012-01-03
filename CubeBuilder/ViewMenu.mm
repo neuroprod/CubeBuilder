@@ -171,55 +171,87 @@ void ViewMenu::onDownfit(npEvent *e)
 {
     //setSelected(false);
     model->camera->fit();
+    fit.setSelected(false);
 
 
 }
 void ViewMenu::onDownfront(npEvent *e){
     //setSelected(false);
     model->camera->setView(0);
+    clear();
+    fit.setSelected(false);
+    front.setSelected(false);
+
     
     
 }
 void ViewMenu::onDownback(npEvent *e){
     //setSelected(false);
     model->camera->setView(1);
-    
+    clear();
+    fit.setSelected(false);
+    back.setSelected(false);
     
 }
 void ViewMenu::onDowntop(npEvent *e){
     //setSelected(false);
     model->camera->setView(2);
-    
+    clear();
+    fit.setSelected(false);
+    top.setSelected(false);
     
 }
 void ViewMenu::onDownbottom(npEvent *e){
     //setSelected(false);
     model->camera->setView(3);
-    
+    clear();
+    fit.setSelected(false);
+    bottom.setSelected(false);
     
 }
 void ViewMenu::onDownleft(npEvent *e){
     //setSelected(false);
     model->camera->setView(4);
-    
+    clear();
+    fit.setSelected(false);
+    left.setSelected(false);
     
 }
 void ViewMenu::onDownright(npEvent *e){
    // setSelected(false);
     model->camera->setView(5);
-    
+    clear();
+    fit.setSelected(false);
+    right.setSelected(false);
     
 }
 
 void ViewMenu::onSnapShot(npEvent *e){
     // setSelected(false);
    // model->camera->setView(5);
-    
+   
     
 }
 
 
+void ViewMenu::clear()
+{
+  
+    fit.setSelected(true);
+    
+  
+    
+   front.setSelected(true);
+    back.setSelected(true);
+    
+    top.setSelected(true);
+    bottom.setSelected(true);
+    
+    left.setSelected(true);
+    right.setSelected(true);
 
+
+}
 
 
 

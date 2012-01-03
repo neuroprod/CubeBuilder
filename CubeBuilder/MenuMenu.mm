@@ -160,12 +160,61 @@ void MenuMenu::setup()
     
 }
 
-void MenuMenu::onDownremove(npEvent *e){}
-void MenuMenu::onDownsave(npEvent *e){}
-void MenuMenu::onDownload(npEvent *e){}
-void MenuMenu::onDowngalery(npEvent *e){}
-void MenuMenu::onDownsnapshot(npEvent *e){}
-void MenuMenu::onDowninfo(npEvent *e){}
+void MenuMenu::onDownremove(npEvent *e){
+
+    OverlayEvent event;
+    event.name ="setOverlay";
+    event.overlayType =10;
+   
+    dispatchEvent(event);
+    
+
+}
+void MenuMenu::onDownsave(npEvent *e){
+    OverlayEvent event;
+    event.name ="setOverlay";
+    event.overlayType =11;
+    
+    dispatchEvent(event);
+
+}
+void MenuMenu::onDownload(npEvent *e){
+
+    OverlayEvent event;
+    event.name ="setOverlay";
+    event.overlayType =12;
+    
+    dispatchEvent(event);
+}
+void MenuMenu::onDowngalery(npEvent *e){
+
+    OverlayEvent event;
+    event.name ="setOverlay";
+    event.overlayType =13;
+    
+    dispatchEvent(event);
+}
+void MenuMenu::onDownsnapshot(npEvent *e){
+
+    OverlayEvent event;
+    event.name ="setOverlay";
+    event.overlayType =14;
+    
+    dispatchEvent(event);
+}
+void MenuMenu::onDowninfo(npEvent *e){
+
+    OverlayEvent event;
+    event.name ="setOverlay";
+    event.overlayType =15;
+    
+    dispatchEvent(event);
+
+}
+
+void MenuMenu::setOverlay(int currentOverLay)
+{
 
 
+}
 

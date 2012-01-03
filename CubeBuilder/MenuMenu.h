@@ -16,6 +16,10 @@
 #include "npTweener.h"
 #include "Model.h"
 #include "TogleIcon.h"
+#include "OverlayEvent.h"
+
+
+
 class MenuMenu:public npDisplayObject
 {
     public :
@@ -61,6 +65,8 @@ class MenuMenu:public npDisplayObject
     void onDownload(npEvent *e);
     void onDownsnapshot(npEvent *e);
     void onDowninfo(npEvent *e);
+    
+    void setOverlay(int currentOverLay);
  
 };
 

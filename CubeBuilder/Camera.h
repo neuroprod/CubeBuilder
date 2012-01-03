@@ -58,7 +58,7 @@ public:
     ofMatrix4x4 perspectiveMatrix;
     
     float zoom;
-    
+    bool didMove;
     
     Camera();
     void update();

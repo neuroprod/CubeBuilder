@@ -106,8 +106,14 @@ void ColorMenu::setup()
     btns[8]->setColor(66);
     btns[9]->setColor(69);
     btns[9]->setColor(69);
+    
+    
+    openColorsBtn.setup(23);
+     openColorsBtn.x = 464;
+    addChild( openColorsBtn);
+    makeCallBack(ColorMenu,onDownOverlay ,callinfo);
+     openColorsBtn.addEventListener(TOUCH_UP_INSIDE , callinfo);
 }
-
 
 void ColorMenu::setColor(int colorid)
 {
@@ -148,4 +154,21 @@ void ColorMenu::setColor(int colorid)
     
     
 }
+void ColorMenu::onDownOverlay(npEvent *e){
+    
+    OverlayEvent event;
+    event.name ="setOverlay";
+    
+    
+    event.overlayType =1;
+    if (openColorsBtn.isSelected) event.overlayType =-1;
+    dispatchEvent(event);
+    
+}
 
+void ColorMenu::setOverlay(int currentOverLay)
+{
+    if(currentOverLay ==1) {openColorsBtn.setSelected(true);}
+    else{openColorsBtn.setSelected(false);}
+    
+}
