@@ -13,7 +13,7 @@ Model* Model::m_pSingleton = NULL;
 
 Model::Model() { currentState = -1;
 
-  //  renderHit =true;
+   renderHit =true;
 }
 Model::~Model() { }
 

@@ -164,8 +164,8 @@ void CubeRenderer::setup(){
     glUseProgram(0);
     setupIDCubes();
     
-    useAO=true;
-    if (useAO)setupAO();
+    useAO=false;
+    setupAO();
     
 };
 
@@ -185,7 +185,7 @@ void CubeRenderer::renderTick(){
     if(!cubeHandler->isDirty && !isDirty )return;
     isDirty =true;
     cubeHandler->isDirty =false;
-    
+    cout << "\ndrawCubes\n";
      glBindFramebuffer(GL_FRAMEBUFFER, sampleFramebuffer);
     
   // glBindFramebuffer(GL_FRAMEBUFFER, fbo);
@@ -194,14 +194,22 @@ void CubeRenderer::renderTick(){
     
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     
- 
+  glEnable (GL_DEPTH_TEST);
+    
+    if (previewCube->x != 10000) {previewCube->draw();
+    
+    
+    }else 
+    {
+        previewCube->isDirty =false;
+    }
     
     
     
     
     glUseProgram(programMain);
     
-    glEnable (GL_DEPTH_TEST);
+   
     
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
    
@@ -281,7 +289,7 @@ void CubeRenderer::setupIDCubes()
 void CubeRenderer::drawIDcubes()
 {
     
-  
+  cout << "drawID";
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     
     

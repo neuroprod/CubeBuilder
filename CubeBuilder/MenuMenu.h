@@ -15,7 +15,7 @@
 #include "Slice3Sprite.h"
 #include "npTweener.h"
 #include "Model.h"
-
+#include "TogleIcon.h"
 class MenuMenu:public npDisplayObject
 {
     public :
@@ -37,9 +37,31 @@ class MenuMenu:public npDisplayObject
     
     
     
-    void setColor(int colorid);
+    TogleIcon remove;
     
-   
+    npBitmapSprite line1;
+    
+    TogleIcon save ;
+    TogleIcon load;
+
+    
+    npBitmapSprite line2;
+    TogleIcon galery;
+  
+    
+    npBitmapSprite line3;
+    TogleIcon snapshot;
+    
+    npBitmapSprite line4;
+    TogleIcon info;
+    
+    void onDowngalery(npEvent *e);
+    void onDownremove(npEvent *e);
+    void onDownsave(npEvent *e);
+    void onDownload(npEvent *e);
+    void onDownsnapshot(npEvent *e);
+    void onDowninfo(npEvent *e);
+ 
 };
 
 

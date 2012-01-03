@@ -37,7 +37,7 @@ void main()
      vec3 lightWorld =vec3(-20.0,-20.0,100.0);
     lightDir = normalize(lightWorld) ;
     
-     vec3 lightWorld2 =vec3(100.0,100.0,100.0);
+     vec3 lightWorld2 =vec3(50.0,100.0,10.0);
     lightDir2 = normalize(lightWorld2);
     eyeVec =normalize(-worldSpace.xyz);
 

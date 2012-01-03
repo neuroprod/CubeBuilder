@@ -74,21 +74,25 @@ void ViewMenu::setup()
     
 
 
-    int startX =32;
-    int margin =64;
-   fit.setSize( 64, 64);
-    fit.setUVauto(8* 64,0,2048,2048);
+    int startX =10;
+    int margin =60;
+    int marginS =40;
+    
+    fit.setup(8);
     fit.x = startX;
     addChild(fit);
     makeCallBack(ViewMenu,onDownfit,callfit );
     fit.addEventListener(TOUCH_UP_INSIDE , callfit);
-    startX+=margin+32;
+    startX+=marginS;
     
+    line1.setSize(6, 64);
+    line1.setUVauto(128,128,2048,2048);
+    line1.x = startX;
+    addChild( line1);
     
-    
+    startX+=marginS;
    
-    front.setSize( 64, 64);
-    front.setUVauto(9* 64,0,2048,2048);
+    front.setup(9);
     front.x = startX;
     addChild(front);
     makeCallBack(ViewMenu,onDownfront,callfront );
@@ -96,8 +100,7 @@ void ViewMenu::setup()
     startX+=margin;
     
   
-    back.setSize( 64, 64);
-     back.setUVauto(10* 64,0,2048,2048);
+    back.setup(10);
      back.x = startX;
     addChild( back);
     makeCallBack(ViewMenu,onDownback,callback);
@@ -106,8 +109,7 @@ void ViewMenu::setup()
     
     
   
-    top.setSize( 64, 64);
-    top.setUVauto(11* 64,0,2048,2048);
+    top.setup(11);
     top.x = startX;
     addChild(top);
     makeCallBack(ViewMenu,onDowntop,calltop );
@@ -115,8 +117,7 @@ void ViewMenu::setup()
     startX+=margin;
     
    
-    bottom.setSize( 64, 64);
-    bottom.setUVauto(12* 64,0,2048,2048);
+    bottom.setup(12);
     bottom.x = startX;
     addChild(bottom);
     makeCallBack(ViewMenu,onDownbottom,callbottom );
@@ -125,8 +126,7 @@ void ViewMenu::setup()
     
     
    
-    left.setSize( 64, 64);
-    left.setUVauto(13* 64,0,2048,2048);
+    left.setup(13);
     left.x = startX;
     addChild(left);
     makeCallBack(ViewMenu,onDownleft,callleft);
@@ -135,12 +135,30 @@ void ViewMenu::setup()
     
     
   
-    right.setSize( 64, 64);
-    right.setUVauto(14* 64,0,2048,2048);
+    right.setup(14);
     right.x = startX;
     addChild(right);
     makeCallBack(ViewMenu,onDownright,callright);
     right.addEventListener(TOUCH_UP_INSIDE , callright);
+    startX+=marginS;
+
+    
+    line2.setSize( 6, 64);
+    line2.setUVauto(128,128,2048,2048);
+    line2.x = startX;
+    addChild( line2);    
+   
+    
+    startX+=marginS;
+    snapShot.setup(15);
+    snapShot.x = startX;
+    addChild(snapShot);
+    makeCallBack(ViewMenu,onSnapShot,callsnap);
+    right.addEventListener(TOUCH_UP_INSIDE , callsnap);
+    
+    
+    
+    
    // startX+=margin;
     
       
@@ -193,6 +211,12 @@ void ViewMenu::onDownright(npEvent *e){
     
 }
 
+void ViewMenu::onSnapShot(npEvent *e){
+    // setSelected(false);
+   // model->camera->setView(5);
+    
+    
+}
 
 
 

@@ -108,7 +108,7 @@ void UIdisplaylist::setup()
     viewBtn.addEventListener( TOUCH_UP_INSIDE, viewCall );   
     
     
-    menuBtn.setup(15);
+    menuBtn.setup(16);
     addChild(menuBtn);
     makeCallBack( UIdisplaylist,setMenu ,menuCall );
     menuBtn.addEventListener( TOUCH_UP_INSIDE, menuCall );   

@@ -38,7 +38,12 @@ void MainCubeBuilder::setup()
     cubeHandler->vertexBuffer =cubeRenderer->vertexBuffer;
     cubeHandler->addCube(0,0,0);
 
-
+    previewCube =new PreviewCube();
+    previewCube->setup();
+    
+    cubeRenderer->previewCube  = previewCube;
+    
+    cubeHandler->previewCube =previewCube;
   
     interfaceHandler =new InterfaceHandler();
     interfaceHandler->setup();
@@ -57,13 +62,14 @@ void MainCubeBuilder::setup()
     glCullFace(GL_BACK);
     
     OpenGLErrorChek::chek("mainsetup");
-    
+    frameCount =0;
 }
 
 
 void MainCubeBuilder::update ()
 {
-   
+    frameCount++;
+    if (frameCount==1)model->renderHit =true;
     npTweener::update();
    
     interfaceHandler->renderTick();
@@ -75,6 +81,8 @@ void MainCubeBuilder::update ()
     }
     
     cubeHandler->update();
+    if (previewCube->isDirty)cubeRenderer->isDirty =true;
+    
     cubeRenderer->renderTick();
     backGround->renderTick();
     
@@ -84,7 +92,7 @@ void MainCubeBuilder::update ()
 void MainCubeBuilder::draw ()
 {
      
-
+    cout << frameCount << endl;
    
     if (!cubeRenderer->isDirty && !interfaceHandler->isDirty && !backGround->isDirty)return;
     
@@ -163,7 +171,10 @@ void MainCubeBuilder::setTouches(vector<npTouch> &touches)
                     {
                         cubeHandler->touchedCube(cubeRenderer->currentCubeIndex,cubeRenderer->currentCubeSide,touches[i].phase);
                         
-                    } 
+                    } else 
+                    {
+                     previewCube->setPos(10000 , -10000,-10000);
+                    }
                 }
             }
         }
@@ -178,7 +189,10 @@ void MainCubeBuilder::setTouches(vector<npTouch> &touches)
                     {
                         cubeHandler->touchedCube(cubeRenderer->currentCubeIndex,cubeRenderer->currentCubeSide,touches[i].phase);
                     
-                    }  
+                    } else 
+                    {
+                        previewCube->setPos(10000 , -10000,-10000);
+                    } 
                 }
                 else  if (currentState<20){
                

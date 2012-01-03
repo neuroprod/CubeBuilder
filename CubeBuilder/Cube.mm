@@ -69,7 +69,15 @@ void Cube::setCubeIndex(int index)
     cbColor colorTop ;
     colorTop.setID(index);
     cubeIndex = index;
+    float g =colorTop.g;
+    float b =colorTop.b;
+    for (int i=0;i<24;i++)
+    {
+        int pos =i*12;
+        data[pos+10] =g;
+        data[pos+11] =b;
     
+    }
     
     
 };

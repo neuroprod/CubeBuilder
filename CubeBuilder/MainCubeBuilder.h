@@ -20,7 +20,7 @@
 #include "npTweener.h"
 #include "npTouch.h"
 #include "npTouchEvent.h"
-
+#include "PreviewCube.h"
 
 #include "Camera.h"
 #include "Model.h"
@@ -45,6 +45,8 @@ public:
     FlatRenderer * flatRenderer;
     
     CubeRenderer * cubeRenderer;
+    PreviewCube *previewCube;
+    
     CubeHandler * cubeHandler;
     InterfaceHandler *interfaceHandler;
     BackGround *backGround;
@@ -52,7 +54,7 @@ public:
     Camera * camera;
     Model *model;
     
- 
+    int frameCount;
 };
 
 

@@ -60,7 +60,7 @@ void main()
     
     
     }
-    mediump float v = (sourceColor.x-blurColor)*2.0 ;
+    mediump float v = (sourceColor.x-blurColor)*5.0 ;
     
     
     gl_FragColor =vec4 (0.0,0.0,0.0 ,v*sourceColor.a);

@@ -241,6 +241,7 @@
         {
             ntouches.erase (ntouches.begin()+i );
             itouches.erase (itouches.begin()+i );
+             ntouches[i ].target =NULL;
             i--;
             
         }
@@ -260,8 +261,10 @@
             if(itouches[i] == itouch)
             {
                 ntouches[i ].markDelete =true;
+               
                 [self updateTouche:i];
                 //found=true;
+                
                 break;
                 
             }
@@ -275,6 +278,7 @@
     {
         if(ntouches[i].markDelete)
         {
+             ntouches[i ].target =NULL;
             ntouches.erase (ntouches.begin()+i );
             itouches.erase (itouches.begin()+i );
             i--;

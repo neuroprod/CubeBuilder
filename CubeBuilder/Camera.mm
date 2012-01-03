@@ -17,6 +17,12 @@ Camera::Camera()
     model = Model::getInstance();
     
     objectMatrixTemp.makeIdentityMatrix();
+    objectMatrixTemp.set(0.8348, 0.322234, -0.446401, 0,
+                         -0.063531, 0.861789, 0.503273, 0,
+                         0.546874, -0.391774, 0.739894, 0,
+                         0, 0, 0, 1);
+    
+    
     normalMatrix.makeIdentityMatrix();
     worldMatrix.makeIdentityMatrix();
     centerMatrix.makeIdentityMatrix();
@@ -49,7 +55,7 @@ void Camera::update()
         quatFinal.get(objectMatrixTemp);
 
     }
-    
+   // cout<<"\n\n" << objectMatrixTemp;
     
     
     zoomMatrix.makeIdentityMatrix();

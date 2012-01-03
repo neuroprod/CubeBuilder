@@ -8,26 +8,20 @@
 
 attribute vec4 position;
 
+
+
 uniform mat4 worldMatrix;
 uniform mat4 perspectiveMatrix;
 
-varying vec3 colorVarying;
+uniform vec4 color;
+uniform vec4 pos;
+
+varying vec4 colorVarying;
+
 
 void main()
 {
-    
-    
-    
-    
-    
-    vec4 worldSpace = worldMatrix*position;
-    gl_Position =perspectiveMatrix*worldSpace;
-
-    
-    
-    float d = (worldSpace.z+4.0 )/-20.0;
-   
-  
-     colorVarying  = vec3(d,d,d);
-
+    vec4 posF = worldMatrix*(pos+position);
+    gl_Position =perspectiveMatrix* posF;
+     colorVarying  = color;
 }

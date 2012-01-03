@@ -12,6 +12,8 @@
 #include "SettingsCubeBuilder.h"
 #include "Cube.h"
 #include "Model.h"
+#include "PreviewCube.h"
+class PreviewCube;
 class Model;
 class CubeHandler
 {
@@ -41,6 +43,7 @@ public:
     GLuint vertexBuffer;
     
     vector <Cube *> cubes ;
+    PreviewCube * previewCube;
     
     bool isDirty;
 };

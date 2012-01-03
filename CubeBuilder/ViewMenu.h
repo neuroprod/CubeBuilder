@@ -16,6 +16,8 @@
 #include "Slice3Sprite.h"
 #include "npTweener.h"
 #include "Model.h"
+#include "TogleIcon.h"
+
 class ViewMenu:public npDisplayObject
 {
     public :
@@ -33,18 +35,22 @@ class ViewMenu:public npDisplayObject
     Slice3Sprite rollout;
    
     
-    npBitmapSprite fit;
+    TogleIcon fit;
     
+    npBitmapSprite line1;
     
-     npBitmapSprite front;
-     npBitmapSprite back;
+    TogleIcon front;
+    TogleIcon back;
     
-     npBitmapSprite top;
-     npBitmapSprite bottom;
+    TogleIcon top;
+    TogleIcon bottom;
     
-     npBitmapSprite left;
-     npBitmapSprite right;
+    TogleIcon left;
+    TogleIcon right;
     
+    npBitmapSprite line2;
+    
+    TogleIcon snapShot;
     
     
     void onDownfit(npEvent *e);
@@ -54,7 +60,9 @@ class ViewMenu:public npDisplayObject
      void onDownbottom(npEvent *e);
     void onDownleft(npEvent *e);
     void onDownright(npEvent *e);
-   
+    
+    void onSnapShot(npEvent *e);
+    
     void setBottom(int bot);
     float bottomPos;
     float w;

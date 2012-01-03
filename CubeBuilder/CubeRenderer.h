@@ -63,6 +63,10 @@ class CubeRenderer
     
     float *data;
     ofMatrix4x4 worldMatrixBlur;
+    
+    
+    
+    
 public:
     
     
@@ -96,7 +100,7 @@ public:
     int vpW;
     int vpH;
     int vpY;
-    
+    PreviewCube *previewCube;
     
     
     

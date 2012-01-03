@@ -21,7 +21,6 @@
 		0187560D14ADB4F900E8CEFB /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0187560B14ADB4F900E8CEFB /* background.jpg */; };
 		0187561114ADB8CE00E8CEFB /* TapBtn.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0187561014ADB8CD00E8CEFB /* TapBtn.mm */; };
 		0187561414ADBCEB00E8CEFB /* ZoomHolder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0187561314ADBCEA00E8CEFB /* ZoomHolder.mm */; };
-		0187561614ADD04300E8CEFB /* mainmap.png in Resources */ = {isa = PBXBuildFile; fileRef = 0187561514ADD04300E8CEFB /* mainmap.png */; };
 		0187561A14ADD49600E8CEFB /* MenuMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0187561914ADD49500E8CEFB /* MenuMenu.mm */; };
 		0187562014ADD50700E8CEFB /* ColorMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0187561F14ADD50400E8CEFB /* ColorMenu.mm */; };
 		0187562314AE0D2100E8CEFB /* ColorHolder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0187562214AE0D2100E8CEFB /* ColorHolder.mm */; };
@@ -30,6 +29,13 @@
 		0187562A14AF0C3B00E8CEFB /* ShaderCubeDepth.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 0187562814AF0C3B00E8CEFB /* ShaderCubeDepth.vsh */; };
 		0187562D14AF1CA900E8CEFB /* ShaderBlur1.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 0187562B14AF1CA700E8CEFB /* ShaderBlur1.fsh */; };
 		0187562E14AF1CA900E8CEFB /* ShaderBlur1.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 0187562C14AF1CA700E8CEFB /* ShaderBlur1.vsh */; };
+		0187563314B1A6BE00E8CEFB /* PreviewCube.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0187563214B1A6BD00E8CEFB /* PreviewCube.mm */; };
+		0187563614B1AA0700E8CEFB /* ShaderCubeLine.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 0187563414B1AA0500E8CEFB /* ShaderCubeLine.fsh */; };
+		0187563714B1AA0700E8CEFB /* ShaderCubeLine.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 0187563514B1AA0500E8CEFB /* ShaderCubeLine.vsh */; };
+		0187563E14B3112300E8CEFB /* TogleIcon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0187563D14B3112200E8CEFB /* TogleIcon.mm */; };
+		0187564014B3174D00E8CEFB /* mainmap.png in Resources */ = {isa = PBXBuildFile; fileRef = 0187563F14B3174D00E8CEFB /* mainmap.png */; };
+		0187564514B31D4800E8CEFB /* ClearView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0187564314B31D4800E8CEFB /* ClearView.m */; };
+		0187564614B31D4800E8CEFB /* ClearView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0187564414B31D4800E8CEFB /* ClearView.xib */; };
 		018F872314A32DA5004C9D6F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 018F872214A32DA5004C9D6F /* UIKit.framework */; };
 		018F872514A32DA5004C9D6F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 018F872414A32DA5004C9D6F /* Foundation.framework */; };
 		018F872714A32DA5004C9D6F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 018F872614A32DA5004C9D6F /* CoreGraphics.framework */; };
@@ -90,7 +96,6 @@
 		0187561014ADB8CD00E8CEFB /* TapBtn.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TapBtn.mm; sourceTree = "<group>"; };
 		0187561214ADBCD500E8CEFB /* ZoomHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZoomHolder.h; sourceTree = "<group>"; };
 		0187561314ADBCEA00E8CEFB /* ZoomHolder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ZoomHolder.mm; sourceTree = "<group>"; };
-		0187561514ADD04300E8CEFB /* mainmap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainmap.png; sourceTree = "<group>"; };
 		0187561714ADD47900E8CEFB /* ColorMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMenu.h; sourceTree = "<group>"; };
 		0187561814ADD48700E8CEFB /* MenuMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuMenu.h; sourceTree = "<group>"; };
 		0187561914ADD49500E8CEFB /* MenuMenu.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MenuMenu.mm; sourceTree = "<group>"; };
@@ -103,6 +108,16 @@
 		0187562814AF0C3B00E8CEFB /* ShaderCubeDepth.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShaderCubeDepth.vsh; sourceTree = "<group>"; };
 		0187562B14AF1CA700E8CEFB /* ShaderBlur1.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShaderBlur1.fsh; sourceTree = "<group>"; };
 		0187562C14AF1CA700E8CEFB /* ShaderBlur1.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShaderBlur1.vsh; sourceTree = "<group>"; };
+		0187562F14B1A51800E8CEFB /* PreviewCube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewCube.h; sourceTree = "<group>"; };
+		0187563214B1A6BD00E8CEFB /* PreviewCube.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PreviewCube.mm; sourceTree = "<group>"; };
+		0187563414B1AA0500E8CEFB /* ShaderCubeLine.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShaderCubeLine.fsh; sourceTree = "<group>"; };
+		0187563514B1AA0500E8CEFB /* ShaderCubeLine.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShaderCubeLine.vsh; sourceTree = "<group>"; };
+		0187563C14B3110E00E8CEFB /* TogleIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TogleIcon.h; sourceTree = "<group>"; };
+		0187563D14B3112200E8CEFB /* TogleIcon.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TogleIcon.mm; sourceTree = "<group>"; };
+		0187563F14B3174D00E8CEFB /* mainmap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainmap.png; sourceTree = "<group>"; };
+		0187564214B31D4800E8CEFB /* ClearView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClearView.h; sourceTree = "<group>"; };
+		0187564314B31D4800E8CEFB /* ClearView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClearView.m; sourceTree = "<group>"; };
+		0187564414B31D4800E8CEFB /* ClearView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClearView.xib; sourceTree = "<group>"; };
 		018F871E14A32DA5004C9D6F /* CubeBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CubeBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		018F872214A32DA5004C9D6F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		018F872414A32DA5004C9D6F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -216,8 +231,20 @@
 				0187562214AE0D2100E8CEFB /* ColorHolder.mm */,
 				0187562414AE0DAF00E8CEFB /* ColorBtn.h */,
 				0187562514AE0FB500E8CEFB /* ColorBtn.mm */,
+				0187563C14B3110E00E8CEFB /* TogleIcon.h */,
+				0187563D14B3112200E8CEFB /* TogleIcon.mm */,
 			);
 			name = UI;
+			sourceTree = "<group>";
+		};
+		0187564114B31CF300E8CEFB /* uikitcrapp */ = {
+			isa = PBXGroup;
+			children = (
+				0187564214B31D4800E8CEFB /* ClearView.h */,
+				0187564314B31D4800E8CEFB /* ClearView.m */,
+				0187564414B31D4800E8CEFB /* ClearView.xib */,
+			);
+			name = uikitcrapp;
 			sourceTree = "<group>";
 		};
 		018F871314A32DA5004C9D6F = {
@@ -253,6 +280,7 @@
 		018F872C14A32DA5004C9D6F /* CubeBuilder */ = {
 			isa = PBXGroup;
 			children = (
+				0187564114B31CF300E8CEFB /* uikitcrapp */,
 				018F87BC14A491A5004C9D6F /* assets */,
 				018F879B14A483F2004C9D6F /* of */,
 				018F876E14A48120004C9D6F /* np_displayList */,
@@ -279,18 +307,18 @@
 		018F874B14A33144004C9D6F /* mainStuff */ = {
 			isa = PBXGroup;
 			children = (
-				018F874A14A32EF3004C9D6F /* SettingsCubeBuilder.h */,
-				018F873514A32DA5004C9D6F /* AppDelegate.h */,
-				018F873614A32DA5004C9D6F /* AppDelegate.mm */,
-				018F873C14A32DA5004C9D6F /* ViewController.h */,
 				018F874714A32EA9004C9D6F /* MainCubeBuilder.h */,
-				018F873F14A32DA5004C9D6F /* ViewController.xib */,
-				018F873D14A32DA5004C9D6F /* ViewController.mm */,
 				018F874814A32EBD004C9D6F /* MainCubeBuilder.mm */,
+				018F874A14A32EF3004C9D6F /* SettingsCubeBuilder.h */,
 				018F876214A34BF8004C9D6F /* FlatRenderer.mm */,
 				018F876414A34C0A004C9D6F /* FlatRenderer.h */,
 				018755EF14AA2B5F00E8CEFB /* Model.h */,
 				018755F014AA2BFE00E8CEFB /* Model.mm */,
+				018F873F14A32DA5004C9D6F /* ViewController.xib */,
+				018F873C14A32DA5004C9D6F /* ViewController.h */,
+				018F873D14A32DA5004C9D6F /* ViewController.mm */,
+				018F873514A32DA5004C9D6F /* AppDelegate.h */,
+				018F873614A32DA5004C9D6F /* AppDelegate.mm */,
 			);
 			name = mainStuff;
 			sourceTree = "<group>";
@@ -307,6 +335,8 @@
 				018755CA14A8995D00E8CEFB /* cbColor.h */,
 				018755CB14A8A91600E8CEFB /* Camera.h */,
 				018755FA14AB263200E8CEFB /* Camera.mm */,
+				0187563214B1A6BD00E8CEFB /* PreviewCube.mm */,
+				0187562F14B1A51800E8CEFB /* PreviewCube.h */,
 			);
 			name = cubestuff;
 			sourceTree = "<group>";
@@ -328,6 +358,8 @@
 		018F876914A480D7004C9D6F /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				0187563414B1AA0500E8CEFB /* ShaderCubeLine.fsh */,
+				0187563514B1AA0500E8CEFB /* ShaderCubeLine.vsh */,
 				0187562B14AF1CA700E8CEFB /* ShaderBlur1.fsh */,
 				0187562C14AF1CA700E8CEFB /* ShaderBlur1.vsh */,
 				0187562714AF0C3A00E8CEFB /* ShaderCubeDepth.fsh */,
@@ -399,7 +431,7 @@
 		018F87BC14A491A5004C9D6F /* assets */ = {
 			isa = PBXGroup;
 			children = (
-				0187561514ADD04300E8CEFB /* mainmap.png */,
+				0187563F14B3174D00E8CEFB /* mainmap.png */,
 				0187560B14ADB4F900E8CEFB /* background.jpg */,
 			);
 			name = assets;
@@ -455,6 +487,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0187563614B1AA0700E8CEFB /* ShaderCubeLine.fsh in Resources */,
+				0187563714B1AA0700E8CEFB /* ShaderCubeLine.vsh in Resources */,
 				0187562D14AF1CA900E8CEFB /* ShaderBlur1.fsh in Resources */,
 				0187562E14AF1CA900E8CEFB /* ShaderBlur1.vsh in Resources */,
 				0187562914AF0C3B00E8CEFB /* ShaderCubeDepth.fsh in Resources */,
@@ -470,7 +504,8 @@
 				018755CE14A8AC0E00E8CEFB /* ShaderCubeMain.fsh in Resources */,
 				018755CF14A8AC0E00E8CEFB /* ShaderCubeMain.vsh in Resources */,
 				0187560D14ADB4F900E8CEFB /* background.jpg in Resources */,
-				0187561614ADD04300E8CEFB /* mainmap.png in Resources */,
+				0187564014B3174D00E8CEFB /* mainmap.png in Resources */,
+				0187564614B31D4800E8CEFB /* ClearView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +552,9 @@
 				0187562014ADD50700E8CEFB /* ColorMenu.mm in Sources */,
 				0187562314AE0D2100E8CEFB /* ColorHolder.mm in Sources */,
 				0187562614AE0FB600E8CEFB /* ColorBtn.mm in Sources */,
+				0187563314B1A6BE00E8CEFB /* PreviewCube.mm in Sources */,
+				0187563E14B3112300E8CEFB /* TogleIcon.mm in Sources */,
+				0187564514B31D4800E8CEFB /* ClearView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
