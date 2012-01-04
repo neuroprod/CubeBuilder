@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:CubeBuilder.xcodeproj">
+      location = "self:CubeConstruct.xcodeproj">
    </FileRef>
 </Workspace>
