@@ -7,7 +7,7 @@
 //
 
 #import "LoadView.h"
-
+#import "SaveDataModel.h"
 @implementation LoadView
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -79,14 +79,14 @@
 {
 //#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 4;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 //#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 1;
+       return [[SaveDataModel getInstance].savedData count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -97,7 +97,7 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
-    
+     cell.textLabel.text =@"test";
     // Configure the cell...
     
     return cell;

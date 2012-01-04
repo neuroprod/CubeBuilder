@@ -7,7 +7,7 @@
 //
 
 #import "ClearView.h"
-
+#include "Model.h"
 @implementation ClearView
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -32,9 +32,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
 }
-
+-(void)viewDidAppear:(BOOL)animated
+{
+    Model * model =Model::getInstance();
+    model->isDirty =true;
+}
 - (void)viewDidUnload
 {
     [super viewDidUnload];
