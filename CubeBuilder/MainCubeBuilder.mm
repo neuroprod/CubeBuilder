@@ -11,9 +11,10 @@
 
 void MainCubeBuilder::setup()
 {
+  
     
     model =Model::getInstance();
-   
+    model->isDirty =true; 
     
     makeCallBack( MainCubeBuilder,becameActive,becameActivecall );
     model->addEventListener("becameActive" ,becameActivecall);
@@ -94,7 +95,7 @@ void MainCubeBuilder::draw ()
      
     //cout << frameCount << endl;
    
-    if (!cubeRenderer->isDirty && !interfaceHandler->isDirty && !backGround->isDirty)return;
+    if (!cubeRenderer->isDirty && !interfaceHandler->isDirty && !backGround->isDirty && !model->isDirty)return;
     
     if (model->renderHit) cubeRenderer->drawIDcubes()  ;
     
@@ -132,7 +133,7 @@ void MainCubeBuilder::draw ()
       
     glDisable  (GL_BLEND); 
     glClearColor(0.0f,0.0f, 0.0f, 0.0f);
-    
+     model->isDirty =false;
 }
 
 
@@ -226,9 +227,6 @@ void MainCubeBuilder::setOrientation(int orientation)
 void MainCubeBuilder::becameActive(npEvent *e)
 {
     
-    int temp = currentorientation;
-    
-    currentorientation  =-100;
-    setOrientation(temp);
+     model->isDirty =true;
 
 }

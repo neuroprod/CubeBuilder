@@ -35,7 +35,7 @@ Camera::Camera()
     
     centerMatrix.setTranslation( currentCenterX,  currentCenterY,  currentCenterZ);
     
-    perspectiveMatrix.makePerspectiveMatrix(60.0,768.0/1024.0,0.1, 1000.0);
+    perspectiveMatrix.makePerspectiveMatrix(60.0,768.0/1024.0,0.1, 200.0);
     
     isDirty =true;
     
@@ -161,7 +161,7 @@ void Camera::setRotate(int lx,int ly)
     
     rotAxis = v2.getCross(v1);
     float rotAngle = v2.dot(v1);
-    objectMatrixTemp.rotate(-rotAngle*4.0, rotAxis.x, rotAxis.y, rotAxis.z);
+    objectMatrixTemp.rotate(-rotAngle*1.0, rotAxis.x, rotAxis.y, rotAxis.z);
     prevX =lx;
     prevY =ly;
     isDirty =true;

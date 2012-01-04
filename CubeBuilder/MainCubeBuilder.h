@@ -53,7 +53,7 @@ public:
     
     Camera * camera;
     Model *model;
-    
+    bool isDirty;
     int frameCount;
 };
 

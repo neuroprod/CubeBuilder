@@ -67,7 +67,7 @@ public:
     CubeHandler * cubeHandler;
     ColorHolder *colorHolder;
     ColorMenu *colorMenu;
-    
+    bool isDirty;
 };
 
 #endif

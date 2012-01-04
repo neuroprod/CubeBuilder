@@ -28,7 +28,7 @@ void npDLRenderer::setup()
     npProgramLoader *pLoader = new npProgramLoader;
     program  =    pLoader->loadProgram ("ShaderFlatDPpng");
    
-   worldMatrix.makeOrtho2DMatrix(0,1024,768,0);
+    worldMatrix.makeOrtho2DMatrix(0,1024,768,0);
     // worldMatrix.makeOrtho2DMatrix(0,0,1024,768);
 
     glBindAttribLocation(program, ATTRIB_VERTEX, "position");
@@ -41,7 +41,7 @@ void npDLRenderer::setup()
   
     uWorldMatrix= glGetUniformLocation(program, "worldMatrix");
 
- glUseProgram(0);
+    glUseProgram(0);
 }
 
 bool  npDLRenderer::update(npDisplayObject * displayObject)

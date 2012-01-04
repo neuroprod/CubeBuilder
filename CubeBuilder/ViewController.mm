@@ -11,6 +11,7 @@
 #import "LoadView.h"
 
 #include "MainCubeBuilder.h"
+#include "SaveDataModel.h"
 #include <iostream>
 #include <vector>
 #include "npTouch.h"
@@ -34,6 +35,7 @@
 
 @property (retain,nonatomic) ClearView *clearView;
 //@property (retain,nonatomic) LoadView *loadView;
+@property (retain,nonatomic) SaveDataModel *saveData;
 
 
 - (void)setupGL;
@@ -44,10 +46,13 @@
 
 @implementation ViewController
 
-@synthesize context = _context;
-@synthesize clearView;
-//@synthesize loadView;
 
+
+@synthesize saveData;
+//@synthesize loadView;
+@synthesize clearView;
+
+@synthesize context = _context;
 - (void)viewDidLoad
 {
    
@@ -64,6 +69,11 @@
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
     view.multipleTouchEnabled =true;
     [self setupGL];
+    
+    saveData= [SaveDataModel getInstance];
+    [saveData initDB];
+    
+    
     main =new MainCubeBuilder();
     main->setup();
     
@@ -71,13 +81,34 @@
     
 
     
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setOverView:) name:@"setOverView" object:nil];
+ [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideOverView:) name:@"hideOverView" object:nil];
     
-  // [self showView:0];
+}
+
+-(void )hideOverView:(NSNotification *) notification
+{
+  if (self.clearView.view.superview  ){
+  
+        [self.clearView.view removeFromSuperview];
+        //[self.clearView release];
+        //self.clearView =NULL;
+    }
+    
+ 
+
+    
+}
+-(void )setOverView:(NSNotification *) notification
+{
+    NSNumber *data  =notification.object;
+    
+    [self showView:[data intValue ]];
     
 }
 -(void) showView:(NSInteger)viewID
 {
-    if (viewID==0)
+    if (viewID==10)
     {
         if (self.clearView ==NULL){
         ClearView *clearV = [[ClearView alloc] initWithNibName:@"ClearView" bundle:nil];
@@ -92,16 +123,18 @@
     
   else  if (viewID==2)
     {
-       /* if (self.loadView ==NULL){
+      /* NSLog(@"show Load");
+      if (self.loadView ==NULL){
             LoadView *loadV = [[LoadView alloc] initWithNibName:@"LoadView" bundle:nil];
             self.loadView = loadV;
-            loadView.view.frame = CGRectMake(100, 100, 400, 400);
+           //self loadView.view.frame = CGRectMake(100, 100, 400, 400);
             
             [loadV release];
         }
         
         [self.view insertSubview:loadView.view atIndex:0];*/
     }
+    main->isDirty =true;
 
 }
 - (void)viewDidUnload

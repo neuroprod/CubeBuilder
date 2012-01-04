@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0129D50914B326F7003643B6 /* LoadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0129D50714B326F7003643B6 /* LoadView.m */; };
+		011559F114B4964A00CDD8B7 /* iconSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 011559F014B4964A00CDD8B7 /* iconSmall.png */; };
+		0129D50914B326F7003643B6 /* LoadView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0129D50714B326F7003643B6 /* LoadView.mm */; };
 		0129D50A14B326F7003643B6 /* LoadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0129D50814B326F7003643B6 /* LoadView.xib */; };
 		0129D50D14B330AF003643B6 /* Slice9Sprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0129D50C14B330AF003643B6 /* Slice9Sprite.mm */; };
 		0129D51414B36D88003643B6 /* mainmap.png in Resources */ = {isa = PBXBuildFile; fileRef = 0129D51314B36D88003643B6 /* mainmap.png */; };
+		0129D51B14B45E7F003643B6 /* SaveDataModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0129D51A14B45E7F003643B6 /* SaveDataModel.mm */; };
+		0129D51D14B47408003643B6 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0129D51C14B47408003643B6 /* libsqlite3.dylib */; };
 		018755CE14A8AC0E00E8CEFB /* ShaderCubeMain.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 018755CC14A8AC0E00E8CEFB /* ShaderCubeMain.fsh */; };
 		018755CF14A8AC0E00E8CEFB /* ShaderCubeMain.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 018755CD14A8AC0E00E8CEFB /* ShaderCubeMain.vsh */; };
 		018755D614A9B6E100E8CEFB /* ShaderFlatDPpng.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 018755D414A9B6E100E8CEFB /* ShaderFlatDPpng.fsh */; };
@@ -37,7 +40,7 @@
 		0187563614B1AA0700E8CEFB /* ShaderCubeLine.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 0187563414B1AA0500E8CEFB /* ShaderCubeLine.fsh */; };
 		0187563714B1AA0700E8CEFB /* ShaderCubeLine.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 0187563514B1AA0500E8CEFB /* ShaderCubeLine.vsh */; };
 		0187563E14B3112300E8CEFB /* TogleIcon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0187563D14B3112200E8CEFB /* TogleIcon.mm */; };
-		0187564514B31D4800E8CEFB /* ClearView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0187564314B31D4800E8CEFB /* ClearView.m */; };
+		0187564514B31D4800E8CEFB /* ClearView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0187564314B31D4800E8CEFB /* ClearView.mm */; };
 		0187564614B31D4800E8CEFB /* ClearView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0187564414B31D4800E8CEFB /* ClearView.xib */; };
 		018F872314A32DA5004C9D6F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 018F872214A32DA5004C9D6F /* UIKit.framework */; };
 		018F872514A32DA5004C9D6F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 018F872414A32DA5004C9D6F /* Foundation.framework */; };
@@ -77,13 +80,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		011559F014B4964A00CDD8B7 /* iconSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconSmall.png; sourceTree = "<group>"; };
 		0129D50614B326F7003643B6 /* LoadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadView.h; sourceTree = "<group>"; };
-		0129D50714B326F7003643B6 /* LoadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadView.m; sourceTree = "<group>"; };
+		0129D50714B326F7003643B6 /* LoadView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LoadView.mm; sourceTree = "<group>"; };
 		0129D50814B326F7003643B6 /* LoadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadView.xib; sourceTree = "<group>"; };
 		0129D50B14B3309E003643B6 /* Slice9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Slice9Sprite.h; sourceTree = "<group>"; };
 		0129D50C14B330AF003643B6 /* Slice9Sprite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Slice9Sprite.mm; sourceTree = "<group>"; };
 		0129D50E14B34745003643B6 /* OverlayEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayEvent.h; sourceTree = "<group>"; };
 		0129D51314B36D88003643B6 /* mainmap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainmap.png; sourceTree = "<group>"; };
+		0129D51914B45E7F003643B6 /* SaveDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveDataModel.h; sourceTree = "<group>"; };
+		0129D51A14B45E7F003643B6 /* SaveDataModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SaveDataModel.mm; sourceTree = "<group>"; };
+		0129D51C14B47408003643B6 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		018755CA14A8995D00E8CEFB /* cbColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cbColor.h; sourceTree = "<group>"; };
 		018755CB14A8A91600E8CEFB /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		018755CC14A8AC0E00E8CEFB /* ShaderCubeMain.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShaderCubeMain.fsh; sourceTree = "<group>"; };
@@ -125,7 +132,7 @@
 		0187563C14B3110E00E8CEFB /* TogleIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TogleIcon.h; sourceTree = "<group>"; };
 		0187563D14B3112200E8CEFB /* TogleIcon.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TogleIcon.mm; sourceTree = "<group>"; };
 		0187564214B31D4800E8CEFB /* ClearView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClearView.h; sourceTree = "<group>"; };
-		0187564314B31D4800E8CEFB /* ClearView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClearView.m; sourceTree = "<group>"; };
+		0187564314B31D4800E8CEFB /* ClearView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ClearView.mm; sourceTree = "<group>"; };
 		0187564414B31D4800E8CEFB /* ClearView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClearView.xib; sourceTree = "<group>"; };
 		018F871E14A32DA5004C9D6F /* CubeBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CubeBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		018F872214A32DA5004C9D6F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -207,6 +214,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0129D51D14B47408003643B6 /* libsqlite3.dylib in Frameworks */,
 				018F87B314A48630004C9D6F /* QuartzCore.framework in Frameworks */,
 				018F872314A32DA5004C9D6F /* UIKit.framework in Frameworks */,
 				018F872514A32DA5004C9D6F /* Foundation.framework in Frameworks */,
@@ -252,11 +260,13 @@
 			isa = PBXGroup;
 			children = (
 				0187564214B31D4800E8CEFB /* ClearView.h */,
-				0187564314B31D4800E8CEFB /* ClearView.m */,
+				0187564314B31D4800E8CEFB /* ClearView.mm */,
 				0187564414B31D4800E8CEFB /* ClearView.xib */,
 				0129D50614B326F7003643B6 /* LoadView.h */,
-				0129D50714B326F7003643B6 /* LoadView.m */,
+				0129D50714B326F7003643B6 /* LoadView.mm */,
 				0129D50814B326F7003643B6 /* LoadView.xib */,
+				0129D51914B45E7F003643B6 /* SaveDataModel.h */,
+				0129D51A14B45E7F003643B6 /* SaveDataModel.mm */,
 			);
 			name = uikitcrapp;
 			sourceTree = "<group>";
@@ -264,6 +274,8 @@
 		018F871314A32DA5004C9D6F = {
 			isa = PBXGroup;
 			children = (
+				011559F014B4964A00CDD8B7 /* iconSmall.png */,
+				0129D51C14B47408003643B6 /* libsqlite3.dylib */,
 				018F87B214A48630004C9D6F /* QuartzCore.framework */,
 				018F872C14A32DA5004C9D6F /* CubeBuilder */,
 				018F872114A32DA5004C9D6F /* Frameworks */,
@@ -522,6 +534,7 @@
 				0187564614B31D4800E8CEFB /* ClearView.xib in Resources */,
 				0129D50A14B326F7003643B6 /* LoadView.xib in Resources */,
 				0129D51414B36D88003643B6 /* mainmap.png in Resources */,
+				011559F114B4964A00CDD8B7 /* iconSmall.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,9 +583,10 @@
 				0187562614AE0FB600E8CEFB /* ColorBtn.mm in Sources */,
 				0187563314B1A6BE00E8CEFB /* PreviewCube.mm in Sources */,
 				0187563E14B3112300E8CEFB /* TogleIcon.mm in Sources */,
-				0187564514B31D4800E8CEFB /* ClearView.m in Sources */,
-				0129D50914B326F7003643B6 /* LoadView.m in Sources */,
+				0187564514B31D4800E8CEFB /* ClearView.mm in Sources */,
+				0129D50914B326F7003643B6 /* LoadView.mm in Sources */,
 				0129D50D14B330AF003643B6 /* Slice9Sprite.mm in Sources */,
+				0129D51B14B45E7F003643B6 /* SaveDataModel.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -186,7 +186,7 @@ void UIdisplaylist::setOverlay(npEvent *e)
         
     }  
     currentOverLay = type;
-  
+   [[NSNotificationCenter defaultCenter] postNotificationName:@"hideOverView" object:nil ]; 
    if (type == 1)
     {
         tarW =11*44+64;
@@ -257,14 +257,14 @@ void UIdisplaylist::setOverlay(npEvent *e)
 }
 void UIdisplaylist::openOverlayCompleet(npEvent *e)
 {
-   
     if ( currentOverLay  ==1)
     {
         colorHolder.visible  =true;
         colorHolder.isDirty =true;
         
+    }else{
+      [[NSNotificationCenter defaultCenter] postNotificationName:@"setOverView" object:[NSNumber numberWithInt:currentOverLay]]; 
     }
-
 }
 void UIdisplaylist::hideOverlayCompleet(npEvent *e)
 {
@@ -274,6 +274,7 @@ void UIdisplaylist::hideOverlayCompleet(npEvent *e)
 void UIdisplaylist::closeCurrentOverLay()
 {
     // hide overlayView
+    
     if ( currentOverLay  ==1)
     {
        
@@ -282,6 +283,11 @@ void UIdisplaylist::closeCurrentOverLay()
             
        
     
+    }else
+    {
+    
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hideOverView" object:nil ]; 
     }
    menuMenu.setOverlay(-1);
     colorMenu.setOverlay(-1);
