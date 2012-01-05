@@ -24,9 +24,7 @@ static sqlite3_stmt *deleteStmt = nil;
 {
     
     savedData  =[[NSMutableArray alloc]init];
-    [savedData addObject:@"1"];
-     [savedData addObject:@"2"];
-     [savedData addObject:@"3"];
+  
     NSString *docsDir;
     NSArray *dirPaths;
     
@@ -36,7 +34,7 @@ static sqlite3_stmt *deleteStmt = nil;
     docsDir = [dirPaths objectAtIndex:0];
     
     // Build the path to the database file
-    databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent: @"data.db"]];
+    databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent: @"datab.db"]];
     
     NSFileManager *filemgr = [NSFileManager defaultManager];
     
@@ -47,7 +45,7 @@ static sqlite3_stmt *deleteStmt = nil;
         if (sqlite3_open(dbpath, &DB) == SQLITE_OK)
         {
             char *errMsg;
-            const char *sql_stmt = "CREATE TABLE IF NOT EXISTS data_tb(pk INTEGER PRIMARY KEY, name VARCHAR(25),data BLOB,image BLOB)";
+            const char *sql_stmt = "CREATE TABLE IF NOT EXISTS data_tb(pk INTEGER PRIMARY KEY, name VARCHAR(25),data BLOB)";
             
             if (sqlite3_exec(DB, sql_stmt, NULL, NULL, &errMsg) != SQLITE_OK)
             {
@@ -74,7 +72,7 @@ static sqlite3_stmt *deleteStmt = nil;
     {
         
         
-        const char *stmt = "SELECT pk, name, data,image FROM data_tb";
+        const char *stmt = "SELECT pk, name FROM data_tb";
         
         if (sqlite3_prepare_v2(DB, stmt, -1, &statement, NULL) == SQLITE_OK)
         {
@@ -82,27 +80,25 @@ static sqlite3_stmt *deleteStmt = nil;
             {
                 NSInteger primaryKey = sqlite3_column_int(statement, 0);
                 NSString *name = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 1)];
-                const void *ptr = sqlite3_column_blob(statement, 2);
+                NSNumber* n =  [NSNumber numberWithInt:primaryKey];
+               /* const void *ptr = sqlite3_column_blob(statement, 2);
                 int size = sqlite3_column_bytes(statement, 2);
                 NSData * data = [[NSData alloc] initWithBytes:ptr length:size];
-                NSArray *d =(NSArray *)[NSKeyedUnarchiver unarchiveObjectWithData:data ];
+                NSArray *dataCubes =(NSArray *)[NSKeyedUnarchiver unarchiveObjectWithData:data ];
                 
-                
-                
-                
+                const void *ptr2 = sqlite3_column_blob(statement, 3);
+                int size2 = sqlite3_column_bytes(statement, 3);
+                NSData * dataImage = [[NSData alloc] initWithBytes:ptr2 length:size2];
+*/
+               // NSLog(@"found stuff");
+                [savedData addObject:n ];
+                /*
                 
                 const void *ptr2 = sqlite3_column_blob(statement, 3);
                 int size2 = sqlite3_column_bytes(statement, 3);
                 NSData * data2 = [[NSData alloc] initWithBytes:ptr2 length:size2];
-                NSArray *songs_arr =(NSArray *)[NSKeyedUnarchiver unarchiveObjectWithData:data2 ];
-                //  NSLog(@"The content of arry is%@",songs_arr); 
-                
-               /* SavedCar *car  =[[SavedCar alloc]init];
-                car.teamName =name;
-                car.teamData =d;
-                car.primaryKey = primaryKey;
-                car.songData = songs_arr;
-                [savedData addObject:car];*/
+                NSArray *songs_arr =(NSArray *)[NSKeyedUnarchiver unarchiveObjectWithData:data2 ];*/
+              
             } 
             
             
@@ -121,11 +117,11 @@ static sqlite3_stmt *deleteStmt = nil;
     
 }
 
-- (void) saveData 
+- (void) saveData : (NSData * ) imageData cubeData :(NSData * ) cubeData 
 {
     
-/*    
-    NSArray *songData = [NSArray arrayWithObjects:song_arr count:3 ];
+
+
     const char *dbpath = [databasePath UTF8String];
     
     if (sqlite3_open(dbpath, &DB) == SQLITE_OK)
@@ -133,21 +129,20 @@ static sqlite3_stmt *deleteStmt = nil;
         
         
         
-        NSData *data= [NSKeyedArchiver archivedDataWithRootObject:stickData];
-        NSData *datasong= [NSKeyedArchiver archivedDataWithRootObject:songData];
-        NSString *name =currentTeamName;
+      
+        NSString *name =@"test";
         
         
         
         if(addStmt == nil) {
-            const char *sql = "insert into data_tb(name, data,songdata) Values(?, ?,?)";
+            const char *sql = "insert into data_tb(name, data) Values(?, ?)";
             if(sqlite3_prepare_v2(DB, sql, -1, &addStmt, NULL) != SQLITE_OK)
                 NSAssert1(0, @"Error while creating add statement. '%s'", sqlite3_errmsg(DB));
         }
         
         sqlite3_bind_text(addStmt, 1, [name UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_blob (addStmt, 2, [data bytes], [data length], SQLITE_TRANSIENT);
-        sqlite3_bind_blob (addStmt, 3, [datasong bytes], [datasong length], SQLITE_TRANSIENT);
+        sqlite3_bind_blob (addStmt, 2, [cubeData bytes], [cubeData length], SQLITE_TRANSIENT);
+       
         if(SQLITE_DONE != sqlite3_step(addStmt))
             NSAssert1(0, @"Error while inserting data. '%s'", sqlite3_errmsg(DB));
         else
@@ -158,14 +153,21 @@ static sqlite3_stmt *deleteStmt = nil;
         sqlite3_reset(addStmt);
     }
     
+  
+   int currentFileID =   sqlite3_last_insert_rowid(DB);
+    sqlite3_close(DB);
     
     
+    NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString  *documentsDirectory = [paths objectAtIndex:0];  
     
+    NSString  *filePath = [NSString stringWithFormat:@"%@/%i.png", documentsDirectory,currentFileID];
     
+   
+    bool r = [imageData  writeToFile:filePath atomically:YES];
+
+    if (!r )NSLog(@"image not saved");
     
-    
-    
-    sqlite3_close(DB);*/
     
 }
 

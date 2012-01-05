@@ -9,5 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @interface ClearView : UIViewController
+{
+    
+
+
+
+
+}
+- (IBAction)cancel:(id)sender;
+-(IBAction)clear:(id)sender;
 
 @end

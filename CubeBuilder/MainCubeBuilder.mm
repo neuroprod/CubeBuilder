@@ -80,7 +80,11 @@ void MainCubeBuilder::update ()
         camera->update();
         cubeRenderer->isDirty =true;
     }
-    
+    if (model->useAO)
+    {
+    cubeRenderer->isDirty =true;
+    cubeRenderer->useAO=true;
+    }
     cubeHandler->update();
     if (previewCube->isDirty)cubeRenderer->isDirty =true;
     
@@ -110,19 +114,54 @@ void MainCubeBuilder::draw ()
     
     flatRenderer->start();
     
-    
+    if(!model->takeSnapshot)
+    {
     backGround->prepForFlatDraw();
     flatRenderer->draw();
-    
+    }
     cubeRenderer->prepForFlatDraw();
     flatRenderer->draw();
     
     if (cubeRenderer->useAO){
-    
-    cubeRenderer->prepForAODraw();
-    flatRenderer->draw();
+        model->useAO =false;
+        cubeRenderer->prepForAODraw();
+        flatRenderer->draw();
     }
-    
+    if(model->takeSnapshot)
+    {
+        
+        if (model->pixeldata ){ delete[]  model->pixeldata ;}
+        int vpW;
+        int vpH;
+        if (currentorientation ==1)
+        {
+            vpW = 1024;
+            vpH = 768;
+            
+        }
+        else
+        {
+            vpH = 1024;
+            vpW = 768;
+        }
+        GLubyte *data =new GLubyte[1024* 768*4];
+        
+        glReadPixels(0, 0,  vpW,vpH, GL_RGBA,GL_UNSIGNED_BYTE,data);
+        
+        
+        
+        model->pixelW= vpW;
+        model->pixelH = vpH;
+        model->pixeldata = data;
+        model->takeSnapshot =false;
+        draw ();
+        
+        
+        
+        
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"setOverView" object:[NSNumber numberWithInt:11]]; 
+       return;
+    }
     
     interfaceHandler->prepForFlatDraw();
     flatRenderer->draw();

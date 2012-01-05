@@ -55,6 +55,9 @@ public:
     Model *model;
     bool isDirty;
     int frameCount;
+    
+    int pixelW;
+    int pixelH;
 };
 
 

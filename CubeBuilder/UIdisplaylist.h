@@ -81,7 +81,7 @@ public :
     void hideOverlayCompleet(npEvent *e);
     void closeCurrentState();
     
-    
+    void clearOverLayEvent(npEvent *e);
     void setOrientation(int orientation);
 };
 

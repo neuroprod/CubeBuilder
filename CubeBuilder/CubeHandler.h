@@ -36,7 +36,7 @@ public:
     void clean();
     
     void setColor(int colorid);
- 
+  void clearCubes();  
     cbColor currentColor;
     
     GLfloat vertexData[518400];
@@ -46,6 +46,8 @@ public:
     PreviewCube * previewCube;
     
     bool isDirty;
+    
+    int * getCubeData();
 };
 
 

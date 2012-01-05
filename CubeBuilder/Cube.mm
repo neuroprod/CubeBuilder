@@ -11,6 +11,10 @@
 void Cube::setup(int _index, int posx, int posy,int posz,cbColor _color)
 {
 
+    x = posx;
+    y =posy;
+    z =posz;
+    colorID = _color.colorID;
     //data = new float[288];
     color =_color;
     cubeIndex = _index;
@@ -83,7 +87,7 @@ void Cube::setCubeIndex(int index)
 };
 void  Cube::setCubeColor(cbColor color)
 {
-    
+     colorID = color.colorID;
     for (int i=0;i<288;i+=12)
     {
     

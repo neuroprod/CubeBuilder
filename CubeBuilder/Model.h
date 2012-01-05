@@ -39,7 +39,7 @@ private:
 protected: 
     Model();
 public:
-    
+  
     virtual ~Model();
     static Model* getInstance();
     
@@ -48,9 +48,11 @@ public:
     
     bool renderHit;
     
-
+    void cancelOverlay();
+    void clearCubes();
     void becameActive();
-
+    void prepForSaveShow();
+    
     Camera *camera;
 
     
@@ -67,7 +69,15 @@ public:
     CubeHandler * cubeHandler;
     ColorHolder *colorHolder;
     ColorMenu *colorMenu;
+    
     bool isDirty;
+    bool takeSnapshot;
+    bool useAO;
+    
+    GLubyte *pixeldata;
+    int pixelW;
+    int pixelH;
+    
 };
 
 #endif

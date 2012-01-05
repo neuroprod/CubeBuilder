@@ -1,14 +1,14 @@
 //
-//  LoadView.m
-//  CubeBuilder
+//  HorImageGal.m
+//  CubeConstruct
 //
-//  Created by Kris Temmerman on 03/01/12.
+//  Created by Kris Temmerman on 05/01/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "LoadView.h"
-#import "SaveDataModel.h"
-@implementation LoadView
+#import "HorImageGal.h"
+
+@implementation HorImageGal
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -77,16 +77,16 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//#warning Potentially incomplete method implementation.
+#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 1;
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//#warning Incomplete method implementation.
+#warning Incomplete method implementation.
     // Return the number of rows in the section.
-       return [[SaveDataModel getInstance].savedData count];
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -97,7 +97,7 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
-     cell.textLabel.text =@"test";
+    
     // Configure the cell...
     
     return cell;

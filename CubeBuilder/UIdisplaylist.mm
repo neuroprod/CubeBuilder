@@ -7,12 +7,13 @@
 //
 
 #include "UIdisplaylist.h"
-
+#include "ViewSettings.h"
 void UIdisplaylist::setup()
 {
 
     model =Model::getInstance();
-    
+    makeCallBack( UIdisplaylist,clearOverLayEvent ,clearOverCall );
+    model->addEventListener( "cancelOverlay", clearOverCall );
     
     ImageDataLoader IDloader;
     GLubyte *imagedata;
@@ -196,18 +197,18 @@ void UIdisplaylist::setOverlay(npEvent *e)
     }
     else if (type == 10)
     {
-        tarW =200;
-        tarH =150;
+        tarW =CLEARVIEW_WIDHT+30;
+        tarH =CLEARVIEW_HEIGHT+30;
     
     }else  if (type == 11)
     {
-        tarW =400;
-        tarH =400;
+        tarW =SAVEVIEW_WIDHT+30;
+        tarH =SAVEVIEW_HEIGHT+30;
         
     }else  if (type == 12)
     {
         tarW =1060;
-        tarH =300;
+        tarH =LOADVIEW_HEIGHT +20;
         
     }else  if (type == 13)
     {
@@ -243,7 +244,7 @@ void UIdisplaylist::setOverlay(npEvent *e)
     
     mijnTween.addProperty( &mainInfoBack.width,tarW );
     mijnTween.addProperty( &mainInfoBack.height,tarH );
-      mijnTween.addProperty( &mainInfoBack.alpha,1.0 );
+    mijnTween.addProperty( &mainInfoBack.alpha,1.0 );
   
     
     
@@ -262,7 +263,12 @@ void UIdisplaylist::openOverlayCompleet(npEvent *e)
         colorHolder.visible  =true;
         colorHolder.isDirty =true;
         
-    }else{
+    } if ( currentOverLay  ==11)
+    {
+        model->prepForSaveShow();
+        
+    }
+    else{
       [[NSNotificationCenter defaultCenter] postNotificationName:@"setOverView" object:[NSNumber numberWithInt:currentOverLay]]; 
     }
 }
@@ -270,6 +276,11 @@ void UIdisplaylist::hideOverlayCompleet(npEvent *e)
 {
     mainInfoBack.visible =false;
     mainInfoBack.isDirty =true;
+}
+void UIdisplaylist::clearOverLayEvent(npEvent *e)
+{
+    closeCurrentOverLay();
+
 }
 void UIdisplaylist::closeCurrentOverLay()
 {

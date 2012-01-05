@@ -36,6 +36,10 @@ public:
     
     float    data[288];
     
+    int x;
+    int y;
+    int z;
+    int colorID;
     
 
 };

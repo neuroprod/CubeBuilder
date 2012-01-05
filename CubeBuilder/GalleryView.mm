@@ -1,31 +1,17 @@
 //
-//  ClearView.m
-//  CubeBuilder
+//  GalleryView.m
+//  CubeConstruct
 //
-//  Created by Kris Temmerman on 03/01/12.
+//  Created by Kris Temmerman on 05/01/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "ClearView.h"
+#import "GalleryView.h"
+#import "SaveDataModel.h"
+#import "HorImageGal.h"
+
 #include "Model.h"
-@implementation ClearView
-
-
-- (IBAction)cancel:(id)sender
-{
-    Model::getInstance()->cancelOverlay();
-
-}
--(IBAction)clear:(id)sender
-{
-Model::getInstance()->clearCubes();
-Model::getInstance()->cancelOverlay();
-
-
-
-}
-
-
+@implementation GalleryView
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -46,23 +32,47 @@ Model::getInstance()->cancelOverlay();
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
+
+- (void)loadView
 {
-    [super viewDidLoad];
+    
+    
     
 }
+
+
+
+- (void)viewDidLoad
+{
+ 
+
+    [super viewDidLoad];
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     Model * model =Model::getInstance();
     model->isDirty =true;
     
-   
+   [[SaveDataModel getInstance] getAllData];
+    
+    HorImageGal * gal =[[HorImageGal alloc] init];
+    CGRect frame = self.view.frame;
+    gal.view.transform = CGAffineTransformMakeRotation(M_PI/2.0);
+    gal.view .frame = CGRectMake(0, 0, frame.size.width, frame.size.height);   
+ gal.arr =  [[SaveDataModel getInstance] savedData ];
+    [self.view addSubview:gal.view];
+
+  
+  //  [gal release];
+
 }
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    NSLog(@"unloadscroll");
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

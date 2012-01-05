@@ -100,6 +100,18 @@ void CubeHandler::touchedCube(int cubeIndex,int cubeSide,int touchPhase)
 
 
 }
+
+void CubeHandler::clearCubes()
+{
+    cubes.clear();
+    model->max.set(0, 0,0);
+    model->min.set(0, 0  ,0);
+    addCube(0, 0, 0);
+  
+    model->resolveCenter();
+
+} 
+
 void CubeHandler::addCube(float x, float y, float z)
 {
     Cube *cube =new Cube();
@@ -263,6 +275,22 @@ void CubeHandler::setColor(int colorid)
     cout << "setcolor " << currentColor.colorID;
 }
 
+int * CubeHandler::getCubeData()
+{
+    int size = cubes.size() ;
+    int * data = new int[size *4];
+    for(int i=0;i<size;i++)
+    {
+        int pos  =i*4;
+        data[pos] =cubes[i]->colorID;
+        data[pos+1] =cubes[i]->x;
+        data[pos+2] =cubes[i]->y;
+        data[pos+3] =cubes[i]->z;
+    }
+    return data;
+
+
+}
 
 void CubeHandler::update()
 {

@@ -8,14 +8,15 @@
 
 #import "ViewController.h"
 #import "ClearView.h"
-#import "LoadView.h"
+#import "SaveView.h"
+#import "GalleryView.h"
 
 #include "MainCubeBuilder.h"
 #include "SaveDataModel.h"
 #include <iostream>
 #include <vector>
 #include "npTouch.h"
-
+#include "ViewSettings.h"
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
@@ -24,17 +25,24 @@
 @interface ViewController ()  {
   
     ClearView *clearView;
-  // LoadView *loadView;
+   SaveView *saveView;
+   GalleryView *galView;
+    
+    
+    
+    
     MainCubeBuilder *main ;
     vector <UITouch *> itouches;
     vector <npTouch > ntouches;
-
+    int width2;
+    int height2;
 
 }
 @property (strong, nonatomic) EAGLContext *context;
 
 @property (retain,nonatomic) ClearView *clearView;
-//@property (retain,nonatomic) LoadView *loadView;
+@property (retain,nonatomic) SaveView *saveView;
+@property (retain,nonatomic)  GalleryView *galView;
 @property (retain,nonatomic) SaveDataModel *saveData;
 
 
@@ -49,9 +57,9 @@
 
 
 @synthesize saveData;
-//@synthesize loadView;
+@synthesize saveView;
 @synthesize clearView;
-
+@synthesize galView;
 @synthesize context = _context;
 - (void)viewDidLoad
 {
@@ -91,10 +99,24 @@
   if (self.clearView.view.superview  ){
   
         [self.clearView.view removeFromSuperview];
-        //[self.clearView release];
-        //self.clearView =NULL;
+      [clearView release];
+      clearView=NULL;
+        
     }
-    
+   else if (self.saveView.view.superview  ){
+        
+        [self.saveView.view removeFromSuperview];
+       
+       [saveView release];
+       saveView =NULL;
+        
+   }    else if (self.galView.view.superview  ){
+       
+       [self.galView.view removeFromSuperview];
+       [galView release];
+       galView =NULL;
+       
+   } 
  
 
     
@@ -113,28 +135,43 @@
         if (self.clearView ==NULL){
         ClearView *clearV = [[ClearView alloc] initWithNibName:@"ClearView" bundle:nil];
         self.clearView = clearV;
-        clearView.view.frame = CGRectMake(100, 100, 400, 400);
-     
+      
         [clearV release];
         }
-        
+       clearView.view.frame = CGRectMake(width2-CLEARVIEW_WIDHT/2, height2-CLEARVIEW_HEIGHT/2, CLEARVIEW_WIDHT, CLEARVIEW_HEIGHT);       
         [self.view insertSubview:clearView.view atIndex:0];
     }
     
-  else  if (viewID==2)
+  else  if (viewID==11)
     {
-      /* NSLog(@"show Load");
-      if (self.loadView ==NULL){
-            LoadView *loadV = [[LoadView alloc] initWithNibName:@"LoadView" bundle:nil];
-            self.loadView = loadV;
-           //self loadView.view.frame = CGRectMake(100, 100, 400, 400);
+        if (self.saveView ==NULL){
+            SaveView *clearV = [[SaveView alloc] initWithNibName:@"SaveView" bundle:nil];
+            self.saveView = clearV;
+           // saveView.view.frame = CGRectMake(width2-SAVEVIEW_WIDHT/2, height2-SAVEVIEW_HEIGHT/2, SAVEVIEW_WIDHT, SAVEVIEW_HEIGHT);
             
-            [loadV release];
+            [clearV release];
         }
-        
-        [self.view insertSubview:loadView.view atIndex:0];*/
+          saveView.view.frame = CGRectMake(width2-SAVEVIEW_WIDHT/2, height2-SAVEVIEW_HEIGHT/2, SAVEVIEW_WIDHT, SAVEVIEW_HEIGHT);
+        [self.view insertSubview:saveView.view atIndex:0];
     }
-    main->isDirty =true;
+  else  if (viewID==12)
+  {
+      if (self.galView ==NULL){
+         GalleryView *clearV =  [[ GalleryView alloc] init];
+          clearV.view = [[UIView alloc] initWithFrame:CGRectMake(0, height2-LOADVIEW_HEIGHT/2, width2*2, LOADVIEW_HEIGHT)];
+          
+          self.galView = clearV;
+                  
+          [clearV release];
+      }
+      NSLog(@"setBackGround");
+      
+       
+     galView.view.frame = CGRectMake(0, height2-LOADVIEW_HEIGHT/2, width2*2, LOADVIEW_HEIGHT);
+      [self.view insertSubview:galView.view atIndex:0];
+      
+  }
+   
 
 }
 - (void)viewDidUnload
@@ -165,14 +202,21 @@
     {
         
         main->setOrientation(0);
-        
+        width2 =768/2;
+        height2 =1024/2;
     
     }else
     {
-        
+        width2 =1024/2;
+        height2 =768/2;
        main->setOrientation(1);
     
     }
+    
+    if (self.saveView !=NULL){saveView.view.frame = CGRectMake(width2-SAVEVIEW_WIDHT/2, height2-SAVEVIEW_HEIGHT/2, SAVEVIEW_WIDHT, SAVEVIEW_HEIGHT);}
+     if (self.clearView !=NULL){clearView.view.frame = CGRectMake(width2-CLEARVIEW_WIDHT/2, height2-CLEARVIEW_HEIGHT/2, CLEARVIEW_WIDHT, CLEARVIEW_HEIGHT);}
+    
+    if (self.galView !=NULL){galView.view.frame =    CGRectMake(0, height2-LOADVIEW_HEIGHT/2, width2*2, LOADVIEW_HEIGHT);}
     return YES;
   
 }

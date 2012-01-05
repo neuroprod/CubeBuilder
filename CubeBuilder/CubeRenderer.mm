@@ -380,7 +380,7 @@ void CubeRenderer::setOrientation(int orientation)
     camera->setOrientation(orientation);
     
    
-    if (!useAO)return;
+//if (!useAO)return;
     
     float  uvX ;
     float  uvY ;
@@ -652,7 +652,7 @@ void CubeRenderer::setupAO()
 void CubeRenderer::prepForAODraw()
 {
   glBindTexture(GL_TEXTURE_2D, textureBlur);
-
+    useAO =false;
 }
 
 void CubeRenderer::renderAO()

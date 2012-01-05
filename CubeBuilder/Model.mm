@@ -11,9 +11,14 @@
 
 Model* Model::m_pSingleton = NULL;
 
-Model::Model() { currentState = -1;
+Model::Model() { 
+    
+    currentState = -1;
+    takeSnapshot  =false;
+    pixeldata =NULL;
+    renderHit =true;
+    useAO =false;
 
-   renderHit =true;
 }
 Model::~Model() { }
 
@@ -34,7 +39,28 @@ void Model::setCurrentState(int state )
 
 
 }
+void Model::prepForSaveShow()
+{
+     useAO =true;
+    takeSnapshot =true;
+    
+}
+void Model::clearCubes ()
+{
+    isDirty =true;
+    setColor(24);// red;
+    cubeHandler->clearCubes();
+    
+}
+void Model::cancelOverlay()
+{
 
+    npEvent e;
+    e.name = "cancelOverlay";
+    dispatchEvent(e);
+    cout << "cancelOver";
+
+}
 void Model::becameActive()
 {
 

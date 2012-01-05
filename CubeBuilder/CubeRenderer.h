@@ -109,6 +109,10 @@ public:
     void setupAO();
     void renderAO();
    void prepForAODraw();
+    
+    
+  
+    
 };
 
 #endif
