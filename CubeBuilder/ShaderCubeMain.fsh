@@ -18,9 +18,19 @@ varying highp vec3 eyeVec;
 void main()
 {
     
-   
+    highp float lambertTerm = abs(dot(lightDir,normalVarying ))*0.4+clamp(dot(lightDir2,normalVarying  ),0.0,1.0)*0.9;
+    
+    lambertTerm +=1.0;
+    lambertTerm *=0.5;
+     gl_FragColor =vec4(colorVarying*clamp(lambertTerm,0.0,1.0),1.0);
     
     
+    highp vec3 R = reflect(-lightDir2, normalVarying );
+    highp float p =max(dot(  eyeVec,R ), 0.0);
+    highp float specular = pow (p,2.0);
+     gl_FragColor+=specular*0.3;
+    
+    /*
  
      highp float lambertTerm = clamp(dot(lightDir,normalVarying ),0.0,1.0)*0.8+clamp(dot(lightDir2,normalVarying  ),0.0,1.0)*0.4;
     
@@ -42,5 +52,5 @@ void main()
     
    gl_FragColor+=specular*0.2+specular2*0.3;
 
-    
+    */
 }

@@ -34,10 +34,10 @@ void main()
      colorVarying  = color;
      
      
-     vec3 lightWorld =vec3(-20.0,-20.0,100.0);
-    lightDir = normalize(lightWorld) ;
+     vec4 lightWorld =vec4(85.0,-70.0,100.0,1.0);
+    lightDir = normalize(lightWorld.xyz-worldSpace.xyz) ;
     
-     vec3 lightWorld2 =vec3(50.0,100.0,10.0);
+     vec3 lightWorld2 =vec3(5.0,100.0,300.0);
     lightDir2 = normalize(lightWorld2);
     eyeVec =normalize(-worldSpace.xyz);
 

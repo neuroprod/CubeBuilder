@@ -122,7 +122,7 @@ void FlatRenderer::start(){
     
     
   
-       OpenGLErrorChek::chek(11);
+     //  OpenGLErrorChek::chek(11);
     
 
 }

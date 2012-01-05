@@ -9,7 +9,7 @@
 #ifndef CubeBuilder_BackGround_h
 #define CubeBuilder_BackGround_h
 #include "SettingsCubeBuilder.h"
-
+#include "ofMatrix4x4.h"
 class BackGround
 {
     GLuint fbo;
@@ -19,6 +19,10 @@ class BackGround
     float *renderData;
     GLuint rbuffer;
     
+    GLuint program;
+    GLint uWorldMatrix;
+    ofMatrix4x4 worldMatrix;
+    float * data;
 public:
     
     BackGround(){isDirty=true;};
@@ -26,7 +30,7 @@ public:
     void setColor();
     void renderTick();
     void prepForFlatDraw();
-    
+    void setOrientation(int orientation);
     
     bool isDirty;
 

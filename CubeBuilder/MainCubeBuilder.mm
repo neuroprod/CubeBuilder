@@ -70,7 +70,10 @@ void MainCubeBuilder::setup()
 void MainCubeBuilder::update ()
 {
     frameCount++;
-    if (frameCount==1)model->renderHit =true;
+    if (frameCount==1){
+        model->renderHit =true;
+        backGround->isDirty =true;
+    }
     npTweener::update();
    
     interfaceHandler->renderTick();
@@ -90,7 +93,7 @@ void MainCubeBuilder::update ()
     
     cubeRenderer->renderTick();
     backGround->renderTick();
-    
+     
 }
 
 
@@ -114,11 +117,11 @@ void MainCubeBuilder::draw ()
     
     flatRenderer->start();
     
-    if(!model->takeSnapshot)
-    {
+   // if(!model->takeSnapshot)
+   // {
     backGround->prepForFlatDraw();
     flatRenderer->draw();
-    }
+   // }
     cubeRenderer->prepForFlatDraw();
     flatRenderer->draw();
     
@@ -251,6 +254,7 @@ void MainCubeBuilder::setTouches(vector<npTouch> &touches)
 void MainCubeBuilder::setOrientation(int orientation)
 {
     if (currentorientation ==orientation)return;
+    
     currentorientation =orientation;
     model->renderHit =true;
     
@@ -258,7 +262,7 @@ void MainCubeBuilder::setOrientation(int orientation)
     flatRenderer->setOrientation(currentorientation);
     interfaceHandler->setOrientation(currentorientation);
    
-    
+    backGround->setOrientation(currentorientation);
     
     
 

@@ -151,7 +151,7 @@ void PreviewCube::draw()
     
     
     glUniform4f(uColor,r,g,b,1.0);
-    glLineWidth(4); 
+    glLineWidth(3); 
     
     
     glDrawArrays(GL_LINES, 0, numi/3);
