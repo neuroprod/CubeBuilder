@@ -7,14 +7,21 @@
 //
 
 #import "HorImageGal.h"
-
+#import "ImageCell.h"
 @implementation HorImageGal
+
+@synthesize arr;
+
+
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+     self.tableView.separatorStyle =UITableViewCellSeparatorStyleNone;
+   
     }
     return self;
 }
@@ -33,9 +40,8 @@
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
+      self.clearsSelectionOnViewWillAppear =YES;
+  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
@@ -55,6 +61,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+   //[self.tableView selectRowAtIndexPath: [NSIndexPath indexPathWithIndex:arr.count -1 ] animated:false scrollPosition:UITableViewScrollPositionBottom];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -77,16 +84,16 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
+
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
+
     // Return the number of rows in the section.
-    return 0;
+    return arr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -95,14 +102,24 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[ImageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    // Configure the cell...
+    NSUInteger  row =[indexPath row];
+    
+ NSNumber *s = [arr objectAtIndex:row];
+    
+   [(ImageCell *)cell setData:s.intValue];
+
     
     return cell;
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
+{
+ 
+    
+    return 330;
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
