@@ -16,6 +16,8 @@
 #include "CubeHandler.h"
 #include "ColorHolder.h"
 #include "ColorMenu.h"
+#include "TapBtn.h"
+
 
 #define STATE_ADD 1
 #define STATE_REMOVE 2
@@ -26,10 +28,13 @@
 
 #define STATE_VIEW 21
 #define STATE_MENU 22
+
+
 class CubeHandler;
 class ColorMenu;
 class ColorHolder;
 class Camera;
+
 class Model :public npEventDispatcher
 {
 
@@ -50,6 +55,7 @@ public:
     
     void cancelOverlay();
     void clearCubes();
+    void setLoadData(int *dataCube,int size);
     void becameActive();
     void prepForSaveShow();
     
@@ -78,6 +84,9 @@ public:
     int pixelW;
     int pixelH;
     
+    
+    TapBtn *redoBtn;
+    TapBtn *undoBtn;
 };
 
 #endif

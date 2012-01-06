@@ -45,11 +45,11 @@ void CubeRenderer::setup(){
     int height =1024;
 	
 	
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
     
    
-    glGenRenderbuffers(1, &rbuffer);
-	glBindRenderbuffer(GL_RENDERBUFFER, rbuffer);
+    //glGenRenderbuffers(1, &rbuffer);
+	//glBindRenderbuffer(GL_RENDERBUFFER, rbuffer);
 	//glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
 	
 	glGenFramebuffers(1, &fbo);
@@ -68,14 +68,14 @@ void CubeRenderer::setup(){
     glBindFramebuffer(GL_FRAMEBUFFER, sampleFramebuffer);
     
     
-    
+    //GL_RGBA8_OES
     glGenRenderbuffers(1, &sampleColorRenderbuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, sampleColorRenderbuffer);
     glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, 4, GL_RGBA8_OES, width,height);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER,sampleColorRenderbuffer);
     glGenRenderbuffers(1, &sampleDepthRenderbuffer); 
     glBindRenderbuffer(GL_RENDERBUFFER, sampleDepthRenderbuffer); 
-    glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, 4, GL_DEPTH_COMPONENT16,width, height);
+    glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, 4, GL_DEPTH_COMPONENT24_OES,width, height);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER,sampleDepthRenderbuffer);
     
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -86,16 +86,16 @@ void CubeRenderer::setup(){
     vertexData= new GLfloat[720000];
 
     
-    for (int i=0; i <720000;i++) 
+   /* for (int i=0; i <720000;i++) 
     {
         vertexData[i ] =0;
-    } 
+    }*/ 
         
   //  65535/24 =2500 cubus
     
     indexData =new GLushort[90000];
     
-    int count =0;
+ int count =0;
     for (int i=0; count<90000; i+=4) 
     {
         indexData[count] =i;
@@ -129,7 +129,8 @@ void CubeRenderer::setup(){
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort)*90000,indexData, GL_STATIC_DRAW);
 
-    
+    delete []vertexData;
+    delete []indexData;
    /*glEnableVertexAttribArray(GLKVertexAttribPosition);
     glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 24, BUFFER_OFFSET(0));
     glEnableVertexAttribArray(GLKVertexAttribNormal);
@@ -165,7 +166,7 @@ void CubeRenderer::setup(){
     setupIDCubes();
     
     useAO=false;
-    setupAO();
+   setupAO();
     
 };
 
@@ -429,7 +430,7 @@ void CubeRenderer::setOrientation(int orientation)
     
     
     worldMatrixBlur.makeOrtho2DMatrix(0,w2,h2,0);
-    
+   
     
     data[0] =0 ;
     data[1] =0 ;
@@ -514,10 +515,10 @@ void CubeRenderer::setupAO()
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
     
     
-    glGenRenderbuffers(1, &rbufferDepth);
+   /* glGenRenderbuffers(1, &rbufferDepth);
 	glBindRenderbuffer(GL_RENDERBUFFER, rbufferDepth);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
-	
+	*/
 	glGenFramebuffers(1, &fboDepth);
 	glBindFramebuffer(GL_FRAMEBUFFER, fboDepth);	
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureDepth, 0);
@@ -553,14 +554,14 @@ void CubeRenderer::setupAO()
  
 
 	
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,width2, height2, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA ,width2, height2, 0, GL_RGBA , GL_UNSIGNED_BYTE, NULL);
     
     
-    glGenRenderbuffers(1, &rbufferBlur);
-	glBindRenderbuffer(GL_RENDERBUFFER, rbufferBlur);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width2, height2);
+   // glGenRenderbuffers(1, &rbufferBlur);
+	//glBindRenderbuffer(GL_RENDERBUFFER, rbufferBlur);
+//	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width2, height2);
  
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER,rbufferBlur);
+    //glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER,rbufferBlur);
 	
 	glGenFramebuffers(1, &fboBlur);
 	glBindFramebuffer(GL_FRAMEBUFFER, fboBlur);	

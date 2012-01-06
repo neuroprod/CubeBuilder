@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <sqlite3.h>
-#include <iostream>
+
+#include "Model.h"
 using namespace std;
 @interface SaveDataModel : NSObject
 {
@@ -27,6 +28,7 @@ using namespace std;
 
 - (void) saveData : (NSData * ) imageData cubeData :(NSData * ) cubeData ;
 -(void )getAllData;
+-(void )getCubeData:(int )key;
 -(void) deleteSaved: (int) key;
 -(void)initDB;
 @end

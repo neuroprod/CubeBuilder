@@ -7,9 +7,12 @@
 //
 
 #import "ImageCell.h"
+#import "SaveDataModel.h"
+
 #include <iostream>
 @implementation ImageCell
 @synthesize image;
+@synthesize cubeID;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -26,13 +29,15 @@
 }
 -(void) setData:(NSInteger)dataID
 {
+    
+    cubeID = dataID;
     NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString  *documentsDirectory = [paths objectAtIndex:0];  
       NSString  *filePath = [NSString stringWithFormat:@"%@/%i.png", documentsDirectory,dataID];
     NSData *pngData = [NSData dataWithContentsOfFile:filePath];
     
-    std::cout<<"\n"<< pngData.length << "numdata"<<"\n";
-    
+  // std::cout<<"\n"<< pngData.length << "numdata"<<"\n";
+   // NSLog(@"%@",filePath);
      image.image =  [UIImage imageWithData:pngData];
   
     
@@ -40,10 +45,15 @@
 } 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
+    if(self.selected == selected)return;
     [super setSelected:selected animated:animated];
+
+    
     if (selected)
     {
         image.alpha =0.5;
+        
+        [[SaveDataModel getInstance] getCubeData:cubeID ];
     }
     else
     {

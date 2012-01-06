@@ -78,6 +78,25 @@ void ViewMenu::setup()
     int margin =60;
     int marginS =40;
     
+       
+    
+    
+ 
+    snapShot.setup(15);
+    snapShot.x = startX;
+    addChild(snapShot);
+    makeCallBack(ViewMenu,onSnapShot,callsnap);
+    snapShot.addEventListener(TOUCH_UP_INSIDE , callsnap);
+    
+       startX+=marginS;
+    
+    line2.setSize( 6, 64);
+    line2.setUVauto(128,128,2048,2048);
+    line2.x = startX;
+    addChild( line2); 
+    
+       startX+=marginS;
+    
     fit.setup(8);
     fit.x = startX;
     addChild(fit);
@@ -143,18 +162,7 @@ void ViewMenu::setup()
     startX+=marginS;
 
     
-    line2.setSize( 6, 64);
-    line2.setUVauto(128,128,2048,2048);
-    line2.x = startX;
-    addChild( line2);    
-   
     
-    startX+=marginS;
-    snapShot.setup(15);
-    snapShot.x = startX;
-    addChild(snapShot);
-    makeCallBack(ViewMenu,onSnapShot,callsnap);
-    right.addEventListener(TOUCH_UP_INSIDE , callsnap);
     
     
     
@@ -227,8 +235,14 @@ void ViewMenu::onDownright(npEvent *e){
 }
 
 void ViewMenu::onSnapShot(npEvent *e){
-    // setSelected(false);
-   // model->camera->setView(5);
+
+        cout <<"snapppp";
+        OverlayEvent event;
+        event.name ="setOverlay";
+        event.overlayType =16;
+        
+        dispatchEvent(event);
+   
    
     
 }

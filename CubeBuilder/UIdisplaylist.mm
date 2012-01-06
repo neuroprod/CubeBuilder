@@ -11,6 +11,7 @@
 void UIdisplaylist::setup()
 {
 
+    isOpen =false;
     model =Model::getInstance();
     makeCallBack( UIdisplaylist,clearOverLayEvent ,clearOverCall );
     model->addEventListener( "cancelOverlay", clearOverCall );
@@ -68,7 +69,7 @@ void UIdisplaylist::setup()
     
     
     
-    free(imagedata);
+    delete[] imagedata;
    
     
     
@@ -76,60 +77,73 @@ void UIdisplaylist::setup()
    setUVauto(0,0,STARTMAP_SIZE_H,STARTMAP_SIZE_W);
 
 
+    
     paintBtn.setup(2);
-    addChild(paintBtn);
+   leftContainer.addChild(paintBtn);
     makeCallBack( UIdisplaylist,setPaint,paintCall );
     paintBtn.addEventListener("setState", paintCall);
     
     removeBtn.setup(1);
-    addChild(removeBtn);
+    leftContainer.addChild(removeBtn);
     makeCallBack( UIdisplaylist,setRemove ,removeCall );
     removeBtn.addEventListener("setState", removeCall);
     
     
     addBtn.setup(0);
-    addChild(addBtn);
+    leftContainer.addChild(addBtn);
     makeCallBack( UIdisplaylist,setAdd,addCall );
     addBtn.addEventListener("setState", addCall);
     
     rotateBtn.setup(3);
-    addChild(rotateBtn);
+   leftContainer. addChild(rotateBtn);
     makeCallBack( UIdisplaylist,setRotate,rotateCall );
     rotateBtn.addEventListener("setState", rotateCall);
                             
                             
     moveBtn.setup(4);
-    addChild(moveBtn);
+    leftContainer.addChild(moveBtn);
     makeCallBack( UIdisplaylist,setMove,moveCall );
     moveBtn.addEventListener("setState", moveCall );                      
     
     viewBtn.setup(7);
-    addChild(viewBtn);
+    leftContainer.addChild(viewBtn);
     makeCallBack( UIdisplaylist,setView,viewCall );
     viewBtn.addEventListener( TOUCH_UP_INSIDE, viewCall );   
     
     
     menuBtn.setup(16);
-    addChild(menuBtn);
+    rightContainer.addChild(menuBtn);
     makeCallBack( UIdisplaylist,setMenu ,menuCall );
     menuBtn.addEventListener( TOUCH_UP_INSIDE, menuCall );   
     
     redoBtn.setup(6);
-    addChild(redoBtn);
-    
+    rightContainer.addChild(redoBtn);
+    model->redoBtn =&redoBtn;
+    model->undoBtn = &undoBtn;
     undoBtn.setup(5);
-    addChild(undoBtn);
+    rightContainer.addChild(undoBtn);
     
     
     zoomHolder.setup();
-    addChild(zoomHolder);
+    rightContainer.addChild(zoomHolder);
     
     
-    
+    addChild(leftContainer);
+    addChild(rightContainer);
     
     
     viewMenu.setup();
     addChild(viewMenu);
+    
+    
+    closeOverlay.setSize( 1024, 1024,0,0);
+    closeOverlay.setUV(0,0,0.01,0.01);
+    addChild(closeOverlay);
+    closeOverlay.visible =false;
+    makeCallBack( UIdisplaylist,closeAllOverlays ,overCCall );
+    closeOverlay.addEventListener( TOUCH_UP_INSIDE, overCCall );
+    
+    
     
     colorMenu.setup();
     addChild(colorMenu);
@@ -144,21 +158,18 @@ void UIdisplaylist::setup()
     makeCallBack( UIdisplaylist,setOverlay ,over2Call );
    colorMenu.addEventListener( "setOverlay", over2Call );   
     
+    makeCallBack( UIdisplaylist,setOverlay ,over3Call );
+    viewMenu.addEventListener( "setOverlay", over3Call ); 
+  
     
-
-    
-    
-    
-   
-    
-     mainInfoBack.setSize( 64, 64,-32,-32);
-     mainInfoBack.setUVauto(0,128,2048,2048);
+    mainInfoBack.setSize( 64, 64,-32,-32);
+    mainInfoBack.setUVauto(0,128,2048,2048);
   
     mainInfoBack.x =30;
     mainInfoBack.y =30;
-     mainInfoBack.width =300;
-     mainInfoBack.height=400;
-     mainInfoBack.isDirty =true;
+    mainInfoBack.width =300;
+    mainInfoBack.height=400;
+    mainInfoBack.isDirty =true;
     mainInfoBack.visible =false;
     addChild( mainInfoBack); 
     
@@ -167,12 +178,61 @@ void UIdisplaylist::setup()
     colorHolder.y =200;
     addChild(colorHolder);
     colorHolder.visible =false;    
-    
+    initBtns();
     model->colorHolder = &colorHolder;
-       model->colorMenu = &colorMenu;
+    model->colorMenu = &colorMenu;
+    
+   
+   
+    //setOpen(true,5000);
     
 }
 
+void UIdisplaylist::closeAllOverlays(npEvent *e)
+{
+   // setOpen(true);
+    closeOverlay.visible =false;
+    closeOverlay.isDirty =true;
+    closeCurrentOverLay();
+}
+void UIdisplaylist::setOpen(bool open,float delay )
+{
+   // cout<<"\nsetOpen " << open<<"\n";
+    if (isOpen ==open)return;
+    
+    isOpen =open;
+    
+    
+    int startLeftX  =32+16+8;
+    int startRightX  ;
+   
+    if (orientation ==1)
+    {
+        startRightX  = 1024-startLeftX;
+    } 
+    else
+    {
+        startRightX  = 768-startLeftX;     
+    }
+    if (!isOpen)
+    {
+        
+        startLeftX-=100;
+        startRightX +=100;
+    }  
+        
+    npTween mijnTween;
+    mijnTween.init(&leftContainer,NP_EASE_OUT_BACK,300,delay);
+    mijnTween.addProperty( &leftContainer.x,startLeftX);
+    npTweener::addTween(mijnTween);
+    
+    npTween mijnTween2;
+    mijnTween2.init(&rightContainer,NP_EASE_OUT_BACK,300,delay);
+    mijnTween2.addProperty( &rightContainer.x,startRightX);
+    npTweener::addTween(mijnTween2);
+    
+
+}
 void UIdisplaylist::setOverlay(npEvent *e)
 {
     OverlayEvent * overE = (OverlayEvent *) e; 
@@ -186,6 +246,22 @@ void UIdisplaylist::setOverlay(npEvent *e)
         return;
         
     }  
+    
+   closeOverlay.visible =true;
+    
+    if(type ==14 || type ==16)
+    {
+        
+        model->useAO =true;
+        
+        closeCurrentOverLay();
+        currentOverLay =type;
+        setOpen(false);
+        menuMenu.setSelected(false);
+        viewMenu.setSelected(false);
+        return;
+    }
+    
     currentOverLay = type;
    [[NSNotificationCenter defaultCenter] postNotificationName:@"hideOverView" object:nil ]; 
    if (type == 1)
@@ -199,32 +275,34 @@ void UIdisplaylist::setOverlay(npEvent *e)
     {
         tarW =CLEARVIEW_WIDHT+30;
         tarH =CLEARVIEW_HEIGHT+30;
+           setOpen(false);
     
     }else  if (type == 11)
     {
         tarW =SAVEVIEW_WIDHT+30;
         tarH =SAVEVIEW_HEIGHT+30;
+           setOpen(false);
         
     }else  if (type == 12)
     {
         tarW =1060;
         tarH =LOADVIEW_HEIGHT +20;
+         setOpen(false);
         
     }else  if (type == 13)
     {
         tarW =1060;
-        tarH =300;
+        tarH =LOADVIEW_HEIGHT +20;
         
+         setOpen(false);
     }else  if (type == 14)
     {
-        tarW =1060;
-        tarH =300;
-        
+               
     }else  if (type == 15)
     {
-        tarW =1060;
+        tarW =300;
         tarH =300;
-        
+        setOpen(false);
     }
     
     if (  mainInfoBack.visible)
@@ -255,6 +333,8 @@ void UIdisplaylist::setOverlay(npEvent *e)
     
     menuMenu.setOverlay(currentOverLay);
     colorMenu.setOverlay(currentOverLay);
+    
+   
 }
 void UIdisplaylist::openOverlayCompleet(npEvent *e)
 {
@@ -266,16 +346,18 @@ void UIdisplaylist::openOverlayCompleet(npEvent *e)
     } if ( currentOverLay  ==11)
     {
         model->prepForSaveShow();
-        
+      
     }
     else{
       [[NSNotificationCenter defaultCenter] postNotificationName:@"setOverView" object:[NSNumber numberWithInt:currentOverLay]]; 
+        
     }
 }
 void UIdisplaylist::hideOverlayCompleet(npEvent *e)
 {
     mainInfoBack.visible =false;
     mainInfoBack.isDirty =true;
+    
 }
 void UIdisplaylist::clearOverLayEvent(npEvent *e)
 {
@@ -285,7 +367,7 @@ void UIdisplaylist::clearOverLayEvent(npEvent *e)
 void UIdisplaylist::closeCurrentOverLay()
 {
     // hide overlayView
-    
+    setOpen(true);
     if ( currentOverLay  ==1)
     {
        
@@ -300,6 +382,17 @@ void UIdisplaylist::closeCurrentOverLay()
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"hideOverView" object:nil ]; 
     }
+    cout << "c: "<< currentOverLay<<endl;
+    if(currentOverLay == 14)
+    {
+        menuMenu.setSelected(true);
+    
+    }else if (currentOverLay ==16)
+    {
+    
+        viewMenu.setSelected(true);
+    }
+    
    menuMenu.setOverlay(-1);
     colorMenu.setOverlay(-1);
     npTween mijnTween;
@@ -318,7 +411,7 @@ void UIdisplaylist::closeCurrentOverLay()
 }
 void UIdisplaylist::setPaint(npEvent *e )
 {
-
+ 
     if (paintBtn.isSelected) return;
     closeCurrentState();
     
@@ -351,7 +444,7 @@ void UIdisplaylist::setAdd(npEvent *e )
     float delay =0;
     if (model->currentState == STATE_VIEW)delay=200;
     colorMenu.setSelected(true,delay);
-    
+    cout <<"setColor";
     addBtn.setSelected(true);
     model->setCurrentState(STATE_ADD);
 
@@ -436,16 +529,14 @@ void UIdisplaylist::closeCurrentState()
 
 }
 
-void UIdisplaylist::setOrientation(int orientation)
+void UIdisplaylist::setOrientation(int _orientation)
 {
     
     
-    
-    
-    
-    
+    orientation = _orientation;
+        
     int startLeftX  =32+16+8;
-    int leftSpace  = 64+8;
+   // int leftSpace  = 64+8;
     int startLeftY  ;
     int startRightX  ;
     int centerX;
@@ -470,14 +561,64 @@ void UIdisplaylist::setOrientation(int orientation)
           centerY =1024/2;
         bottom =1024+64;
     }
-
-   mainInfoBack.x =centerX;
+    if (!isOpen)
+    {
+    
+        startLeftX-=100;
+        startRightX +=100;
+    
+    
+    }
+    leftContainer.x = startLeftX;
+    leftContainer.y =startLeftY;
+    leftContainer.isDirty =true;
+    rightContainer.x = startRightX;
+    rightContainer.y =startLeftY;
+    rightContainer.isDirty =true;
+    
+    
+    
+    mainInfoBack.x =centerX;
     mainInfoBack.y =centerY;
     mainInfoBack.isDirty =true;
     
     
     colorHolder.x =centerX;
     colorHolder.y =centerY;
+    
+
+    viewMenu.x= centerX- (viewMenu.w/2.0);
+    viewMenu.setBottom(bottom);
+    
+    
+    colorMenu.x= centerX- (viewMenu.w/2.0);
+    colorMenu.setBottom(bottom);
+    colorMenu.isDirty =true;
+    
+    menuMenu.x= centerX- (menuMenu.w/2.0);
+    menuMenu.isDirty =true;
+    
+}
+
+void UIdisplaylist::initBtns()
+{
+    int startLeftX  =0;
+    int leftSpace  = 64+8;
+    int startLeftY  ;
+    int startRightX  ;
+    int centerX;
+    int centerY;
+    int bottom;
+    //landscape
+  
+        
+        startLeftY  = 0;  
+        startRightX  = 0;
+        centerX =1024/2;
+        centerY =768/2;
+        bottom =768+64;
+       
+   
     
     
     //
@@ -515,7 +656,7 @@ void UIdisplaylist::setOrientation(int orientation)
     viewBtn.x =startLeftX;
     viewBtn.y =startLeftY ;
     viewBtn.isDirty =true;
-       
+    
     
     
     // right;
@@ -535,21 +676,9 @@ void UIdisplaylist::setOrientation(int orientation)
     undoBtn.isDirty =true;
     
     
-     startLeftY += leftSpace +64*1.25;
+    startLeftY += leftSpace +64*1.25;
     zoomHolder.x = startRightX;
     zoomHolder.y = startLeftY;
     zoomHolder.isDirty =true;
-    
-    
-    viewMenu.x= centerX- (viewMenu.w/2.0);
-    viewMenu.setBottom(bottom);
-    
-    
-    colorMenu.x= centerX- (viewMenu.w/2.0);
-    colorMenu.setBottom(bottom);
-    
-    
-    menuMenu.x= centerX- (menuMenu.w/2.0);
-    menuMenu.isDirty =true;
-    
+
 }

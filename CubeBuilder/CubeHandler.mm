@@ -10,9 +10,15 @@
 void CubeHandler::setup()
 {
     currentColor.set(1,0,0);
-      
+    currentColor.colorID =24;
     cubes.clear();
     model = Model::getInstance();
+    
+    makeCallBack( CubeHandler,tryUndo ,undoCall );
+    model->undoBtn->addEventListener( TOUCH_UP_INSIDE, undoCall );   
+    
+    makeCallBack( CubeHandler,tryRedo ,redoCall );
+    model->redoBtn->addEventListener( TOUCH_UP_INSIDE, redoCall );   
     
 }
 void CubeHandler::touchedCube(int cubeIndex,int cubeSide,int touchPhase)
@@ -270,9 +276,9 @@ void CubeHandler::clean()
 
 void CubeHandler::setColor(int colorid)
 {
-    
+    if(colorid != currentColor.colorID)
     currentColor =model->colors[colorid];
-    cout << "setcolor " << currentColor.colorID;
+
 }
 
 int * CubeHandler::getCubeData()
@@ -291,9 +297,47 @@ int * CubeHandler::getCubeData()
 
 
 }
+void CubeHandler::setLoadData(int *dataCube,int size)
+{
+    cubes.clear();
+    model->max.set(-10000, -10000,-10000);
+    model->min.set(10000, 10000  ,10000);
+  
+    
 
+    for (int i=0;i<size/4;i++)
+    {
+        int pos =i*4;
+        setColor(dataCube[pos]);
+        addCube(dataCube[pos+1], dataCube[pos+2], dataCube[pos+3]);
+    
+    }
+    model->resolveCenter();
+}
 void CubeHandler::update()
 {
     
    
+}
+
+
+
+
+
+///
+//
+//
+//
+//
+///
+
+void CubeHandler::tryUndo( npEvent *e)
+{
+    cout << "tryUndo\n";
+
+}
+void CubeHandler::tryRedo( npEvent *e)
+{
+
+cout << "tryURedo\n";
 }

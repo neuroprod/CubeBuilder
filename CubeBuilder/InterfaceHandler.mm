@@ -32,8 +32,8 @@ void InterfaceHandler::setup()
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
     
     
-    glGenRenderbuffers(1, &rbuffer);
-	glBindRenderbuffer(GL_RENDERBUFFER, rbuffer);
+   // glGenRenderbuffers(1, &rbuffer);
+	//glBindRenderbuffer(GL_RENDERBUFFER, rbuffer);
 	//glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
 	
 	glGenFramebuffers(1, &fbo);

@@ -13,6 +13,7 @@
 #include "Cube.h"
 #include "Model.h"
 #include "PreviewCube.h"
+#include "npEvent.h"
 class PreviewCube;
 class Model;
 class CubeHandler
@@ -48,6 +49,12 @@ public:
     bool isDirty;
     
     int * getCubeData();
+    void  setLoadData(int *dataCube,int size);
+    
+    
+    ///
+    void tryUndo( npEvent *e);
+    void tryRedo( npEvent *e);
 };
 
 

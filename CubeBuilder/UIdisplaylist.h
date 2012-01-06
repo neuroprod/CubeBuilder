@@ -36,6 +36,10 @@ class UIdisplaylist: public npBitmapSprite
     Model *model;
     
     
+    npDisplayObject leftContainer;
+    npDisplayObject rightContainer;
+    
+    
     SelectIconBtn addBtn;
     SelectIconBtn removeBtn;
     SelectIconBtn paintBtn;
@@ -48,7 +52,7 @@ class UIdisplaylist: public npBitmapSprite
      TapBtn undoBtn;
     ZoomHolder zoomHolder;
     
-    
+    npBitmapSprite closeOverlay;
     
     ViewMenu viewMenu;
     ColorMenu colorMenu;
@@ -59,8 +63,9 @@ class UIdisplaylist: public npBitmapSprite
     Slice9Sprite mainInfoBack;
     
 public :
-    
+    int orientation;
     int  currentOverLay ;
+    int oldType;
     void closeCurrentOverLay();
     
     UIdisplaylist(){};
@@ -83,6 +88,11 @@ public :
     
     void clearOverLayEvent(npEvent *e);
     void setOrientation(int orientation);
+    
+    void initBtns();
+    bool isOpen ;
+    void setOpen(bool open,float delay =0);
+    void closeAllOverlays(npEvent *e);
 };
 
 

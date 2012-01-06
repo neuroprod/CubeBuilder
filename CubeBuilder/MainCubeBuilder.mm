@@ -16,6 +16,10 @@ void MainCubeBuilder::setup()
     model =Model::getInstance();
     model->isDirty =true; 
     
+    
+    interfaceHandler =new InterfaceHandler();
+    interfaceHandler->setup();
+    
     makeCallBack( MainCubeBuilder,becameActive,becameActivecall );
     model->addEventListener("becameActive" ,becameActivecall);
     
@@ -46,8 +50,7 @@ void MainCubeBuilder::setup()
     
     cubeHandler->previewCube =previewCube;
   
-    interfaceHandler =new InterfaceHandler();
-    interfaceHandler->setup();
+  
         
     backGround  =new BackGround();
     backGround->setup();
@@ -55,6 +58,9 @@ void MainCubeBuilder::setup()
     
     
     model->setColor(24);
+    
+    
+   
     
     glClearColor(0.0f,0.0f, 0.0f, 0.0f);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -73,6 +79,15 @@ void MainCubeBuilder::update ()
     if (frameCount==1){
         model->renderHit =true;
         backGround->isDirty =true;
+        
+      
+    }
+    if (frameCount==6){
+       
+        
+        npEvent *e;
+        interfaceHandler->display.setAdd(e );
+        interfaceHandler->display.setOpen(true);
     }
     npTweener::update();
    

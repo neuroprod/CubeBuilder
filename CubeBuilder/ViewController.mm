@@ -74,7 +74,7 @@
     
     GLKView *view = (GLKView *)self.view;
     view.context = self.context;
-    view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
+    view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
     view.multipleTouchEnabled =true;
     [self setupGL];
     

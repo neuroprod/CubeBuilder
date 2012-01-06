@@ -52,6 +52,15 @@ void Model::clearCubes ()
     cubeHandler->clearCubes();
     
 }
+
+void  Model::setLoadData(int *dataCube,int size)
+{
+
+    cubeHandler->setLoadData(dataCube,size);
+    cancelOverlay();
+}
+
+
 void Model::cancelOverlay()
 {
 

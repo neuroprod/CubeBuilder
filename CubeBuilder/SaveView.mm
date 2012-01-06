@@ -29,7 +29,7 @@
         
         
     NSData *img = UIImagePNGRepresentation(self.imageView.image);
-    
+    cout <<"imageDAtaSize" <<img.length;
     NSData *cube= [NSKeyedArchiver archivedDataWithRootObject:array];
   
     

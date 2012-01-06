@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface ImageCell : UITableViewCell
+
+@property (readwrite,assign) int cubeID;
 @property (nonatomic, retain)  UIImageView *image;
 
 -(void) setData:(NSInteger)dataID;

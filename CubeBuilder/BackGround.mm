@@ -31,7 +31,7 @@ void BackGround::setup()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1024,1024, 0, GL_RGBA, GL_UNSIGNED_BYTE, imagedata);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA , 1024,1024, 0, GL_RGBA, GL_UNSIGNED_BYTE, imagedata);
     
     free(imagedata);
     
@@ -51,12 +51,12 @@ void BackGround::setup()
     int height =1024;
 	
 	
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
     
     
-    glGenRenderbuffers(1, &rbuffer);
-	glBindRenderbuffer(GL_RENDERBUFFER, rbuffer);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
+    //glGenRenderbuffers(1, &rbuffer);
+	//glBindRenderbuffer(GL_RENDERBUFFER, rbuffer);
+	//glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
 	
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);	
@@ -109,7 +109,7 @@ void BackGround::renderTick()
     
     glViewport(0, 0, 1024, 1024);
   
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
     
     
     glUseProgram(program);

@@ -23,7 +23,7 @@ class InterfaceHandler
  
     GLuint rbuffer;
     
-    UIdisplaylist display;
+  
     npDLRenderer dlRenderer;
     
     int vpW ;
@@ -31,7 +31,7 @@ class InterfaceHandler
    
 public:
     
-    
+      UIdisplaylist display;
     InterfaceHandler(){isDirty =true;}
     void setup();
     void renderTick();

@@ -17,7 +17,7 @@
 @synthesize databasePath ;
 @synthesize openSavedIndex;
 
-static sqlite3_stmt *addStmt = nil;
+//static sqlite3_stmt *addStmt = nil;
 static sqlite3_stmt *deleteStmt = nil;
 
 -(void)initDB
@@ -109,9 +109,51 @@ static sqlite3_stmt *deleteStmt = nil;
     
     
     
+}
+
+-(void )getCubeData:(int )key
+{
+    NSLog(@"okedoke");
+    //[savedData removeAllObjects];
+    const char *dbpath = [databasePath UTF8String];
+    sqlite3_stmt    *statement;
     
-    
-    
+    if (sqlite3_open(dbpath, &DB) == SQLITE_OK)
+    {
+        
+        
+        const char *stmt = "SELECT data FROM data_tb where pk = ?";
+        
+        if (sqlite3_prepare_v2(DB, stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            sqlite3_bind_int(statement, 1, key);
+
+            if     (sqlite3_step(statement) == SQLITE_ROW)
+            {
+               const void *ptr = sqlite3_column_blob(statement, 0);
+                 int size = sqlite3_column_bytes(statement, 0);
+                 NSData * data = [[NSData alloc] initWithBytes:ptr length:size];
+                 NSArray *dataCubes =(NSArray *)[NSKeyedUnarchiver unarchiveObjectWithData:data ];
+                
+                //[dataCubes objectAtIndex:0];
+                int  * dataCube =new int[[dataCubes count]];
+               for (int i=0; i< [dataCubes count];i++)
+                {
+                    NSNumber *a  =(NSNumber *)[dataCubes objectAtIndex:i ] ;
+                   dataCube [i]= [a intValue];
+                }
+                Model::getInstance()->setLoadData(dataCube,[dataCubes count]);
+               //delete [] dataCube;
+                //[data release];
+                //[dataCubes release];
+                
+            } 
+            
+            
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(DB);
+    }
     
     
     
@@ -123,7 +165,7 @@ static sqlite3_stmt *deleteStmt = nil;
 
 
     const char *dbpath = [databasePath UTF8String];
-    
+   sqlite3_stmt *addStmt = nil;
     if (sqlite3_open(dbpath, &DB) == SQLITE_OK)
     {
         
@@ -151,6 +193,8 @@ static sqlite3_stmt *deleteStmt = nil;
             
             
         sqlite3_reset(addStmt);
+        
+        cout << "savedOK";
     }
     
   
@@ -165,7 +209,8 @@ static sqlite3_stmt *deleteStmt = nil;
     
    
     bool r = [imageData  writeToFile:filePath atomically:YES];
-
+    NSLog(@"%@",filePath);
+    cout << "\n saved"<< r<<" "<< currentFileID <<"\n";
     if (!r )NSLog(@"image not saved");
     
     
