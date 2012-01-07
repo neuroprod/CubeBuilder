@@ -8,18 +8,22 @@
 //
 
 #include "TogleIcon.h"
+#include "SettingsCubeBuilder.h"
 void TogleIcon::setup(int iconID)
 {
     setSize( 64, 64);
-    setUVauto(iconID*64,0,2048,2048);
+    setUVauto(iconID*64,0,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     touchChildren =false;
+    
+        
+   
     
     
     iconSel.setSize( 64, 64);
     
     iconSel.touchEnabled =false;
     
-    iconSel.setUVauto(iconID*64,64,2048,2048);
+    iconSel.setUVauto(iconID*64,64,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     addChild(iconSel);
     iconSel.visible =false;
 

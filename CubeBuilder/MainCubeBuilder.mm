@@ -198,6 +198,64 @@ void MainCubeBuilder::setTouches(vector<npTouch> &touches)
 {
     int currentState  = model->currentState;
     
+    
+    for(int i =0;i<touches.size();i++ )
+    {
+        
+        if(touches[i].phase ==NP_TOUCH_STOP && touches[i].target)
+        {
+            
+          
+                npTouchEvent t;
+                t.name  =TOUCH_UP;
+                t.target = touches[i].target;
+                touches[i].target->dispatchEvent(t );
+                if(t.target->isTouching(touches[i]))
+                {
+                    npTouchEvent ti;
+                    ti.name  =TOUCH_UP_INSIDE;
+                    ti.target = touches[i].target;
+                    touches[i].target->dispatchEvent(ti );
+                    
+                }
+            touches[i].target =NULL;
+        }
+        else{
+            
+            if( !interfaceHandler->checkTouch(touches[i]))
+            {
+               //if(touches[i].target ==NULL)
+               // {
+                    if (currentState<10)
+                    {
+                        if(cubeRenderer->getPoint(touches[i].x,touches[i ].y))
+                        {
+                            cubeHandler->touchedCube(cubeRenderer->currentCubeIndex,cubeRenderer->currentCubeSide,touches[i].phase);
+                            
+                        } else 
+                        {
+                            previewCube->setPos(10000 , -10000,-10000);
+                        } 
+                    }
+                    else  if (currentState<20)
+                    {
+                        
+                        camera->checkTouch(touches[i]);
+                        
+                    }
+                //}
+            }
+            
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+   /* 
     for(int i =0;i<touches.size();i++ )
     {
        
@@ -261,7 +319,7 @@ void MainCubeBuilder::setTouches(vector<npTouch> &touches)
               
         }
     }
-    
+    */
     
 };
 

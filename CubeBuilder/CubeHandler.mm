@@ -9,6 +9,8 @@
 #include "CubeHandler.h"
 void CubeHandler::setup()
 {
+    lockUndo =false;
+    isRedo =false;
     currentColor.set(1,0,0);
     currentColor.colorID =24;
     cubes.clear();
@@ -115,13 +117,25 @@ void CubeHandler::clearCubes()
     addCube(0, 0, 0);
   
     model->resolveCenter();
-
+resetUndo();
 } 
 
 void CubeHandler::addCube(float x, float y, float z)
 {
+    int s =cubes.size();
+    if (s !=0){
+        Cube *cubeT  =cubes[s-1];
+        if (cubeT->x ==x && cubeT->y == y && cubeT->z ==z )
+        {
+    
+            cout << "Mother f**king cube on that plane!!!\n";
+            // only check last cube?? 
+            return;
+        }
+    }
+    
     Cube *cube =new Cube();
-    cube->setup(cubes.size(),x,y,z,currentColor);
+    cube->setup(s ,x,y,z,currentColor);
   
     cubes.push_back(cube );
    
@@ -169,13 +183,33 @@ void CubeHandler::addCube(float x, float y, float z)
     
     isDirty =true;
     model->renderHit =true;
-   
- 
+    UndoObj und;
+    
+    und.index = s;
+    und.colorID = cube->colorID;
+    und.x = cube->x;
+    und.y = cube->y;
+    und.z = cube->z;
+    und.action =0;
+    addToUndo(und);
+   // undoVec.push_back(und );
   
 }
 void CubeHandler::removeCube(int index)
 {
-
+    
+    Cube *cube =cubes[index];
+    
+    UndoObj und;
+    und.index = index;
+    und.colorID = cube->colorID;
+    und.x = cube->x;
+    und.y = cube->y;
+    und.z = cube->z;
+    und.action =1;
+    addToUndo(und);
+    
+    
     int l =cubes.size();
     if (l==1)return;
     if (index+1 == l)
@@ -255,7 +289,22 @@ void CubeHandler::removeCube(int index)
 }
 void CubeHandler::setCubeColor(int index)
 {
+    
+ cout <<"setcubecolor"; 
     Cube *cube =cubes[index];
+    if (currentColor.colorID ==cube->colorID)return;
+    
+    UndoObj und;
+    und.index = index;
+    und.colorID =currentColor.colorID;
+    und.colorIDOld = cube->colorID;
+    und.x = cube->x;
+    und.y = cube->y;
+    und.z = cube->z;
+    und.action =2;
+    addToUndo(und);
+    
+    
     cube->setCubeColor(currentColor);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     
@@ -313,6 +362,7 @@ void CubeHandler::setLoadData(int *dataCube,int size)
     
     }
     model->resolveCenter();
+    resetUndo();
 }
 void CubeHandler::update()
 {
@@ -330,14 +380,198 @@ void CubeHandler::update()
 //
 //
 ///
-
+void CubeHandler::addToUndo(UndoObj und )
+{
+    if (lockUndo)
+    {
+           cout << "addRedo "<< und.action <<"\n";
+        redoVec.push_back(und );
+        model->redoBtn->setEnabled(true);
+    
+    }else{
+        if (cubes.size()==1 && und.action != 2)return;
+        cout << "addUndo "<< und.action <<"\n";
+        undoVec.push_back(und );
+        model->undoBtn->setEnabled(true);
+        
+        
+        
+        if (undoVec.size()>100)undoVec.erase(undoVec.begin());// max 100 undos...
+        
+        if (!isRedo)
+        {
+            if (redoVec.size()!=0){
+            redoVec.clear();
+            model->redoBtn->setEnabled(false);        
+            }
+        }
+    }
+}
 void CubeHandler::tryUndo( npEvent *e)
 {
+    if (undoVec.size()==1)model->undoBtn->setEnabled(false);  
     cout << "tryUndo\n";
+    lockUndo =true;
+    
+    UndoObj und = undoVec[undoVec.size()-1];
+    undoVec.pop_back();
+    //ADD
+    if(und.action ==0)
+    {
+    
+        Cube *cube  =cubes[und.index];
+        
+        if (cube->x ==und.x && cube->y == und.y && cube->z ==und.z )
+        {
+            removeCube(und.index);
+        }
+        else 
+        {
+            int l = cubes.size();
+            int newIndex;
+            for (int i=l-1;i>=0;i --)
+            {
+                
+                Cube *cubeS =cubes[i ];
+                if (cubeS->x ==und.x && cubeS->y == und.y && cubeS->z ==und.z )
+                {
+                    newIndex = i;
+                    break;
+                    
+                }
+            }
+            cout << "\nADDDD WHAS FAIL, But UPDATED?????\n";         
+            removeCube(newIndex);
+        
+        }
+    
+    }else if (und.action ==1)
+    {
+        setColor(und.colorID);
+        addCube(und.x, und.y, und.z);
+    
+    }else if (und.action==2)
+    {
+        
+        Cube *cube  =cubes[und.index];
+        
+        if (cube->x ==und.x && cube->y == und.y && cube->z ==und.z ){
+        
+            setColor(und.colorIDOld);
+            setCubeColor(und.index);
+        }else
+        {
+            setColor(und.colorIDOld);
+            int l = cubes.size();
+            int newIndex;
+            for (int i=l-1;i>=0;i --)
+            {
+            
+                Cube *cubeS =cubes[i ];
+                if (cubeS->x ==und.x && cubeS->y == und.y && cubeS->z ==und.z )
+                {
+                    newIndex = i;
+                    break;
+                
+                }
+            }
+            
+            cout << "\nWHAS FAIL, But UPDATED?????\n";
+            setCubeColor(newIndex);
+        
+        
+        }
+    }
+
+    
+    lockUndo =false;
 
 }
 void CubeHandler::tryRedo( npEvent *e)
 {
+    isRedo =true;
+    if (redoVec.size()==1){model->redoBtn->setEnabled(false);  };
+    cout << "tryRedo\n";
 
-cout << "tryURedo\n";
+    UndoObj und = redoVec[redoVec.size()-1];
+    redoVec.pop_back();
+    //ADD
+    if(und.action ==0)
+    {
+        //if (und.index>cubes.size())
+        Cube *cube  =cubes[und.index];
+        
+        if (cube->x ==und.x && cube->y == und.y && cube->z ==und.z )
+        {
+            removeCube(und.index);
+        }
+        else 
+        {
+            int l = cubes.size();
+            int newIndex;
+            for (int i=l-1;i>=0;i --)
+            {
+                
+                Cube *cubeS =cubes[i ];
+                if (cubeS->x ==und.x && cubeS->y == und.y && cubeS->z ==und.z )
+                {
+                    newIndex = i;
+                    break;
+                    
+                }
+            }
+            cout << "\nADDDD WHAS FAIL, But UPDATED?????\n";         
+            removeCube(newIndex);
+            
+        }
+        
+    }else if (und.action ==1)
+    {
+        setColor(und.colorID);
+        addCube(und.x, und.y, und.z);
+        
+    }else if (und.action==2)
+    {
+        
+        Cube *cube  =cubes[und.index];
+        
+        if (cube->x ==und.x && cube->y == und.y && cube->z ==und.z ){
+            
+            setColor(und.colorIDOld);
+            setCubeColor(und.index);
+        }else
+        {
+            setColor(und.colorIDOld);
+            int l = cubes.size();
+            int newIndex;
+            for (int i=l-1;i>=0;i --)
+            {
+                
+                Cube *cubeS =cubes[i ];
+                if (cubeS->x ==und.x && cubeS->y == und.y && cubeS->z ==und.z )
+                {
+                    newIndex = i;
+                    break;
+                    
+                }
+            }
+            
+            cout << "\nWHAS FAIL, But UPDATED?????\n";
+            setCubeColor(newIndex);
+            
+            
+        }
+    }
+    isRedo= false;    
+   //lockUndo =false;
+
+}
+
+void CubeHandler::resetUndo()
+{
+    model->undoBtn->setEnabled(false);  
+    model->redoBtn->setEnabled(false);  
+    redoVec.clear();
+    undoVec.clear();
+    
 }

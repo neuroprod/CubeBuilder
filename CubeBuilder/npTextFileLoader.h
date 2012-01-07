@@ -40,7 +40,7 @@ public:
         [fileNS release];
         [typeNS release];
         
-
+  [ Pathname release];
         return source;
     
     
@@ -61,12 +61,18 @@ public:
         
        
         
-      delete bufF;
-        delete bufT;
-        
+
         
         const char* source;
         source = [[NSString stringWithContentsOfFile:Pathname encoding:NSUTF8StringEncoding error:nil] UTF8String];
+        
+        delete bufF;
+        delete bufT;
+        [fileNS release];
+        [typeNS release];
+        
+       // [ Pathname release];
+        
         return source;
         
         

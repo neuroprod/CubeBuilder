@@ -52,7 +52,7 @@ void MenuMenu::setup()
     w =512-64;
     
     rollout.setSize( 64, 64,-32,-32);
-    rollout.setUVauto(0,128,2048,2048);
+    rollout.setUVauto(0,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     rollout.width =w;
     addChild(rollout);
     
@@ -71,7 +71,7 @@ void MenuMenu::setup()
     startX+=marginS;
     
     line1.setSize(6, 64);
-    line1.setUVauto(128,128,2048,2048);
+    line1.setUVauto(128,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     line1.x = startX;
     addChild( line1);
     
@@ -94,7 +94,7 @@ void MenuMenu::setup()
     startX+=marginS;
     
     line2.setSize(6, 64);
-    line2.setUVauto(128,128,2048,2048);
+    line2.setUVauto(128,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     line2.x = startX;
     addChild( line2);
     
@@ -108,7 +108,7 @@ void MenuMenu::setup()
     startX+=marginS;
     
     line3.setSize(6, 64);
-    line3.setUVauto(128,128,2048,2048);
+    line3.setUVauto(128,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     line3.x = startX;
     addChild( line3);
     
@@ -124,7 +124,7 @@ void MenuMenu::setup()
     startX+=marginS;
     
     line4.setSize(6, 64);
-    line4.setUVauto(128,128,2048,2048);
+    line4.setUVauto(128,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     line4.x = startX;
     addChild( line4);
     
@@ -215,7 +215,26 @@ void MenuMenu::onDowninfo(npEvent *e){
 
 void MenuMenu::setOverlay(int currentOverLay)
 {
+    remove.setSelected(false);
+    
+    
+    save.setSelected(false);
+    
+    
+    load.setSelected(false);
+    
 
+    
+    galery.setSelected(false);
+   
+    
+    info.setSelected(false);
+    
+    if (currentOverLay==10)   remove.setSelected(true);
+   else  if (currentOverLay==11)   save.setSelected(true);
+     else  if (currentOverLay==12)   load.setSelected(true);
+     else  if (currentOverLay==13)   galery.setSelected(true);
+     else  if (currentOverLay==15)   info.setSelected(true);
 
 }
 

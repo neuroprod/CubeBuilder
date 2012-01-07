@@ -29,7 +29,7 @@ void UIdisplaylist::setup()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, STARTMAP_SIZE_H,STARTMAP_SIZE_W, 0, GL_RGBA, GL_UNSIGNED_BYTE, imagedata);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, STARTMAP_SIZE_W,STARTMAP_SIZE_H, 0, GL_RGBA, GL_UNSIGNED_BYTE, imagedata);
     
     
     
@@ -123,6 +123,8 @@ void UIdisplaylist::setup()
     undoBtn.setup(5);
     rightContainer.addChild(undoBtn);
     
+    undoBtn.setEnabled(false);
+    redoBtn.setEnabled(false);
     
     zoomHolder.setup();
     rightContainer.addChild(zoomHolder);
@@ -163,7 +165,7 @@ void UIdisplaylist::setup()
   
     
     mainInfoBack.setSize( 64, 64,-32,-32);
-    mainInfoBack.setUVauto(0,128,2048,2048);
+    mainInfoBack.setUVauto(0,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
   
     mainInfoBack.x =30;
     mainInfoBack.y =30;
@@ -382,7 +384,7 @@ void UIdisplaylist::closeCurrentOverLay()
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"hideOverView" object:nil ]; 
     }
-    cout << "c: "<< currentOverLay<<endl;
+   
     if(currentOverLay == 14)
     {
         menuMenu.setSelected(true);
@@ -396,14 +398,14 @@ void UIdisplaylist::closeCurrentOverLay()
    menuMenu.setOverlay(-1);
     colorMenu.setOverlay(-1);
     npTween mijnTween;
-    int  tarW  =mainInfoBack.width -100;
-    int tarH = mainInfoBack.height -100;
+    int  tarW  =mainInfoBack.width *0.5;
+    int tarH = mainInfoBack.height *0.5;
     
-    mijnTween.init(&mainInfoBack,NP_EASE_OUT_SINE,150,0);
+    mijnTween.init(&mainInfoBack,NP_EASE_IN_SINE,150,0);
     
     mijnTween.addProperty( &mainInfoBack.width,tarW );
     mijnTween.addProperty( &mainInfoBack.height,tarH );
-    mijnTween.addProperty( &mainInfoBack.alpha,0 );
+    mijnTween.addProperty( &mainInfoBack.alpha,0.5 );
     makeCallBack(UIdisplaylist, hideOverlayCompleet, openComp);
     mijnTween.addEventListener(NP_TWEEN_COMPLETE, openComp);
     npTweener::addTween(mijnTween);

@@ -29,8 +29,8 @@ public:
     npBitmapSprite iconSel;
     
     npBitmapSprite over;
-
-
+    void setEnabled(bool  en);
+    bool isEnabled;
 };
 
 #endif

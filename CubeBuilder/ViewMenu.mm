@@ -64,7 +64,7 @@ void ViewMenu::setup()
     w =512;
     
     rollout.setSize( 64, 64,-32,-32);
-    rollout.setUVauto(0,128,2048,2048);
+    rollout.setUVauto(0,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     rollout.width =w;
     addChild(rollout);
     
@@ -91,7 +91,7 @@ void ViewMenu::setup()
        startX+=marginS;
     
     line2.setSize( 6, 64);
-    line2.setUVauto(128,128,2048,2048);
+    line2.setUVauto(128,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     line2.x = startX;
     addChild( line2); 
     
@@ -105,7 +105,7 @@ void ViewMenu::setup()
     startX+=marginS;
     
     line1.setSize(6, 64);
-    line1.setUVauto(128,128,2048,2048);
+    line1.setUVauto(128,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     line1.x = startX;
     addChild( line1);
     

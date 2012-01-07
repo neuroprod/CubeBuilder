@@ -14,6 +14,7 @@
 #include "Model.h"
 #include "PreviewCube.h"
 #include "npEvent.h"
+#include "UndoObj.h"
 class PreviewCube;
 class Model;
 class CubeHandler
@@ -53,8 +54,15 @@ public:
     
     
     ///
+    void addToUndo(UndoObj und );
     void tryUndo( npEvent *e);
     void tryRedo( npEvent *e);
+    void resetUndo();
+    bool lockUndo;
+    bool isRedo;
+    
+    vector<UndoObj> undoVec;
+    vector<UndoObj> redoVec;
 };
 
 

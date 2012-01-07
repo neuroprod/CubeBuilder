@@ -38,10 +38,17 @@ public:
         pt2Object = _pt2Object;  
         fpt=_fpt; 
     };
-    
+    ~npEventFunctor()
+    {
+  
+    }
   
     virtual void Call( npEvent* event)
-    { (*pt2Object.*fpt)(event);};            
+    { 
+        (*pt2Object.*fpt)(event);
+    
+    
+    };            
 };
 
 

@@ -25,7 +25,7 @@ public:
     
     bool isSelected;
     
-   
+ 
     npBitmapSprite iconSel;
     
    

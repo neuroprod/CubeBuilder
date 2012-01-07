@@ -7,7 +7,7 @@
 //
 
 #include "SelectIconBtn.h"
-
+#include "SettingsCubeBuilder.h"
 #include "npTweener.h"
 
 void SelectIconBtn::setSelected(bool sel )
@@ -35,7 +35,7 @@ void SelectIconBtn::setup(int type)
     touchChildren = false;
     touchEnabled =true;
    setSize( 64, 64);
-    setUVauto(1000,1000,2048,2048);
+    setUVauto(1000,1000,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     //over.setUVauto(1836,0,2048,2048);
     
     
@@ -54,12 +54,12 @@ void SelectIconBtn::setup(int type)
   
     
     rollout.setSize( 64, 64,-32,-32);
-    rollout.setUVauto(0,128,2048,2048);
+    rollout.setUVauto(0,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     rollout.width =32;
     addChild(rollout);
 
     rollover.setSize( 64, 64,-32,-32);
-    rollover.setUVauto(64,128,2048,2048);
+    rollover.setUVauto(64,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
    rollover.visible =false;
       rollover.width =32;
     rollover.isDirty =true;
@@ -67,11 +67,11 @@ void SelectIconBtn::setup(int type)
     
     
     unselected.setSize( 64, 64);
-    unselected.setUVauto(type*64,0,2048,2048);
+    unselected.setUVauto(type*64,0,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     addChild(unselected);
     selected.setSize( 64, 64);
     
-    selected.setUVauto(type*64,64,2048,2048);
+    selected.setUVauto(type*64,64,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     addChild(selected);
     selected.visible =false;
       

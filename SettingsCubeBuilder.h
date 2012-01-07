@@ -22,7 +22,7 @@ using namespace std;
 
 
 
-#define STARTMAP_SIZE_H 2048
+#define STARTMAP_SIZE_H 1024
 #define STARTMAP_SIZE_W 2048
 
 

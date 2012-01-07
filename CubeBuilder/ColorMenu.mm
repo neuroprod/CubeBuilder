@@ -65,7 +65,7 @@ void ColorMenu::setup()
     w =512;
     
     rollout.setSize( 64, 64,-32,-32);
-    rollout.setUVauto(0,128,2048,2048);
+    rollout.setUVauto(0,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     rollout.width =w;
     addChild(rollout);
     

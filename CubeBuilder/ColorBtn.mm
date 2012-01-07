@@ -12,13 +12,13 @@ void ColorBtn::setup()
 {
     model =Model::getInstance();
     select.setSize(64-20, 64-20);
-    select.setUVauto(10, 64*4+10, 2048, 2048);
+    select.setUVauto(10, 64*4+10,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     addChild(select);
     select.visible =false;
     color.setSize(32, 32);
     addChild(color);
     isSelected =false;
-   
+    select.touchEnabled =false;
     makeCallBack(ColorBtn,touchColor,touchColorC);
     color.addEventListener(TOUCH_UP_INSIDE , touchColorC );
     
@@ -28,7 +28,7 @@ void ColorBtn::setColor(cbColor &col )
 {
     if (colorID == col.colorID )return;
     
-    color.setUVauto(col.u  , col.v  , 2048, 2048);
+    color.setUVauto(col.u  , col.v  , STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     color.isDirty =true;
     colorID =col.colorID;
     
@@ -38,7 +38,7 @@ void ColorBtn::setColor(int colID )
     cbColor col= model->colors[colID];
     if (colorID == col.colorID )return;
     
-    color.setUVauto(col.u  , col.v  , 2048, 2048);
+    color.setUVauto(col.u  , col.v  , STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     color.isDirty =true;
     colorID =col.colorID;
     

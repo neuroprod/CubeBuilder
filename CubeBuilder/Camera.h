@@ -50,6 +50,15 @@ class Camera: public npDirty
     
     float slerp;
     
+    
+    
+    int panXStart;
+    int panYStart;
+    float rot;
+    float currentRotX ;
+    float currentRotY;
+    float tempRotY ;
+    float tempRotX; 
 public:
     
      npTouch * touchPointer;

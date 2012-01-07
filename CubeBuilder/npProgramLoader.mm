@@ -30,11 +30,14 @@ GLuint npProgramLoader::loadProgram(string  shader)
     
       
     
-    const GLchar *sourceV =npTextFileLoader::loadChar  (shader,"vsh");
+    const GLchar *sourceV;
+    sourceV=npTextFileLoader::loadChar  (shader,"vsh");
     
     vertShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertShader, 1, &sourceV, NULL);
     glCompileShader(vertShader);
+    
+
     
     
     
@@ -57,7 +60,7 @@ GLuint npProgramLoader::loadProgram(string  shader)
     glShaderSource(fragShader, 1, &sourceF, NULL);
     glCompileShader(fragShader);
     
-    
+        
     
     glGetShaderiv(fragShader, GL_INFO_LOG_LENGTH, &logLength);
     if (logLength > 0)
@@ -75,6 +78,11 @@ GLuint npProgramLoader::loadProgram(string  shader)
     
     glDeleteShader(vertShader);
     glDeleteShader(fragShader);
+    
+    
+  // delete [] sourceF;
+  
+   //  delete [] sourceV;
     
     return program;
     

@@ -52,8 +52,17 @@ void Camera::update()
     if (slerp != -1)
     {
         quatFinal.slerp(slerp,    quatTarget,quatStart);        
-        quatFinal.get(objectMatrixTemp);
-        if(slerp ==0)slerp=-1;
+        quatFinal.get(normalMatrix);
+     
+        if(slerp ==0){slerp=-1;   model->renderHit =true;};
+    }else
+    {
+    
+        normalMatrix.makeIdentityMatrix();
+        normalMatrix.postMultRotate(tempRotY, 1, 0, 0);
+        
+        normalMatrix.preMultRotate(-tempRotX, 0, 1, 0)  ;
+    
     }
    // cout<<"\n\n" << objectMatrixTemp;
     
@@ -61,17 +70,35 @@ void Camera::update()
     zoomMatrix.makeIdentityMatrix();
     zoomMatrix.translate(0.0,0,zoom );
     
-    
+   /*
     centerMatrix.setTranslation( currentCenterX,  currentCenterY,  currentCenterZ);
     
     worldMatrix.makeIdentityMatrix();
      
+ 
     
     normalMatrix.set(objectMatrixTemp);
     
     
     worldMatrix.preMult(zoomMatrix);
     worldMatrix.preMult(objectMatrixTemp);
+    worldMatrix.preMult(centerMatrix);
+    
+    isDirty =false;*/
+    
+    
+    
+    centerMatrix.setTranslation( currentCenterX,  currentCenterY,  currentCenterZ);
+    
+    worldMatrix.makeIdentityMatrix();
+    
+    
+    
+   
+    
+    
+    worldMatrix.preMult(zoomMatrix);
+    worldMatrix.preMult( normalMatrix);
     worldMatrix.preMult(centerMatrix);
     
     isDirty =false;
@@ -87,7 +114,7 @@ void Camera::checkTouch(npTouch &touch)
             if( touch.phase==0)
             {
                          
-                startRotate(touch.x,touch.y);
+              startRotate(touch.x,touch.y);
                 touchPointer =&touch;
 
             }
@@ -96,12 +123,12 @@ void Camera::checkTouch(npTouch &touch)
         {
             if( touch.phase==1)
             {
-                setRotate(touch.x,touch.y);
+              setRotate(touch.x,touch.y);
                  didMove =true;
             }
             if( touch.phase==2)
             {
-                stopRotate(touch.x,touch.y);
+               stopRotate(touch.x,touch.y);
                 touchPointer =NULL;
             }
         }
@@ -152,8 +179,8 @@ void Camera::checkTouch(npTouch &touch)
     }
     
 }
-
-
+/// OLD REAL TRACKBALL-> SUCKS
+/*
 void Camera::setRotate(int lx,int ly)
 {
     v1 = trackBallMapping(lx,ly);
@@ -207,9 +234,50 @@ void Camera::startRotate(int lx,int ly)
     prevY =ly;
    
     
+}*/
+void Camera::setRotate(int lx,int ly)
+{
+    
+    int ofX = panXStart-lx;
+    int ofY = panYStart-ly;
+    tempRotY = currentRotY -(ofY/4.0);
+     tempRotX = currentRotX +(ofX/4.0);
+    // cout<<"\nrot " << tempRotX << " " <<tempRotY<< "\n";
+if(tempRotY<-90) tempRotY=-90;
+    if(tempRotY>90) tempRotY=90;
+   // makeMatrix(tempRotX,tempRotY);
+    
+    isDirty =true;
+    
 }
-
-
+void Camera::stopRotate(int lx,int ly)
+{
+    
+    int ofX = panXStart-lx;
+    int ofY = panYStart-ly;
+    tempRotY = currentRotY -(ofY/4.0);
+    tempRotX = currentRotX +(ofX/4.0);
+    if(tempRotY<-89) tempRotY=-89;
+    if(tempRotY>90) tempRotY=90;
+   // makeMatrix(tempRotX,tempRotY);
+    
+    
+    currentRotX =tempRotX;
+    currentRotY =tempRotY;
+  //  cout << "currentRott" << tempRotX << " " << tempRotY <<"\n";
+    
+    // cout << "stoprotate\n";
+      isDirty =true;
+    
+}
+void Camera::startRotate(int lx,int ly)
+{
+    // cout << "statrtRotaote";
+    panXStart = lx;
+    panYStart =ly;
+    
+}
+ void makeMatrix(int lx,int ly);
 void Camera::setOrientation(int orientation)
 { 
     if (orientation==0)
@@ -233,46 +301,59 @@ void Camera::setOrientation(int orientation)
 
 void Camera::setView(int viewID){
 
-    fit();
+    //fit();
     
     ofMatrix4x4 target;
     
     
     if (viewID ==0)
     {
-        target.makeIdentityMatrix();
+        tempRotX =0;
+        tempRotY =0;
         
     }else  if (viewID ==1)
 
     {
-        target.makeRotationMatrix(180, ofVec3f(0,1,0));
+        tempRotX =180;
+        tempRotY =0;
     
     }
     else  if (viewID ==2)
         
     {
-        target.makeRotationMatrix(90, ofVec3f(1,0,0));
+        tempRotX =0;
+        tempRotY =90;
         
     }
     else  if (viewID ==3)
         
     {
-        target.makeRotationMatrix(-90, ofVec3f(1,0,0));
+        tempRotX =0;
+        tempRotY =-90;
         
     }
     else  if (viewID ==4)
         
     {
-        target.makeRotationMatrix(90, ofVec3f(0,1,0));
+        tempRotX =-90;
+         tempRotY =0;
         
     }
     else  if (viewID ==5)
         
     {
-        target.makeRotationMatrix(-90, ofVec3f(0,1,0));
+          tempRotX =90;
+         tempRotY =0;
         
     }
-    quatStart.set( objectMatrixTemp);
+    currentRotX  =tempRotX;
+    currentRotY =tempRotY;
+   target.makeIdentityMatrix();
+   target.postMultRotate(tempRotY, 1, 0, 0);
+    
+    target.preMultRotate(-tempRotX, 0, 1, 0)  ;
+
+    quatStart.set(normalMatrix);
     quatTarget.set( target);
     
     
@@ -294,21 +375,71 @@ void Camera::setView(int viewID){
 }
 void Camera::fit(){
     
+    float dist = model->min.distance(model->max)*-4;//small;
+    zoomMatrix.makeIdentityMatrix();
+    zoomMatrix.translate(0.0,0,dist );
     
-    float dist = model->min.distance(model->max)*-1.5f; // 1,5 is guess->use sin rule to fix
+    
+    centerMatrix.setTranslation( -model->center.x,  -model->center.x,  -model->center.z);
+    
+    worldMatrix.makeIdentityMatrix();
+    
+    
+    normalMatrix.set(objectMatrixTemp);
+    
+    
+    worldMatrix.preMult(zoomMatrix);
+    worldMatrix.preMult(objectMatrixTemp);
+    worldMatrix.preMult(centerMatrix);
+    
+    
+
+    
+    
+    ofVec4f m = model->min +ofVec4f(-0.5,-0.5,-0.5,0);
+    ofVec4f mpm= worldMatrix.preMult( m);
+    ofVec4f mp= perspectiveMatrix.preMult(  mpm);
+    
+    mp.w =0;
+    mp.normalize();
+    
+    
+    ofVec4f ma = model->max +ofVec4f(+0.5,+0.5,+0.5,0);
+    ofVec4f mapm= worldMatrix.preMult( ma);
+    ofVec4f map= perspectiveMatrix.preMult(  mapm);
+    
+    map.w =0;
+    map.normalize();
+    
+    float yp = min  (abs (map.y),abs(mp.y ) )  ;
+    //  cout << "\n proj"<<map;
+    
+    /*mp.x *= 1024/2;
+    mp.y *=-768/2;
+    mp.x += 1024/2;
+    mp.y +=768/2;*/
+    cout << "--> " <<yp<< endl;
+    float f =sinf  (60.0/180.0*3.1415) * 1.0-yp ;
+    dist *=f;
+    zoom =dist;
+    isDirty =true;
+  
+    
+    return;
+   /* float dist = model->min.distance(model->max)*-1.5f; // 1,5 is guess->use sin rule to fix
     if (dist>-5) dist =-5;
     npTween mijnTween;
     mijnTween.init(this,NP_EASE_OUT_SINE,400,0);
     
     mijnTween.addProperty(&currentCenterX,-model->center.x);
-    mijnTween.addProperty(&currentCenterY,-model->center.y );
-    mijnTween.addProperty(&currentCenterZ,-model->center.z );
+    mijnTween.addProperty(&currentCenterY,-model->center.x);
+    mijnTween.addProperty(&currentCenterZ,-model->center.x );
     mijnTween.addProperty(&zoom,dist  );
     makeCallBack(Camera,setComplete,call );
     mijnTween.addEventListener( NP_TWEEN_COMPLETE , call);
       
     npTweener::addTween(mijnTween);
-didMove =false;
+didMove =false;*/
 
 
 }

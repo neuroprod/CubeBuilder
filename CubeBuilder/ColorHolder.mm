@@ -14,7 +14,7 @@ void ColorHolder::setup()
     model = Model::getInstance();
 
     setSize( 1, 1);
-    setUVauto(0,0,2048,2048);
+    setUVauto(0,0,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
 
     int  posStartX =-11*22 +22;
     int posStartY =-7*22 +22-4;

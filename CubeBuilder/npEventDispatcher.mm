@@ -16,6 +16,7 @@ void npEventDispatcher::addEventListener(string name  ,TnpEventFunctor* functor 
     pair <string , TnpEventFunctor* > myPair (name, functor);
     pairs.push_back( myPair);
     hasEventListeners =true;
+  
 
 }
 
@@ -41,6 +42,6 @@ void npEventDispatcher::dispatchEvent(npEvent &event)
         
         }
     }
-   
+ 
 
 }

@@ -83,7 +83,7 @@ void Slice9Sprite::resetData()
     
     float margin = +21.3333 ;
     float uvw1 = uvWidth/3 ;
-    
+    float uvw11 = uvHeight/3 ;
     
     
     //set data
@@ -112,7 +112,7 @@ void Slice9Sprite::resetData()
     data[13] = p1t.y+margin ;
     data[14] = p1t.z;
     data[15] = uvX ;
-    data[16] = uvY +uvw1;
+    data[16] = uvY +uvw11;
     data[17] = renderalpha;
     
     
@@ -122,7 +122,7 @@ void Slice9Sprite::resetData()
     data[19] = p1t.y+margin ;
     data[20] = p1t.z;
     data[21] =  uvX +uvw1; 
-    data[22] = uvY +uvw1;
+    data[22] = uvY +uvw11;
     data[23] = renderalpha;
     
     
@@ -150,7 +150,7 @@ void Slice9Sprite::resetData()
     data[1+36] =p1t.y+margin ;
     data[2+36] =p1t.z;
     data[3+36] = uvX+uvw1;
-    data[4+36] = uvY+uvw1;
+    data[4+36] = uvY+uvw11;
     data[5+36] = renderalpha;
     
     
@@ -167,7 +167,7 @@ void Slice9Sprite::resetData()
     data[13+36] = p3t.y-margin ;
     data[14+36] = p3t.z;
     data[15+36] = uvX+uvw1;
-    data[16+36] = uvY +uvHeight-uvw1;
+    data[16+36] = uvY +uvHeight-uvw11;
     data[17+36] = renderalpha;
     
     
@@ -178,7 +178,7 @@ void Slice9Sprite::resetData()
     data[20+36] = p4t.z;
     data[21+36] =  uvX+uvWidth-uvw1;
     
-    data[22+36] = uvY +uvHeight -uvw1;
+    data[22+36] = uvY +uvHeight -uvw11;
     data[23+36] = renderalpha;
     
     
@@ -224,7 +224,7 @@ void Slice9Sprite::resetData()
     data[13+pos] = p2t.y+margin ;
     data[14+pos] = p2t.z;
     data[15+pos] = uvX +uvWidth-uvw1;
-    data[16+pos] = uvY+uvw1;
+    data[16+pos] = uvY+uvw11;
     data[17+pos] = renderalpha;
     
     
@@ -235,7 +235,7 @@ void Slice9Sprite::resetData()
     data[20+pos] = p2t.z;
     data[21+pos] =  uvX+uvWidth;
     
-    data[22+pos] = uvY +uvw1;
+    data[22+pos] = uvY +uvw11;
     data[23+pos] = renderalpha;
     
     
@@ -280,7 +280,7 @@ void Slice9Sprite::resetData()
     data[13+pos] = p1t.y+margin ;
     data[14+pos] = p1t.z;
     data[15+pos] = uvX+uvw1 ;
-    data[16+pos] = uvY +uvw1;
+    data[16+pos] = uvY +uvw11;
     data[17+pos] = renderalpha;
     
     
@@ -290,7 +290,7 @@ void Slice9Sprite::resetData()
     data[19+pos] = p2t.y+margin ;
     data[20+pos] = p2t.z;
     data[21+pos] = uvX +uvWidth-uvw1;
-    data[22+pos] = uvY+uvw1;
+    data[22+pos] = uvY+uvw11;
     data[23+pos] = renderalpha;
     
     
@@ -316,7 +316,7 @@ void Slice9Sprite::resetData()
     data[1+pos] =p1t.y+margin ;
     data[2+pos] =p1t.z;
     data[3+pos] = uvX;
-    data[4+pos] = uvY+uvw1;
+    data[4+pos] = uvY+uvw11;
     data[5+pos] = renderalpha;
     
     
@@ -325,7 +325,7 @@ void Slice9Sprite::resetData()
     data[7+pos] =p1t.y +margin;
     data[8+pos] =p2t.z;
     data[9+pos] = uvX+uvw1;
-    data[10+pos] = uvY+uvw1;
+    data[10+pos] = uvY+uvw11;
     data[11+pos] = renderalpha;
     
     
@@ -334,7 +334,7 @@ void Slice9Sprite::resetData()
     data[13+pos] = p3t.y-margin ;
     data[14+pos] = p1t.z;
     data[15+pos] = uvX ;
-    data[16+pos] = uvY+uvHeight- uvw1 ;
+    data[16+pos] = uvY+uvHeight- uvw11 ;
     data[17+pos] = renderalpha;
     
     
@@ -344,7 +344,7 @@ void Slice9Sprite::resetData()
     data[19+pos] = p3t.y-margin ;
     data[20+pos] = p2t.z;
     data[21+pos] = uvX+uvw1 ;
-    data[22+pos] = uvY+uvHeight- uvw1;
+    data[22+pos] = uvY+uvHeight- uvw11;
     data[23+pos] = renderalpha;
     
     
@@ -372,7 +372,7 @@ void Slice9Sprite::resetData()
     data[1+pos] = p3t.y-margin ;
     data[2+pos] = p1t.z;
     data[3+pos] = uvX ;
-    data[4+pos] = uvY+uvHeight- uvw1 ;
+    data[4+pos] = uvY+uvHeight- uvw11 ;
     data[5+pos] = renderalpha;
     
     
@@ -382,7 +382,7 @@ void Slice9Sprite::resetData()
     data[7+pos] = p3t.y-margin ;
     data[8+pos] = p2t.z;
     data[9+pos] = uvX+uvw1 ;
-    data[10+pos] = uvY+uvHeight- uvw1;
+    data[10+pos] = uvY+uvHeight- uvw11;
     data[11+pos] = renderalpha;
     
 
@@ -433,7 +433,7 @@ void Slice9Sprite::resetData()
     data[1+pos] = p3t.y-margin ;
     data[2+pos] = p2t.z;
     data[3+pos] = uvX+uvw1 ;
-    data[4+pos] = uvY+uvHeight- uvw1;
+    data[4+pos] = uvY+uvHeight- uvw11;
     data[5+pos] = renderalpha;
     
     
@@ -443,7 +443,7 @@ void Slice9Sprite::resetData()
     data[7+pos] = p4t.y-margin ;
     data[8+pos] = p2t.z;
     data[9+pos] = uvX+uvWidth -uvw1 ;
-    data[10+pos] = uvY+uvHeight- uvw1;
+    data[10+pos] = uvY+uvHeight- uvw11;
     data[11+pos] = renderalpha;
     
     
@@ -463,7 +463,7 @@ void Slice9Sprite::resetData()
     data[18+pos] = p4t.x-margin ;
     data[19+pos] = p4t.y;
     data[20+pos] = p2t.z;
-    data[21+pos] = uvX+uvHeight -uvw1 ;
+    data[21+pos] = uvX+uvWidth -uvw1 ;
     data[22+pos] = uvY+uvHeight;
     data[23+pos] = renderalpha;
     
@@ -492,7 +492,7 @@ void Slice9Sprite::resetData()
     data[1+pos] = p4t.y-margin ;
     data[2+pos] = p2t.z;
     data[3+pos] = uvX+uvWidth -uvw1 ;
-    data[4+pos] = uvY+uvHeight- uvw1;
+    data[4+pos] = uvY+uvHeight- uvw11;
     data[5+pos] = renderalpha;
     
     
@@ -502,7 +502,7 @@ void Slice9Sprite::resetData()
     data[7+pos] = p4t.y-margin ;
     data[8+pos] = p2t.z;
     data[9+pos] = uvX+uvWidth;
-    data[10+pos] = uvY+uvHeight- uvw1;
+    data[10+pos] = uvY+uvHeight- uvw11;
     data[11+pos] = renderalpha;
     
     
@@ -512,7 +512,7 @@ void Slice9Sprite::resetData()
     data[12+pos] = p4t.x-margin ;
     data[13+pos] = p4t.y;
     data[14+pos] = p2t.z;
-    data[15+pos] = uvX+uvHeight -uvw1 ;
+    data[15+pos] = uvX+uvWidth -uvw1 ;
     data[16+pos] = uvY+uvHeight;
     data[17+pos] = renderalpha;
     
@@ -522,7 +522,7 @@ void Slice9Sprite::resetData()
     data[18+pos] = p4t.x;
     data[19+pos] = p4t.y;
     data[20+pos] = p2t.z;
-    data[21+pos] = uvX+uvHeight ;
+    data[21+pos] = uvX+uvWidth ;
     data[22+pos] = uvY+uvHeight;
     data[23+pos] = renderalpha;
     
@@ -552,7 +552,7 @@ void Slice9Sprite::resetData()
     data[1+pos] = p2t.y+margin ;
     data[2+pos] = p2t.z;
     data[3+pos] = uvX +uvWidth-uvw1;
-    data[4+pos] = uvY+uvw1;
+    data[4+pos] = uvY+uvw11;
     data[5+pos] = renderalpha;
     
     
@@ -563,7 +563,7 @@ void Slice9Sprite::resetData()
     data[8+pos] = p2t.z;
     data[9+pos] =  uvX+uvWidth;
     
-    data[10+pos] = uvY +uvw1;
+    data[10+pos] = uvY +uvw11;
     data[11+pos] = renderalpha;
     
     
@@ -574,7 +574,7 @@ void Slice9Sprite::resetData()
     data[13+pos] = p4t.y-margin ;
     data[14+pos] = p2t.z;
     data[15+pos] = uvX+uvWidth -uvw1 ;
-    data[16+pos] = uvY+uvHeight- uvw1;
+    data[16+pos] = uvY+uvHeight- uvw11;
     data[17+pos] = renderalpha;
     
     
@@ -584,7 +584,7 @@ void Slice9Sprite::resetData()
     data[19+pos] = p4t.y-margin ;
     data[20+pos] = p2t.z;
     data[21+pos] = uvX+uvWidth;
-    data[22+pos] = uvY+uvHeight- uvw1;
+    data[22+pos] = uvY+uvHeight- uvw11;
     data[23+pos] = renderalpha;
     
     

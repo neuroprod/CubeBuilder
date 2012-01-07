@@ -7,30 +7,31 @@
 //
 
 #include "TapBtn.h"
-
+#include "SettingsCubeBuilder.h"
 
 
 void TapBtn::setup(int iconID)
 {
+    isEnabled =true;
     touchChildren =false;
     
     setSize( 64, 64,-32,-32);
-    setUVauto(0,128,2048,2048);
+    setUVauto(0,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     
     
     over.setSize( 64, 64,-32,-32);
-   over.setUVauto(64,128,2048,2048);
+   over.setUVauto(64,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     over.visible =false;
     
     addChild(over); 
     
     
     icon.setSize( 64, 64);
-    icon.setUVauto(iconID*64,0,2048,2048);
+    icon.setUVauto(iconID*64,0,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     addChild(icon );
    
     iconSel.setSize( 64, 64);
-    iconSel.setUVauto(iconID*64,64,2048,2048);
+    iconSel.setUVauto(iconID*64,64,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     addChild(iconSel);
     iconSel.visible =false;
     
@@ -42,8 +43,33 @@ void TapBtn::setup(int iconID)
     
     makeCallBack( TapBtn,onUp,call2 );
     addEventListener(TOUCH_UP , call2);
-
+  
+    
 }
+void TapBtn::setEnabled(bool  en)
+{
+    if (en == isEnabled)return;
+    
+    
+    
+    isEnabled = en;
+    if (isEnabled)
+    {
+    
+        touchEnabled =true;
+        iconSel.visible =false;
+          icon.visible =true;
+        isDirty =true;
+    }else 
+    {
+        touchEnabled =false;
+        iconSel.visible =true;
+        icon.visible =false;
+        isDirty = true;
+    }
+
+};
+
 void TapBtn::setSelected(bool sel )
 {
    
@@ -82,7 +108,7 @@ void TapBtn::onUp(npEvent *e )
   
      if (isSelected) return;
     
-    cout << "up" << isSelected;
+   
     over.visible =false;
     over.isDirty =false;      
     isDirty =true;

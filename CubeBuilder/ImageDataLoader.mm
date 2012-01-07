@@ -17,7 +17,7 @@ GLubyte * ImageDataLoader::loadFile(NSString *file )
         exit(1);
     }
     
- 
+    [file release];
     size_t width = CGImageGetWidth(spriteImage);
     size_t height = CGImageGetHeight(spriteImage);
     
@@ -25,7 +25,7 @@ GLubyte * ImageDataLoader::loadFile(NSString *file )
     
     CGContextRef spriteContext = CGBitmapContextCreate(spriteData, width, height, 8, width*4, 
                                                        CGImageGetColorSpace(spriteImage), kCGImageAlphaPremultipliedLast);    
-    
+ 
     
     CGContextDrawImage(spriteContext, CGRectMake(0, 0, width, height), spriteImage);
     
