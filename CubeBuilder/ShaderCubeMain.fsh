@@ -27,8 +27,8 @@ void main()
     
     highp vec3 R = reflect(-lightDir2, normalVarying );
     highp float p =max(dot(  eyeVec,R ), 0.0);
-    highp float specular = pow (p,2.0);
-     gl_FragColor+=specular*0.3;
+    highp float specular = pow (p,20.0);
+     gl_FragColor+=specular*0.2;
     
     /*
  

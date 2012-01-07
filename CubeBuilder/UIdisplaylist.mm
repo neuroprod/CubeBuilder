@@ -255,12 +255,13 @@ void UIdisplaylist::setOverlay(npEvent *e)
     {
         
         model->useAO =true;
-        
+       
         closeCurrentOverLay();
         currentOverLay =type;
         setOpen(false);
         menuMenu.setSelected(false);
         viewMenu.setSelected(false);
+         model->keepAO =true;
         return;
     }
     
@@ -359,6 +360,7 @@ void UIdisplaylist::hideOverlayCompleet(npEvent *e)
 {
     mainInfoBack.visible =false;
     mainInfoBack.isDirty =true;
+   
     
 }
 void UIdisplaylist::clearOverLayEvent(npEvent *e)
@@ -387,11 +389,12 @@ void UIdisplaylist::closeCurrentOverLay()
    
     if(currentOverLay == 14)
     {
+        model->keepAO =false;
         menuMenu.setSelected(true);
     
     }else if (currentOverLay ==16)
     {
-    
+        model->keepAO =false;
         viewMenu.setSelected(true);
     }
     

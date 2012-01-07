@@ -178,6 +178,10 @@ void ViewMenu::setup()
 void ViewMenu::onDownfit(npEvent *e)
 {
     //setSelected(false);
+    model->camera->fit(false,1);
+    model->camera->fit(false,2);
+    model->camera->fit(false,3);
+  
     model->camera->fit();
     fit.setSelected(false);
 

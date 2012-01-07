@@ -18,7 +18,7 @@ Model::Model() {
     pixeldata =NULL;
     renderHit =true;
     useAO =false;
-
+    keepAO =false;
 }
 Model::~Model() { }
 
@@ -60,9 +60,17 @@ void  Model::setLoadData(int *dataCube,int size)
 {
 
     cubeHandler->setLoadData(dataCube,size);
+    
     cancelOverlay();
-   // camera->fit();
-      camera->reset();
+    
+    resolveCenter();
+    camera->reset();
+    camera->fit(false,1);
+    camera->fit(false,2);
+    camera->fit(false,3);
+    camera->zoom =camera->tempzoom*2.0;
+    camera->fit(true,0);
+      
 }
 
 

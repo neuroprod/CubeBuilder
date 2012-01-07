@@ -49,7 +49,7 @@ class Camera: public npDirty
     ofQuaternion quatFinal;
     
     float slerp;
-    
+    int currentOrientation;
     
     
     int panXStart;
@@ -59,6 +59,12 @@ class Camera: public npDirty
     float currentRotY;
     float tempRotY ;
     float tempRotX; 
+    
+    
+    float minx;
+    float maxx;
+    float miny;
+    float maxy;
 public:
     
      npTouch * touchPointer;
@@ -82,12 +88,14 @@ public:
    
     
     void setView(int viewID);
-    void fit();
+    void fit(bool dotween =true,int lock=0);
     void setComplete(npEvent *e);
     void addjustCenter( ofVec3f adj);
     
     void reset();
   void   setZoomMove(float move);
+    float tempzoom;
+    void project(ofVec4f &vec );
 };
 
 #endif

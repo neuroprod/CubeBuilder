@@ -295,6 +295,7 @@ void Camera::setOrientation(int orientation)
     {
         perspectiveMatrix.makePerspectiveMatrix(45.0,1024.0/768,0.1, 1000.0);        
     }
+    currentOrientation =orientation;
     isDirty =true;
 }
 
@@ -388,78 +389,147 @@ void Camera::reset()
     tempRotX =60;
     currentRotX =60;
     isDirty =true;
+    normalMatrix.makeIdentityMatrix();
+    normalMatrix.postMultRotate(tempRotY, 1, 0, 0);
+    
+    normalMatrix.preMultRotate(-tempRotX, 0, 1, 0)  ;
+
 }
-void Camera::fit(){
-    
-    float dist = model->min.distance(model->max)*-4;//small;
-    zoomMatrix.makeIdentityMatrix();
-    zoomMatrix.translate(0.0,0,dist );
-    
-    
-    centerMatrix.setTranslation( -model->center.x,  -model->center.x,  -model->center.z);
-    
-    worldMatrix.makeIdentityMatrix();
-    
-    
-    normalMatrix.set(objectMatrixTemp);
-    
-    
-    worldMatrix.preMult(zoomMatrix);
-    worldMatrix.preMult(objectMatrixTemp);
-    worldMatrix.preMult(centerMatrix);
-    
+void Camera::fit(bool dotween,int lock){
     
 
+    if(lock==1){
+     tempzoom =zoom;   
+       
+        centerMatrix.setTranslation( -model->center.x,  -model->center.y, -model->center.z);
+         worldMatrix.makeIdentityMatrix();
+        worldMatrix.preMult(zoomMatrix);
+        worldMatrix.preMult( normalMatrix);
+        worldMatrix.preMult(centerMatrix);
+    }
+
+    float w =1.0f;
+    
+    ofVec4f lbb = model->min +ofVec4f(-0.5,-0.5,-0.5,0);
+    ofVec4f rtf = model->max +ofVec4f(+0.5,+0.5,+0.5,0); 
+    
+   
+   
+    
+    lbb.w =w;
+    rtf.w =w;
     
     
-    ofVec4f m = model->min +ofVec4f(-0.5,-0.5,-0.5,0);
-    ofVec4f mpm= worldMatrix.preMult( m);
-    ofVec4f mp= perspectiveMatrix.preMult(  mpm);
+    ofVec4f lbf ;
+    lbf.set(lbb.x, lbb.y, rtf.z, w);
     
-    mp.w =0;
-    mp.normalize();
+    ofVec4f rbf ;
+    rbf.set(rtf.x, lbb.y, rtf.z, w);
+    
+    ofVec4f ltf ;
+    ltf.set(lbb.x, rtf.y, rtf.z, w);
     
     
-    ofVec4f ma = model->max +ofVec4f(+0.5,+0.5,+0.5,0);
-    ofVec4f mapm= worldMatrix.preMult( ma);
-    ofVec4f map= perspectiveMatrix.preMult(  mapm);
+    ofVec4f rtb ;
+    rtb.set(rtf.x, rtf.y, lbb.z, w);
     
-    map.w =0;
-    map.normalize();
+    ofVec4f ltb ;
+    ltb.set(lbb.x, rtf.y, lbb.z, w);
     
-    float yp = min  (abs (map.y),abs(mp.y ) )  ;
-    //  cout << "\n proj"<<map;
+    ofVec4f rbb ;
+    rbb.set(rtf.x, lbb.y, lbb.z, w);
+    maxx =-100000000;
+    minx =100000000;
     
-    /*mp.x *= 1024/2;
-    mp.y *=-768/2;
-    mp.x += 1024/2;
-    mp.y +=768/2;*/
-    cout << "--> " <<yp<< endl;
-    float f =sinf  (60.0/180.0*3.1415) * 1.0-yp ;
-    dist *=f;
-    zoom =dist;
-    isDirty =true;
+    maxy =-100000000;
+    miny =100000000;
+    project(lbb);
+     project(rbb);
+     project(ltb);
+     project(rtb);
+
+    project(lbf);
+    project(rbf);
+    project(ltf);
+    project(rtf);
+    float zoomf ;
+    if (currentOrientation==0){
+        
+        maxy*=0.75;
+         miny*=0.75;
+       
+    
+    }else
+    {
+        maxx*=0.75;
+        minx*=0.75;
+     
+    }
+    float dx = maxx-minx;
+    float dy =maxy-miny;
+    zoomf =sqrt( (dx*dx)+(dy*dy) )/(4.0 * tan(45.0/360.0 *3.1415));
+    tempzoom *=zoomf;
+     
+    if (lock!=0){
+        worldMatrix.makeIdentityMatrix();
+        zoomMatrix.makeIdentityMatrix();
+        zoomMatrix.translate(0.0,0,tempzoom  );
+        worldMatrix.preMult(zoomMatrix);
+        worldMatrix.preMult( normalMatrix);
+        worldMatrix.preMult(centerMatrix);
+        return;
+    }
+    if (!dotween)
+    {
+        currentCenterX =-model->center.x;
+        currentCenterY =-model->center.y;
+        currentCenterZ =-model->center.z;
+        centerMatrix.setTranslation( -model->center.x,  -model->center.y, -model->center.z);
+        zoom  =tempzoom ;
+        isDirty =true;
+    
+    }else
+    {
+        npTween mijnTween;
+        mijnTween.init(this,NP_EASE_OUT_SINE,400,0);
+        
+        mijnTween.addProperty(&currentCenterX,-model->center.x);
+        mijnTween.addProperty(&currentCenterY,-model->center.y);
+        mijnTween.addProperty(&currentCenterZ,-model->center.z );
+        mijnTween.addProperty(&zoom,tempzoom  );
+        makeCallBack(Camera,setComplete,call );
+        mijnTween.addEventListener( NP_TWEEN_COMPLETE , call);
+        
+        npTweener::addTween(mijnTween);
+        didMove =false;
+    
+    
+    }
+   
+
+}
+
+void Camera::project(ofVec4f &vec )
+{
+    ofVec4f mpm= worldMatrix.preMult( vec);
+     vec= perspectiveMatrix.preMult(  mpm);
+    
+    vec.w =0;
+    vec.x/=vec.z;
+    vec.y/=vec.z;
+    
+    
+    if(vec.x<minx)minx =vec.x;
+    if(vec.x>maxx)maxx =vec.x;
+    
+    if(vec.y<miny)miny =vec.y;
+    if(vec.y>maxy)maxy =vec.y;
   
-    
-    return;
-   /* float dist = model->min.distance(model->max)*-1.5f; // 1,5 is guess->use sin rule to fix
-    if (dist>-5) dist =-5;
-    npTween mijnTween;
-    mijnTween.init(this,NP_EASE_OUT_SINE,400,0);
-    
-    mijnTween.addProperty(&currentCenterX,-model->center.x);
-    mijnTween.addProperty(&currentCenterY,-model->center.x);
-    mijnTween.addProperty(&currentCenterZ,-model->center.x );
-    mijnTween.addProperty(&zoom,dist  );
-    makeCallBack(Camera,setComplete,call );
-    mijnTween.addEventListener( NP_TWEEN_COMPLETE , call);
-      
-    npTweener::addTween(mijnTween);
-didMove =false;*/
+  
+   // cout << "\n"<< vec;
 
 
 }
-
 void Camera::addjustCenter( ofVec3f adj)
 {
       

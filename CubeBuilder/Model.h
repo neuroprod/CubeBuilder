@@ -79,7 +79,7 @@ public:
     bool isDirty;
     bool takeSnapshot;
     bool useAO;
-    
+    bool keepAO;
     GLubyte *pixeldata;
     int pixelW;
     int pixelH;

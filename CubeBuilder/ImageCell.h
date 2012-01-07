@@ -12,8 +12,7 @@
 
 @property (readwrite,assign) int cubeID;
 @property (nonatomic, retain)  UIImageView *image;
-@property (nonatomic, retain)  UIButton *deleteBtn;
-@property (nonatomic, retain)  UIButton *openBtn;
+
 
 
 -(void) setData:(NSInteger)dataID;

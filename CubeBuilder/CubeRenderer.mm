@@ -354,7 +354,7 @@ bool CubeRenderer::getPoint(int x, int y )
     
     int g = (int)pixels[pos+1];
     int b = (int)pixels[pos+2];
-    currentCubeIndex = g*256 +b;
+    currentCubeIndex = g*255 +b;
     
 
     return true;

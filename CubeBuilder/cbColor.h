@@ -37,10 +37,10 @@ public:
     }
     void setID(int id)
     {
-    
-        int rint =floor  ((float)id/ 65536);
-        int gint   =floor  ((float)(id-(rint *65536)    )/ 256);
-        int bint   =id -(rint *65536) -(gint *256);
+    //65536
+        int rint =floor  ((float)id/ 65025);
+        int gint   =floor  ((float)(id-(rint *65025)    )/ 255);
+        int bint   =id -(rint *65025) -(gint *255);
         
         r =(float) rint/255.0;
         g =(float) gint/255.0;
