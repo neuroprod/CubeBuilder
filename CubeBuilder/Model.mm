@@ -12,7 +12,7 @@
 Model* Model::m_pSingleton = NULL;
 
 Model::Model() { 
-    
+    currentLoadID =-1;
     currentState = -1;
     takeSnapshot  =false;
     pixeldata =NULL;
@@ -47,9 +47,12 @@ void Model::prepForSaveShow()
 }
 void Model::clearCubes ()
 {
+     currentLoadID =-1;
     isDirty =true;
     setColor(24);// red;
     cubeHandler->clearCubes();
+    camera->zoom = -10;
+    camera->reset();
     
 }
 
@@ -58,6 +61,8 @@ void  Model::setLoadData(int *dataCube,int size)
 
     cubeHandler->setLoadData(dataCube,size);
     cancelOverlay();
+   // camera->fit();
+      camera->reset();
 }
 
 

@@ -16,12 +16,19 @@ Camera::Camera()
     
     model = Model::getInstance();
     
-    objectMatrixTemp.makeIdentityMatrix();
+  /* objectMatrixTemp.makeIdentityMatrix();
     objectMatrixTemp.set(0.8348, 0.322234, -0.446401, 0,
                          -0.063531, 0.861789, 0.503273, 0,
                          0.546874, -0.391774, 0.739894, 0,
                          0, 0, 0, 1);
     
+    */
+    
+    
+    tempRotY=30; 
+   currentRotY =30;
+    tempRotX =60;
+     currentRotX =60;
     
     normalMatrix.makeIdentityMatrix();
     worldMatrix.makeIdentityMatrix();
@@ -372,6 +379,15 @@ void Camera::setView(int viewID){
   
 
 
+}
+void Camera::reset()
+{
+
+    tempRotY=30; 
+    currentRotY =30;
+    tempRotX =60;
+    currentRotX =60;
+    isDirty =true;
 }
 void Camera::fit(){
     

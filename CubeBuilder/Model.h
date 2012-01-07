@@ -83,7 +83,7 @@ public:
     GLubyte *pixeldata;
     int pixelW;
     int pixelH;
-    
+    int currentLoadID;
     
     TapBtn *redoBtn;
     TapBtn *undoBtn;

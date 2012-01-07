@@ -32,9 +32,14 @@
     cout <<"imageDAtaSize" <<img.length;
     NSData *cube= [NSKeyedArchiver archivedDataWithRootObject:array];
   
+    if (Model::getInstance()->currentLoadID ==-1)
+    {
+        [[SaveDataModel getInstance] saveData:img cubeData:cube ];
+    }else
+    {
     
-    [[SaveDataModel getInstance] saveData:img cubeData:cube ];
-    
+      [[SaveDataModel getInstance] saveDataCurrent:img cubeData:cube ];
+    }
     Model::getInstance()->cancelOverlay();
     
     //[[SaveDataModel getInstance] getAllData];
@@ -42,7 +47,22 @@
 }
 -(IBAction)saveAsNew:(id)sender
 {
-
+    int *cubeData =Model::getInstance()->cubeHandler->getCubeData();
+    int size  = Model::getInstance()->cubeHandler->cubes.size()*4;
+    NSMutableArray * array = [[NSMutableArray alloc] initWithCapacity:size];
+    for ( int i = 0 ; i < size; i ++ )
+        [array addObject:[NSNumber numberWithInt:cubeData[i]]];
+    
+    
+    
+    NSData *img = UIImagePNGRepresentation(self.imageView.image);
+    cout <<"imageDAtaSize" <<img.length;
+    NSData *cube= [NSKeyedArchiver archivedDataWithRootObject:array];
+    
+    
+    [[SaveDataModel getInstance] saveData:img cubeData:cube ];
+    
+    Model::getInstance()->cancelOverlay();
 
 
 }
@@ -127,7 +147,15 @@
     
     [imageView setImage:myImage];  
     
+    if ( Model::getInstance()->currentLoadID ==-1)
+    {
+        [saveAsNewBtn setHidden:true];
+    }else
+    {
     
+        [saveAsNewBtn setHidden:false];
+    
+    }
    // delete [] buffer2;
     
    //[myImage release];

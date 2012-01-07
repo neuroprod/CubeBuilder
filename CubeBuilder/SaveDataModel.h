@@ -27,6 +27,7 @@ using namespace std;
 + (SaveDataModel *)getInstance;
 
 - (void) saveData : (NSData * ) imageData cubeData :(NSData * ) cubeData ;
+- (void) saveDataCurrent : (NSData * ) imageData cubeData :(NSData * ) cubeData ;
 -(void )getAllData;
 -(void )getCubeData:(int )key;
 -(void) deleteSaved: (int) key;

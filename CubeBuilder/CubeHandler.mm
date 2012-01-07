@@ -31,7 +31,7 @@ void CubeHandler::touchedCube(int cubeIndex,int cubeSide,int touchPhase)
        
         if (touchPhase == NP_TOUCH_STOP)
         {
-            
+            if(cubeIndex> cubes.size()-1 && cubeIndex<0)return;
              previewCube->setPos(10000 , 10000, 10000);
             //cout << " \ntouchADD" << touchPhase << " "<< cubeSide<<" "<<cubeIndex <<" \n";
             ofVec3f pos   =  cubes[cubeIndex]->pos;
@@ -290,7 +290,7 @@ void CubeHandler::removeCube(int index)
 void CubeHandler::setCubeColor(int index)
 {
     
- cout <<"setcubecolor"; 
+ 
     Cube *cube =cubes[index];
     if (currentColor.colorID ==cube->colorID)return;
     
@@ -384,13 +384,13 @@ void CubeHandler::addToUndo(UndoObj und )
 {
     if (lockUndo)
     {
-           cout << "addRedo "<< und.action <<"\n";
+          
         redoVec.push_back(und );
         model->redoBtn->setEnabled(true);
     
     }else{
         if (cubes.size()==1 && und.action != 2)return;
-        cout << "addUndo "<< und.action <<"\n";
+       
         undoVec.push_back(und );
         model->undoBtn->setEnabled(true);
         
@@ -410,7 +410,6 @@ void CubeHandler::addToUndo(UndoObj und )
 void CubeHandler::tryUndo( npEvent *e)
 {
     if (undoVec.size()==1)model->undoBtn->setEnabled(false);  
-    cout << "tryUndo\n";
     lockUndo =true;
     
     UndoObj und = undoVec[undoVec.size()-1];
@@ -440,7 +439,7 @@ void CubeHandler::tryUndo( npEvent *e)
                     
                 }
             }
-            cout << "\nADDDD WHAS FAIL, But UPDATED?????\n";         
+                
             removeCube(newIndex);
         
         }
@@ -476,7 +475,7 @@ void CubeHandler::tryUndo( npEvent *e)
                 }
             }
             
-            cout << "\nWHAS FAIL, But UPDATED?????\n";
+         
             setCubeColor(newIndex);
         
         
@@ -491,7 +490,7 @@ void CubeHandler::tryRedo( npEvent *e)
 {
     isRedo =true;
     if (redoVec.size()==1){model->redoBtn->setEnabled(false);  };
-    cout << "tryRedo\n";
+  
 
     UndoObj und = redoVec[redoVec.size()-1];
     redoVec.pop_back();

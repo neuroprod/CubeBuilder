@@ -155,15 +155,71 @@ static sqlite3_stmt *deleteStmt = nil;
         sqlite3_close(DB);
     }
     
+     Model::getInstance()->currentLoadID = key ;
+    
+}
+- (void) saveData : (NSData * ) imageData cubeData :(NSData * ) cubeData 
+{
+    
+    
+    
+    const char *dbpath = [databasePath UTF8String];
+    sqlite3_stmt *addStmt = nil;
+    if (sqlite3_open(dbpath, &DB) == SQLITE_OK)
+    {
+        
+        
+        
+        
+        NSString *name =@"test";
+        
+        
+        
+        if(addStmt == nil) {
+            const char *sql = "insert into data_tb(name, data) Values(?, ?)";
+            if(sqlite3_prepare_v2(DB, sql, -1, &addStmt, NULL) != SQLITE_OK)
+                NSAssert1(0, @"Error while creating add statement. '%s'", sqlite3_errmsg(DB));
+        }
+        
+        sqlite3_bind_text(addStmt, 1, [name UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_blob (addStmt, 2, [cubeData bytes], [cubeData length], SQLITE_TRANSIENT);
+        
+        if(SQLITE_DONE != sqlite3_step(addStmt))
+            NSAssert1(0, @"Error while inserting data. '%s'", sqlite3_errmsg(DB));
+        else
+            
+            
+            
+            
+            sqlite3_reset(addStmt);
+        
+        cout << "savedOK";
+    }
+    
+    
+    int currentFileID =   sqlite3_last_insert_rowid(DB);
+    sqlite3_close(DB);
+    Model::getInstance()->currentLoadID = currentFileID ;
+    
+    NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString  *documentsDirectory = [paths objectAtIndex:0];  
+    
+    NSString  *filePath = [NSString stringWithFormat:@"%@/%i.png", documentsDirectory,currentFileID];
+    
+    
+    bool r = [imageData  writeToFile:filePath atomically:YES];
+    NSLog(@"%@",filePath);
+    cout << "\n saved"<< r<<" "<< currentFileID <<"\n";
+    if (!r )NSLog(@"image not saved");
     
     
 }
 
-- (void) saveData : (NSData * ) imageData cubeData :(NSData * ) cubeData 
+- (void) saveDataCurrent: (NSData * ) imageData cubeData :(NSData * ) cubeData 
 {
     
 
-
+  int currentFileID =   Model::getInstance()->currentLoadID;
     const char *dbpath = [databasePath UTF8String];
    sqlite3_stmt *addStmt = nil;
     if (sqlite3_open(dbpath, &DB) == SQLITE_OK)
@@ -177,14 +233,14 @@ static sqlite3_stmt *deleteStmt = nil;
         
         
         if(addStmt == nil) {
-            const char *sql = "insert into data_tb(name, data) Values(?, ?)";
+            const char *sql = "UPDATE data_tb SET name = ?, data =? WHERE pk=?";
             if(sqlite3_prepare_v2(DB, sql, -1, &addStmt, NULL) != SQLITE_OK)
                 NSAssert1(0, @"Error while creating add statement. '%s'", sqlite3_errmsg(DB));
         }
         
         sqlite3_bind_text(addStmt, 1, [name UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_blob (addStmt, 2, [cubeData bytes], [cubeData length], SQLITE_TRANSIENT);
-       
+        sqlite3_bind_int(addStmt,3, currentFileID);
         if(SQLITE_DONE != sqlite3_step(addStmt))
             NSAssert1(0, @"Error while inserting data. '%s'", sqlite3_errmsg(DB));
         else
@@ -198,9 +254,9 @@ static sqlite3_stmt *deleteStmt = nil;
     }
     
   
-   int currentFileID =   sqlite3_last_insert_rowid(DB);
+  
     sqlite3_close(DB);
-    
+   // Model::getInstance()->currentLoadID = currentFileID ;
     
     NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString  *documentsDirectory = [paths objectAtIndex:0];  
@@ -220,7 +276,7 @@ static sqlite3_stmt *deleteStmt = nil;
 -(void) deleteSaved: (int) key
 {
     
-    
+     if( Model::getInstance()->currentLoadID == key)  Model::getInstance()->currentLoadID =-1;
     const char *dbpath = [databasePath UTF8String];
     
     if (sqlite3_open(dbpath, &DB) == SQLITE_OK)
@@ -239,6 +295,9 @@ static sqlite3_stmt *deleteStmt = nil;
             NSAssert1(0, @"Error while deleting. '%s'", sqlite3_errmsg(DB));
         
         sqlite3_reset(deleteStmt);
+        
+        
+        //delete image
         //cout << "\ndeleted:" <<key;
         
     }

@@ -86,7 +86,7 @@ public:
     void setComplete(npEvent *e);
     void addjustCenter( ofVec3f adj);
     
-    
+    void reset();
   void   setZoomMove(float move);
 };
 

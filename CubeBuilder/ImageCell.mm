@@ -13,16 +13,39 @@
 @implementation ImageCell
 @synthesize image;
 @synthesize cubeID;
+
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
             
-       image = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 330, 330)];
-        image.backgroundColor = [UIColor yellowColor]; 
+       image = [[UIImageView alloc] initWithFrame:CGRectMake(7, 5, 310, 310)];
+        
         [self addSubview:image];
-            
+        
+        
+        
+        UIButton *myButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        myButton.frame = CGRectMake(20, 20, 200, 44); // position in the parent view and set the size of the button
+        [myButton setTitle:@"Delete" forState:UIControlStateNormal];
+        // add targets and actions
+        [myButton addTarget:self action:@selector(doDelete:) forControlEvents:UIControlEventTouchUpInside];
+       
+        [self addSubview:myButton];
+        
+        UIButton *myButton2 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        myButton2.frame = CGRectMake(20, 50, 200, 44); // position in the parent view and set the size of the button
+        [myButton2 setTitle:@"Open" forState:UIControlStateNormal];
+        // add targets and actions
+        [myButton2 addTarget:self action:@selector(doOpen:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self addSubview:myButton2];
+        
         self.transform = CGAffineTransformMakeRotation(-M_PI/2.0);
+        
+        
+        
         
     }
     return self;
@@ -43,9 +66,23 @@
     
   
 } 
+
+- (void)doDelete:(id)sender
+{
+
+    [[SaveDataModel getInstance] deleteSaved:cubeID ];
+  //  self.superview.
+
+}
+- (void)doOpen:(id)sender
+{
+    
+   [[SaveDataModel getInstance] getCubeData:cubeID ];
+    
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-    if(self.selected == selected)return;
+    /*if(self.selected == selected)return;
     [super setSelected:selected animated:animated];
 
     
@@ -57,7 +94,7 @@
     }
     else
     {
-      image.alpha =1.0;    }
+      image.alpha =1.0;    }*/
 }
 
 @end
