@@ -148,6 +148,22 @@
     // then make the uiimage from that
     UIImage *myImage = [UIImage imageWithCGImage:imageRef];
    // cout << "makeimage";
+   /* CGSize *newSize
+    
+    UIGraphicsBeginImageContext(newSize);
+    [myImage drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();    
+    UIGraphicsEndImageContext();
+*/
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     [imageView setImage:myImage];  
     

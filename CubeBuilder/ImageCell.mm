@@ -26,18 +26,28 @@
         
         
         
-       myButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        myButton.frame = CGRectMake(20, 20, 200, 44); // position in the parent view and set the size of the button
+       myButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        myButton.frame = CGRectMake(310-64+7+5, +5, 64, 64); // position in the parent view and set the size of the button
         [myButton setTitle:@"Delete" forState:UIControlStateNormal];
         // add targets and actions
+        UIImage * btnImage = [UIImage imageNamed:@"deleteBtn.png"];
+        [myButton setImage:btnImage forState:UIControlStateNormal];
+
+        myButton.alpha =0.6;
+        
         [myButton addTarget:self action:@selector(doDelete:) forControlEvents:UIControlEventTouchUpInside];
        
         [self addSubview:myButton];
         
-        myButton2 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        myButton2.frame = CGRectMake(20, 50, 200, 44); // position in the parent view and set the size of the button
+        myButton2 = [UIButton buttonWithType:UIButtonTypeCustom];
+        myButton2.frame = CGRectMake(0+7, 310-78+5,310, 78); // position in the parent view and set the size of the button
         [myButton2 setTitle:@"Open" forState:UIControlStateNormal];
         // add targets and actions
+        
+        UIImage * btnImage2 = [UIImage imageNamed:@"openBtn.png"];
+        [myButton2 setImage:btnImage2 forState:UIControlStateNormal];
+        
+        
         [myButton2 addTarget:self action:@selector(doOpen:) forControlEvents:UIControlEventTouchUpInside];
         
         [self addSubview:myButton2];
@@ -45,7 +55,7 @@
         self.transform = CGAffineTransformMakeRotation(-M_PI/2.0);
         
       
-        
+       self.selectedBackgroundView = [[[UIImageView alloc] init] autorelease];
         
     }
     return self;
@@ -70,7 +80,10 @@
 {
 
   [[SaveDataModel getInstance] deleteSaved:cubeID ];
-  /// [self.myTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    NSNumber *n = [NSNumber numberWithInt:cubeID];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"deleterow" object: n ]; 
+    
+ //[self.myTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
  
 }
 - (void)doOpen:(id)sender
@@ -78,10 +91,10 @@
     
    [[SaveDataModel getInstance] getCubeData:cubeID ];
     
-}
+}/*
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-    /*if(self.selected == selected)return;
+    if(self.selected == selected)return;
     [super setSelected:selected animated:animated];
 
     
@@ -93,7 +106,7 @@
     }
     else
     {
-      image.alpha =1.0;    }*/
-}
+      image.alpha =1.0;    }
+}*/
 
 @end

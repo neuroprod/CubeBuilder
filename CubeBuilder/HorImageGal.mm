@@ -42,6 +42,11 @@
 
       self.clearsSelectionOnViewWillAppear =YES;
   
+    
+  
+    
+         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteRow :) name:@"deleterow" object:nil];
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
@@ -52,7 +57,37 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
+- (void)deleteRow:(NSNotification *) notification
+{
+    NSNumber *data  =notification.object;
+    int dataID = [data intValue];
+    int index =-1;
+    for (int i=0;i< arr.count;i++)
+    {
+    
+     NSNumber *s = [arr objectAtIndex:i];
+        if (s.intValue == dataID)
+        {
+            index =i;
+            break;
+        }
+    }
+    
+    if (index >-1){
+     
+           [arr removeObjectAtIndex:index];
+     /*   NSIndexPath *myIP = [NSIndexPath indexPathForRow:index inSection:0] ;
+        [self.tableView beginUpdates];
+       // [selfconstructTableGroups];
 
+        [self.tableView deleteRowsAtIndexPaths :[NSArray arrayWithObject:myIP] withRowAnimation:UITableViewRowAnimationNone];
+       // [self.tableView endUpdates];*/
+        [self.tableView reloadData];
+
+       
+    }
+ 
+}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -109,7 +144,7 @@
     
  NSNumber *s = [arr objectAtIndex:row];
     
-   [(ImageCell *)cell setData:s.intValue];
+   [(ImageCell *)cell setData:s.intValue  ];
 
    
     return cell;
@@ -118,7 +153,7 @@
 {
  
     
-    return 330;
+    return 325;
 }
 /*
 // Override to support conditional editing of the table view.

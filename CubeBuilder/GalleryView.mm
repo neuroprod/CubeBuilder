@@ -60,7 +60,24 @@
     CGRect frame = self.view.frame;
     gal.view.transform = CGAffineTransformMakeRotation(M_PI/2.0);
     gal.view .frame = CGRectMake(0, 0, frame.size.width, frame.size.height);   
- gal.arr =  [[SaveDataModel getInstance] savedData ];
+    NSMutableArray* galArray =  [[SaveDataModel getInstance] savedData ];
+    
+
+    
+    NSUInteger i = 0;
+    NSUInteger j = [galArray count] - 1;
+    while (i < j) {
+        [galArray exchangeObjectAtIndex:i
+                  withObjectAtIndex:j];
+        
+        i++;
+        j--;
+    }
+
+    
+    
+    gal.arr = galArray;
+    
     [self.view addSubview:gal.view];
 
   
