@@ -32,7 +32,7 @@ void CubeRenderer::setup(){
     
     model = Model::getInstance();
     
-    
+    isIpad1 =model->isIpad1;
     glGenTextures(1, &flatTexture);
 	glBindTexture(GL_TEXTURE_2D, flatTexture);
 	
@@ -48,9 +48,9 @@ void CubeRenderer::setup(){
 	glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
     
    
-    //glGenRenderbuffers(1, &rbuffer);
-	//glBindRenderbuffer(GL_RENDERBUFFER, rbuffer);
-	//glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
+    glGenRenderbuffers(1, &rbuffer);
+	glBindRenderbuffer(GL_RENDERBUFFER, rbuffer);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
 	
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);	
@@ -63,7 +63,7 @@ void CubeRenderer::setup(){
     
   
     
-    
+    if(!isIpad1){
     glGenFramebuffers(1, &sampleFramebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, sampleFramebuffer);
     
@@ -81,7 +81,7 @@ void CubeRenderer::setup(){
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
     cout <<"Failed to make complete framebuffer object "<<glCheckFramebufferStatus(GL_FRAMEBUFFER)<< "\n";
     
-    
+    }
     
     vertexData= new GLfloat[720000];
 
@@ -166,7 +166,7 @@ void CubeRenderer::setup(){
     setupIDCubes();
     
     useAO=false;
-   setupAO();
+  // setupAO();
     
 };
 
@@ -186,8 +186,15 @@ void CubeRenderer::renderTick(){
     if(!cubeHandler->isDirty && !isDirty )return;
     isDirty =true;
     cubeHandler->isDirty =false;
-    
+    if (isIpad1)
+    {
+    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+    }else
+    {
      glBindFramebuffer(GL_FRAMEBUFFER, sampleFramebuffer);
+    
+    }
+    // glBindFramebuffer(GL_FRAMEBUFFER, sampleFramebuffer);
     
   // glBindFramebuffer(GL_FRAMEBUFFER, fbo);
     
@@ -234,12 +241,13 @@ void CubeRenderer::renderTick(){
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,indexBuffer);   
     glDrawElements(GL_TRIANGLES, 36* cubeHandler->cubes.size(), GL_UNSIGNED_SHORT, (void*)0);
     
-    
-    
+    if (!isIpad1)
+    {
+   
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, fbo);
     glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, sampleFramebuffer);
     glResolveMultisampleFramebufferAPPLE();
-    
+    }
     
     //clean
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -284,15 +292,15 @@ void CubeRenderer::setupIDCubes()
     glUseProgram(0);
 
     
-    pixels =new GLubyte[1024* 768*4];
+    pixels =new GLubyte[1024* 768*2];
 
 }
 void CubeRenderer::drawIDcubes()
 {
-    
+   // glBindFramebuffer(GL_FRAMEBUFFER, 0);
  // cout << "drawID";
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    
+   glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glViewport(0, 0, vpWID, vpHID);
     
   // glDisable(GL_BLEND);
 
@@ -335,16 +343,17 @@ void CubeRenderer::drawIDcubes()
    // glEnable(GL_BLEND);
 
 
-    glReadPixels(0, 0,  vpW,vpH, GL_RGBA,GL_UNSIGNED_BYTE, pixels);
-    
-    model->renderHit =false;
+    glReadPixels(0, 0,  vpWID,vpHID, GL_RGBA,GL_UNSIGNED_BYTE, pixels);
+    glViewport(0, 0, vpW, vpH);
+   model->renderHit =false;
+    cout << "drawwwww";
    // cout << "redraw id cubes\n";
     //OpenGLErrorChek::chek("id cubes");    
 }
 bool CubeRenderer::getPoint(int x, int y )
 {
     ofVec4f vec;
-    int pos =(        x +((vpH-y)*vpW ))*4;
+    int pos =(        x/2 +((vpHID-y/2)*vpWID ))*4;
     
     int a = (int)pixels[pos+3];
     if (a ==0) return false;
@@ -377,10 +386,11 @@ void CubeRenderer::setOrientation(int orientation)
         vpH = 1024;
         vpY = 0;
     }
-    
+    vpWID =vpW/2;
+    vpHID =vpH/2;
     camera->setOrientation(orientation);
     
-   
+    return;
 //if (!useAO)return;
     
     float  uvX ;
@@ -674,7 +684,7 @@ void CubeRenderer::renderAO()
     
     glUniformMatrix4fv(uWorldMatrixID, 1,0, camera->worldMatrix.getPtr());
     glUniformMatrix4fv(uPerspectiveMatrixID, 1, 0, camera->perspectiveMatrix.getPtr());
-    
+    ;
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 
     glEnableVertexAttribArray(ATTRIB_VERTEX);

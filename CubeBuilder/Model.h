@@ -87,6 +87,8 @@ public:
     
     TapBtn *redoBtn;
     TapBtn *undoBtn;
+    
+    bool isIpad1;
 };
 
 #endif

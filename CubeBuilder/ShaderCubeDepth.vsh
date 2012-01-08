@@ -10,7 +10,8 @@ attribute vec4 position;
 
 uniform mat4 worldMatrix;
 uniform mat4 perspectiveMatrix;
-
+uniform float minDepth;
+uniform float depthRange;
 varying vec3 colorVarying;
 
 void main()
@@ -25,7 +26,7 @@ void main()
 
     
     
-    float d = (worldSpace.z+4.0 )/-20.0;
+    float d = (worldSpace.z-minDepth )/depthRange;
    
   
      colorVarying  = vec3(d,d,d);

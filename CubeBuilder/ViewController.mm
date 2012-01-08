@@ -18,12 +18,15 @@
 #include "npTouch.h"
 #include "ViewSettings.h"
 
-#define BUFFER_OFFSET(i) ((char *)NULL + (i))
+
 
 
 
 @interface ViewController ()  {
   
+    
+   
+    
     ClearView *clearView;
    SaveView *saveView;
    GalleryView *galView;
@@ -65,6 +68,23 @@
 {
    
     [super viewDidLoad];
+    cout<<"\n " ;
+    if ( [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+		
+	{	
+          cout<<"hascam " ;
+        Model::getInstance()->isIpad1 =false;
+          
+        
+    }
+    else {
+    
+      cout<<"hasnocam " ;
+       Model::getInstance()->isIpad1 =false ;
+    }
+    cout<<"\n " ;
+    
+    
     
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
 
@@ -240,6 +260,7 @@
 - (void)update
 {
      main->update();
+    
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect

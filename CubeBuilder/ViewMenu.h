@@ -67,6 +67,7 @@ class ViewMenu:public npDisplayObject
     float bottomPos;
     float w;
     void clear();
+    void hideComplete(npEvent *e);
 };
 
 #endif

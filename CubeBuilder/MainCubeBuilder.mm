@@ -119,16 +119,15 @@ void MainCubeBuilder::draw ()
    
     if (!cubeRenderer->isDirty && !interfaceHandler->isDirty && !backGround->isDirty && !model->isDirty)return;
     
-    if (model->renderHit) cubeRenderer->drawIDcubes()  ;
     
     // cout << "\ndirties: "<< cubeRenderer->isDirty << " "<<interfaceHandler->isDirty << " "<<backGround->isDirty <<" " <<cubeHandler->isDirty<<"\n";
-    
-    
+    if (model->renderHit) cubeRenderer->drawIDcubes()  ;
+ 
     glClearColor(1.0f,1.0f, 1.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable (GL_BLEND); 
   
-
+  
     
     flatRenderer->start();
     
@@ -136,11 +135,11 @@ void MainCubeBuilder::draw ()
    // {
     backGround->prepForFlatDraw();
     flatRenderer->draw();
-   // }
+  // }
     cubeRenderer->prepForFlatDraw();
     flatRenderer->draw();
     
-    if (cubeRenderer->useAO || model->keepAO){
+    if (cubeRenderer->useAO){
         model->useAO =false;
         cubeRenderer->prepForAODraw();
         flatRenderer->draw();

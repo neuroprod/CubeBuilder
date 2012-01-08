@@ -54,6 +54,9 @@ class CubeRenderer
     GLint uWorldMatrixDepth;
     GLint uPerspectiveMatrixDepth;
     
+    GLint uMinDepth;
+    GLint uDepthRange;
+    
     
     GLuint fboBlur;
     GLuint rbufferBlur;
@@ -96,6 +99,9 @@ public:
     CubeHandler *cubeHandler;
     
     Camera * camera;
+    int vpWID;
+    int vpHID;
+    
     
     int vpW;
     int vpH;
@@ -110,7 +116,7 @@ public:
     void renderAO();
    void prepForAODraw();
     
-    
+    bool isIpad1;
   
     
 };

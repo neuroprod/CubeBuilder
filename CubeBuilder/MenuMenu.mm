@@ -19,9 +19,10 @@ void MenuMenu::setSelected(bool sel, float delay)
         mijnTween.init(this,NP_EASE_IN_SINE,200,delay);
         
         mijnTween.addProperty( &y,-64 );
+        
+        makeCallBack(MenuMenu, hideComplete ,hideCall);
+        mijnTween.addEventListener(NP_TWEEN_COMPLETE , hideCall );
         npTweener::addTween(mijnTween);
-        
-        
         
     }else 
     {
@@ -30,18 +31,22 @@ void MenuMenu::setSelected(bool sel, float delay)
         
         mijnTween.addProperty( &y,64 );
         npTweener::addTween(mijnTween);
+        visible =true;
         
     } 
     isDirty =true;
     
     
 }
-
+void MenuMenu::hideComplete(npEvent *e){
+    
+    visible =false;
+}
 void MenuMenu::setup()
 {
     
     model =Model::getInstance();
-    
+    visible =false;
     //over.alpha =0.0;
     // addChild(over);
     

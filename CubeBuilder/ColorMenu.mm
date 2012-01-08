@@ -19,7 +19,8 @@ void ColorMenu::setSelected(bool sel, float delay)
         
         mijnTween.addProperty( &y,bottomPos );
         npTweener::addTween(mijnTween);
-        
+        makeCallBack(ColorMenu, hideComplete ,hideCall);
+        mijnTween.addEventListener(NP_TWEEN_COMPLETE , hideCall );
         
         
     }else 
@@ -29,13 +30,17 @@ void ColorMenu::setSelected(bool sel, float delay)
         
         mijnTween.addProperty( &y,bottomPos-128 );
         npTweener::addTween(mijnTween);
+        visible =true;
      
     } 
     isDirty =true;
     
     
 }
-
+void ColorMenu::hideComplete(npEvent *e){
+    
+    visible =false;
+}
 void ColorMenu::setBottom(int bot)
 {
     
@@ -52,7 +57,7 @@ void ColorMenu::setBottom(int bot)
 }
 void ColorMenu::setup()
 {
-    
+    visible =false;
     model =Model::getInstance();
     
     //over.alpha =0.0;

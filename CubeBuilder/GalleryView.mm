@@ -64,7 +64,7 @@
     [self.view addSubview:gal.view];
 
   
-  //  [gal release];
+   [gal release];
 
 }
 - (void)viewDidUnload

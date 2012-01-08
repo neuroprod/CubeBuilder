@@ -65,7 +65,7 @@ class MenuMenu:public npDisplayObject
     void onDownload(npEvent *e);
     void onDownsnapshot(npEvent *e);
     void onDowninfo(npEvent *e);
-    
+    void hideComplete(npEvent *e);
     void setOverlay(int currentOverLay);
  
 };
