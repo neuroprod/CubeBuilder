@@ -12,7 +12,7 @@ void npMovieClip::setFrame(int _frame)
 {
     if( _frame== frame) return;
     uvX  =uvXStart +((float )_frame*  uvWidth);
-    cout << " xstart::  "<<uvXStart;
+  
     frame =_frame;
       
     isDirty =true;
@@ -24,7 +24,7 @@ void npMovieClip::setFrame(int _frame)
 void  npMovieClip::setUV(float u  , float v ,float  uSize,float vSize)
 {
     frame = 0;
-cout << "setUV";
+
     uvX  =u ;
     uvY =v;
     uvWidth= uSize;

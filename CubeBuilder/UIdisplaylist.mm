@@ -53,7 +53,7 @@ void UIdisplaylist::setup()
              c.v =((float) posY -16.0);
             c.set((float)imagedata[pos]/255.0f, (float)imagedata[pos+1]/255.0f, (float)imagedata[pos+2]/255.0f);
             model->colors.push_back(c);
-            //cout << "r=" << c.r << " g="<< c.g <<" b="<<c.b <<"\n";
+       
             count++;
         }
     
@@ -359,7 +359,7 @@ void UIdisplaylist::openOverlayCompleet(npEvent *e)
 }
 void UIdisplaylist::hideOverlayCompleet(npEvent *e)
 {
-    cout << "\nhidecomplete\n";
+  
     mainInfoBack.visible =false;
     mainInfoBack.isDirty =true;
    
@@ -446,7 +446,7 @@ void UIdisplaylist::setAdd(npEvent *e )
     float delay =0;
     if (model->currentState == STATE_VIEW)delay=200;
     colorMenu.setSelected(true,delay);
-    cout <<"setColor";
+   
     addBtn.setSelected(true);
     model->setCurrentState(STATE_ADD);
 

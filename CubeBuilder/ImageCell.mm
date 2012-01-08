@@ -37,10 +37,8 @@
         
         [myButton addTarget:self action:@selector(doDelete:) forControlEvents:UIControlEventTouchUpInside];
        
-        [self addSubview:myButton];
-        
         myButton2 = [UIButton buttonWithType:UIButtonTypeCustom];
-        myButton2.frame = CGRectMake(0+7, 310-78+5,310, 78); // position in the parent view and set the size of the button
+        myButton2.frame = CGRectMake(0+7, +5,310, 310); // position in the parent view and set the size of the button
         [myButton2 setTitle:@"Open" forState:UIControlStateNormal];
         // add targets and actions
         
@@ -51,7 +49,9 @@
         [myButton2 addTarget:self action:@selector(doOpen:) forControlEvents:UIControlEventTouchUpInside];
         
         [self addSubview:myButton2];
+        [self addSubview:myButton];
         
+
         self.transform = CGAffineTransformMakeRotation(-M_PI/2.0);
         
       

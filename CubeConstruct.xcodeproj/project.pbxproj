@@ -45,8 +45,10 @@
 		0187563E14B3112300E8CEFB /* TogleIcon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0187563D14B3112200E8CEFB /* TogleIcon.mm */; };
 		0187564514B31D4800E8CEFB /* ClearView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0187564314B31D4800E8CEFB /* ClearView.mm */; };
 		0187564614B31D4800E8CEFB /* ClearView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0187564414B31D4800E8CEFB /* ClearView.xib */; };
-		018D268714B9C58E00742A9D /* deleteBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 018D268514B9C58E00742A9D /* deleteBtn.png */; };
-		018D268814B9C58E00742A9D /* openBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 018D268614B9C58E00742A9D /* openBtn.png */; };
+		018D268A14B9DF1100742A9D /* deleteBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 018D268914B9DF1100742A9D /* deleteBtn.png */; };
+		018D268C14B9DF1A00742A9D /* openBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 018D268B14B9DF1A00742A9D /* openBtn.png */; };
+		018D268F14B9DF6900742A9D /* ShaderBlur2.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 018D268D14B9DF6900742A9D /* ShaderBlur2.fsh */; };
+		018D269014B9DF6900742A9D /* ShaderBlur2.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 018D268E14B9DF6900742A9D /* ShaderBlur2.vsh */; };
 		018F872314A32DA5004C9D6F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 018F872214A32DA5004C9D6F /* UIKit.framework */; };
 		018F872514A32DA5004C9D6F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 018F872414A32DA5004C9D6F /* Foundation.framework */; };
 		018F872714A32DA5004C9D6F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 018F872614A32DA5004C9D6F /* CoreGraphics.framework */; };
@@ -147,8 +149,10 @@
 		0187564214B31D4800E8CEFB /* ClearView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClearView.h; sourceTree = "<group>"; };
 		0187564314B31D4800E8CEFB /* ClearView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ClearView.mm; sourceTree = "<group>"; };
 		0187564414B31D4800E8CEFB /* ClearView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClearView.xib; sourceTree = "<group>"; };
-		018D268514B9C58E00742A9D /* deleteBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = deleteBtn.png; path = ../../../../Dropbox/cubebuilder/deleteBtn.png; sourceTree = "<group>"; };
-		018D268614B9C58E00742A9D /* openBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = openBtn.png; path = ../../../../Dropbox/cubebuilder/openBtn.png; sourceTree = "<group>"; };
+		018D268914B9DF1100742A9D /* deleteBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deleteBtn.png; sourceTree = "<group>"; };
+		018D268B14B9DF1A00742A9D /* openBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = openBtn.png; sourceTree = "<group>"; };
+		018D268D14B9DF6900742A9D /* ShaderBlur2.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShaderBlur2.fsh; sourceTree = "<group>"; };
+		018D268E14B9DF6900742A9D /* ShaderBlur2.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShaderBlur2.vsh; sourceTree = "<group>"; };
 		018F871E14A32DA5004C9D6F /* CubeConstruct.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CubeConstruct.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		018F872214A32DA5004C9D6F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		018F872414A32DA5004C9D6F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -408,6 +412,8 @@
 		018F876914A480D7004C9D6F /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				018D268D14B9DF6900742A9D /* ShaderBlur2.fsh */,
+				018D268E14B9DF6900742A9D /* ShaderBlur2.vsh */,
 				0187563414B1AA0500E8CEFB /* ShaderCubeLine.fsh */,
 				0187563514B1AA0500E8CEFB /* ShaderCubeLine.vsh */,
 				0187562B14AF1CA700E8CEFB /* ShaderBlur1.fsh */,
@@ -482,8 +488,8 @@
 			isa = PBXGroup;
 			children = (
 				0187560B14ADB4F900E8CEFB /* background.jpg */,
-				018D268514B9C58E00742A9D /* deleteBtn.png */,
-				018D268614B9C58E00742A9D /* openBtn.png */,
+				018D268914B9DF1100742A9D /* deleteBtn.png */,
+				018D268B14B9DF1A00742A9D /* openBtn.png */,
 				01155A0D14B8630D00CDD8B7 /* mainmap.png */,
 			);
 			name = assets;
@@ -541,6 +547,8 @@
 			files = (
 				0187563614B1AA0700E8CEFB /* ShaderCubeLine.fsh in Resources */,
 				0187563714B1AA0700E8CEFB /* ShaderCubeLine.vsh in Resources */,
+				018D268F14B9DF6900742A9D /* ShaderBlur2.fsh in Resources */,
+				018D269014B9DF6900742A9D /* ShaderBlur2.vsh in Resources */,
 				0187562D14AF1CA900E8CEFB /* ShaderBlur1.fsh in Resources */,
 				0187562E14AF1CA900E8CEFB /* ShaderBlur1.vsh in Resources */,
 				0187562914AF0C3B00E8CEFB /* ShaderCubeDepth.fsh in Resources */,
@@ -560,8 +568,8 @@
 				011559F114B4964A00CDD8B7 /* iconSmall.png in Resources */,
 				011559F714B5A3C100CDD8B7 /* SaveView.xib in Resources */,
 				01155A0E14B8630D00CDD8B7 /* mainmap.png in Resources */,
-				018D268714B9C58E00742A9D /* deleteBtn.png in Resources */,
-				018D268814B9C58E00742A9D /* openBtn.png in Resources */,
+				018D268A14B9DF1100742A9D /* deleteBtn.png in Resources */,
+				018D268C14B9DF1A00742A9D /* openBtn.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

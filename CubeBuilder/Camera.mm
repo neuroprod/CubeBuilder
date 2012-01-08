@@ -55,7 +55,7 @@ void Camera::update()
 {
     if (!isDirty) return;
 
-    
+  
     if (slerp != -1)
     {
         quatFinal.slerp(slerp,    quatTarget,quatStart);        
@@ -107,6 +107,10 @@ void Camera::update()
     worldMatrix.preMult(zoomMatrix);
     worldMatrix.preMult( normalMatrix);
     worldMatrix.preMult(centerMatrix);
+    
+    
+    setDepthRange();
+    
     
     isDirty =false;
 }
@@ -266,20 +270,16 @@ void Camera::stopRotate(int lx,int ly)
     tempRotX = currentRotX +(ofX/4.0);
     if(tempRotY<-89) tempRotY=-89;
     if(tempRotY>90) tempRotY=90;
-   // makeMatrix(tempRotX,tempRotY);
-    
     
     currentRotX =tempRotX;
     currentRotY =tempRotY;
-  //  cout << "currentRott" << tempRotX << " " << tempRotY <<"\n";
-    
-    // cout << "stoprotate\n";
+ 
       isDirty =true;
     
 }
 void Camera::startRotate(int lx,int ly)
 {
-    // cout << "statrtRotaote";
+   
     panXStart = lx;
     panYStart =ly;
     
@@ -545,6 +545,11 @@ void Camera::addjustCenter( ofVec3f adj)
     
     npTweener::addTween(mijnTween);
     didMove =true;
+    
+    
+    
+    
+    
 }
 
 
@@ -565,3 +570,75 @@ void   Camera::setZoomMove(float move)
 
 
 
+void  Camera::setDepthRange()
+{
+    
+    
+    ofVec4f lbb = model->min +ofVec4f(-0.5,-0.5,-0.5,0);
+    ofVec4f rtf = model->max +ofVec4f(+0.5,+0.5,+0.5,0); 
+    
+    
+    float w =1;
+    
+    lbb.w =w;
+    rtf.w =w;
+    
+    
+    ofVec4f lbf ;
+    lbf.set(lbb.x, lbb.y, rtf.z, w);
+    
+    ofVec4f rbf ;
+    rbf.set(rtf.x, lbb.y, rtf.z, w);
+    
+    ofVec4f ltf ;
+    ltf.set(lbb.x, rtf.y, rtf.z, w);
+    
+    
+    ofVec4f rtb ;
+    rtb.set(rtf.x, rtf.y, lbb.z, w);
+    
+    ofVec4f ltb ;
+    ltb.set(lbb.x, rtf.y, lbb.z, w);
+    
+    ofVec4f rbb ;
+    rbb.set(rtf.x, lbb.y, lbb.z, w);
+    
+    
+  maxDepth =-100000000;
+   
+    
+ 
+   minDepth=100000000;
+    projectD(lbb);
+    projectD(rbb);
+    projectD(ltb);
+    projectD(rtb);
+    
+    projectD(lbf);
+    projectD(rbf);
+    projectD(ltf);
+    projectD(rtf);
+    
+//minDepth
+//depthRange
+    
+    depthRange = maxDepth-minDepth;
+   
+}    
+void Camera::projectD (ofVec4f vec )
+{
+    ofVec4f mpm= worldMatrix.preMult( vec);
+    vec= perspectiveMatrix.preMult(  mpm);
+    
+
+    
+    
+    if(vec.z<minDepth)minDepth =vec.z;
+    if(vec.z>maxDepth)maxDepth=vec.z;
+    
+  
+    
+    // cout << "\n"<< vec;
+    
+    
+}

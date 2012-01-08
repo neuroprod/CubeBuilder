@@ -139,10 +139,11 @@ void MainCubeBuilder::draw ()
     cubeRenderer->prepForFlatDraw();
     flatRenderer->draw();
     
-    if (cubeRenderer->useAO){
+    if (cubeRenderer->useAO     || model->keepAO){
         model->useAO =false;
         cubeRenderer->prepForAODraw();
         flatRenderer->draw();
+        cout << "drawAO";
     }
     if(model->takeSnapshot)
     {

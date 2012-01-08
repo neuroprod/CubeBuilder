@@ -26,7 +26,7 @@ void main()
 
     
     
-    float d = (worldSpace.z-minDepth )/depthRange;
+    float d = 1.0-(worldSpace.z+minDepth )/depthRange;
    
   
      colorVarying  = vec3(d,d,d);

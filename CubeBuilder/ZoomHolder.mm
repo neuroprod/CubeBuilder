@@ -23,7 +23,7 @@ bool ZoomHolder::isTouching(npTouch &touch)
     
     if ( touchPointer ==&touch)
     {
-        //cout << "imhere\n";
+    
         if( touch.phase==1)
         {
             float move =startY-(float)touch.y;

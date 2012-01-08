@@ -19,53 +19,30 @@ void main()
 {
    
     mediump vec4 sourceColor = texture2D(texture, uvVarying.xy);
-    if(sourceColor.a ==0.0)
-    {
-    gl_FragColor =vec4 (0.0,0.0,0.0 ,0.0);
-    }else{
+
     
-    mediump float blurColor =0.0 ;
+        mediump float blurColor =0.0 ;
     
-    mediump vec2 temp =  uvVarying.xy;
+        mediump vec2 temp =  uvVarying.xy;
     
    
     
-    for (mediump float  i =-10.0;i<10.0;i++)
-    {
+        for (mediump float  i =-10.0;i<10.0;i++)
+        {
      
       
-           pos = vec2(temp.x +(i*0.003),temp.y) ;
+            pos = vec2(temp.x +(i*0.002),temp.y) ;
             tempColor =texture2D(texture,pos );
-          blurColor += tempColor.x*0.025;
-    
-    
-       
-    
-    
-    
-    
-    }
-    for (mediump float  j=-10.0;j<10.0;j++)
-    {
+            
+            blurColor += tempColor.x*0.05;
+           
+          }
      
-      
-           pos = vec2(temp.x ,temp.y+(j*0.003)) ;
-            tempColor =texture2D(texture,pos );
-          blurColor += tempColor.x*0.025;
     
     
-       
-    
-    
-    
-    
-    }
-    mediump float v = (sourceColor.x-blurColor)*5.0 ;
-    
-    
-    gl_FragColor =vec4 (0.0,0.0,0.0 ,v*sourceColor.a);
-    //gl_FragColor +=vec4 (-v,-v,-v ,sourceColor.a*-v);
-    }
+        gl_FragColor =vec4 ( blurColor, sourceColor.y, 0.0 ,sourceColor.a);
+ 
+  
 
      
 }

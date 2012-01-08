@@ -246,7 +246,7 @@ void ViewMenu::onDownright(npEvent *e){
 
 void ViewMenu::onSnapShot(npEvent *e){
 
-        cout <<"snapppp";
+     
         OverlayEvent event;
         event.name ="setOverlay";
         event.overlayType =16;

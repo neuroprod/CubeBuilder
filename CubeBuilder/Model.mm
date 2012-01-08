@@ -80,7 +80,7 @@ void Model::cancelOverlay()
     npEvent e;
     e.name = "cancelOverlay";
     dispatchEvent(e);
-    cout << "cancelOver";
+   
 
 }
 void Model::becameActive()

@@ -96,6 +96,14 @@ public:
   void   setZoomMove(float move);
     float tempzoom;
     void project(ofVec4f &vec );
+    
+    
+    float minDepth;
+    float depthRange;
+    float maxDepth;
+    void setDepthRange();
+    void projectD(ofVec4f vec );
+
 };
 
 #endif
