@@ -12,7 +12,7 @@
 
 #include "Model.h"
 @implementation GalleryView
-
+@synthesize gal;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -56,7 +56,7 @@
     
    [[SaveDataModel getInstance] getAllData];
     
-    HorImageGal * gal =[[HorImageGal alloc] init];
+    gal =[[HorImageGal alloc] init];
     CGRect frame = self.view.frame;
     gal.view.transform = CGAffineTransformMakeRotation(M_PI/2.0);
     gal.view .frame = CGRectMake(0, 0, frame.size.width, frame.size.height);   
@@ -64,7 +64,7 @@
     [self.view addSubview:gal.view];
 
   
-   [gal release];
+  // [gal release];
 
 }
 - (void)viewDidUnload
@@ -80,5 +80,9 @@
     // Return YES for supported orientations
 	return YES;
 }
-
+-(void)dealloc
+{
+    [gal release];
+    [super dealloc];
+}
 @end

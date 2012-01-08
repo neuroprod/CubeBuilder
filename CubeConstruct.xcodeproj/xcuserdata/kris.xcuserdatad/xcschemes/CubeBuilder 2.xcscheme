@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "018F871D14A32DA5004C9D6F"
-               BuildableName = "CubeBuilder.app"
+               BuildableName = "CubeConstruct.app"
                BlueprintName = "CubeConstruct"
                ReferencedContainer = "container:CubeConstruct.xcodeproj">
             </BuildableReference>
@@ -32,7 +32,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "018F871D14A32DA5004C9D6F"
-            BuildableName = "CubeBuilder.app"
+            BuildableName = "CubeConstruct.app"
             BlueprintName = "CubeConstruct"
             ReferencedContainer = "container:CubeConstruct.xcodeproj">
          </BuildableReference>
@@ -50,7 +50,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "018F871D14A32DA5004C9D6F"
-            BuildableName = "CubeBuilder.app"
+            BuildableName = "CubeConstruct.app"
             BlueprintName = "CubeConstruct"
             ReferencedContainer = "container:CubeConstruct.xcodeproj">
          </BuildableReference>
@@ -68,7 +68,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "018F871D14A32DA5004C9D6F"
-            BuildableName = "CubeBuilder.app"
+            BuildableName = "CubeConstruct.app"
             BlueprintName = "CubeConstruct"
             ReferencedContainer = "container:CubeConstruct.xcodeproj">
          </BuildableReference>

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HorImageGal.h"
 @interface GalleryView : UIViewController
 
+@property (nonatomic, retain)  HorImageGal *gal;
 @end

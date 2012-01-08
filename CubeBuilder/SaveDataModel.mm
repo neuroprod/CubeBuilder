@@ -79,8 +79,9 @@ static sqlite3_stmt *deleteStmt = nil;
             while  (sqlite3_step(statement) == SQLITE_ROW)
             {
                 NSInteger primaryKey = sqlite3_column_int(statement, 0);
-                NSString *name = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 1)];
+               // NSString *name = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 1)];
                 NSNumber* n =  [NSNumber numberWithInt:primaryKey];
+                cout << n.intValue <<"\n";
                /* const void *ptr = sqlite3_column_blob(statement, 2);
                 int size = sqlite3_column_bytes(statement, 2);
                 NSData * data = [[NSData alloc] initWithBytes:ptr length:size];

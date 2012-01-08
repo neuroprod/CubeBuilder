@@ -102,10 +102,10 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[ImageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[ImageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease] ;
     }
     
-    NSUInteger  row =[indexPath row];
+   NSUInteger  row =[indexPath row];
     
  NSNumber *s = [arr objectAtIndex:row];
     

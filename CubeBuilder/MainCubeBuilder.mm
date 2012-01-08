@@ -147,7 +147,7 @@ void MainCubeBuilder::draw ()
     if(model->takeSnapshot)
     {
         
-        if (model->pixeldata ){ delete[]  model->pixeldata ;}
+      ///  if (model->pixeldata ){ delete[]  model->pixeldata ;}
         int vpW;
         int vpH;
         if (currentorientation ==1)
@@ -161,7 +161,7 @@ void MainCubeBuilder::draw ()
             vpH = 1024;
             vpW = 768;
         }
-        GLubyte *data =new GLubyte[1024* 768*4];
+        GLubyte *data =(GLubyte *) malloc(768*1024*4);
         
         glReadPixels(0, 0,  vpW,vpH, GL_RGBA,GL_UNSIGNED_BYTE,data);
         

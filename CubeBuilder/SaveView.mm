@@ -115,18 +115,22 @@
     int w =768;
     int countX =0;
     int countY =0;
-    for(int y = wS; y <h+wS; y++)
+    int yr = 0;
+    int xr =0;
+    for(int y = wS; y <h+wS; ++y)
     {
-        for(int x = hS*4; x <(w+hS)* 4; x++)
+        xr = ( w-1- countY) * h  * 4;
+        yr = y * 4 * pW;
+        for(int x = hS*4; x <(w+hS)* 4; ++x)
         {
             
-            buffer2[( w-1- countY) * h  * 4 + countX ] = pixeldata [y * 4 * pW + x];
+            buffer2[xr + countX ] = pixeldata [yr + x];
                 countX++;
         }
         countX =0;
         countY++;
     }
-    
+    delete [] pixeldata;
     // make data provider with data.
     CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, buffer2, 768*1024*4, NULL);
     
@@ -156,7 +160,7 @@
         [saveAsNewBtn setHidden:false];
     
     }
-   // delete [] buffer2;
+  // delete [] buffer2;
     
    //[myImage release];
     

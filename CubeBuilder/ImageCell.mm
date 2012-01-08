@@ -13,8 +13,8 @@
 @implementation ImageCell
 @synthesize image;
 @synthesize cubeID;
-
-
+@synthesize myButton;
+@synthesize myButton2;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -26,7 +26,7 @@
         
         
         
-        UIButton *myButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+       myButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         myButton.frame = CGRectMake(20, 20, 200, 44); // position in the parent view and set the size of the button
         [myButton setTitle:@"Delete" forState:UIControlStateNormal];
         // add targets and actions
@@ -34,7 +34,7 @@
        
         [self addSubview:myButton];
         
-        UIButton *myButton2 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        myButton2 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         myButton2.frame = CGRectMake(20, 50, 200, 44); // position in the parent view and set the size of the button
         [myButton2 setTitle:@"Open" forState:UIControlStateNormal];
         // add targets and actions
@@ -44,7 +44,7 @@
         
         self.transform = CGAffineTransformMakeRotation(-M_PI/2.0);
         
-        
+      
         
         
     }
@@ -52,17 +52,16 @@
 }
 -(void) setData:(NSInteger)dataID
 {
-    
-    cubeID = dataID;
+  
+ cubeID = dataID;
     NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString  *documentsDirectory = [paths objectAtIndex:0];  
       NSString  *filePath = [NSString stringWithFormat:@"%@/%i.png", documentsDirectory,dataID];
     NSData *pngData = [NSData dataWithContentsOfFile:filePath];
     
-  // std::cout<<"\n"<< pngData.length << "numdata"<<"\n";
-   // NSLog(@"%@",filePath);
+
      image.image =  [UIImage imageWithData:pngData];
-  
+ 
     
   
 } 
@@ -70,9 +69,9 @@
 - (void)doDelete:(id)sender
 {
 
-    [[SaveDataModel getInstance] deleteSaved:cubeID ];
-  //  self.superview.
-
+  [[SaveDataModel getInstance] deleteSaved:cubeID ];
+  /// [self.myTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ 
 }
 - (void)doOpen:(id)sender
 {

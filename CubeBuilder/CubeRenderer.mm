@@ -66,7 +66,7 @@ void CubeRenderer::setup(){
     
   
     
-    if(!isIpad1){
+    //if(!isIpad1){
     glGenFramebuffers(1, &sampleFramebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, sampleFramebuffer);
     
@@ -84,7 +84,7 @@ void CubeRenderer::setup(){
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
     cout <<"Failed to make complete framebuffer object "<<glCheckFramebufferStatus(GL_FRAMEBUFFER)<< "\n";
     
-    }
+   // }
     
     vertexData= new GLfloat[720000];
 
@@ -189,6 +189,17 @@ void CubeRenderer::renderTick(){
     if(!cubeHandler->isDirty && !isDirty )return;
     isDirty =true;
     cubeHandler->isDirty =false;
+    bool tempIpad;
+    if(useAO)
+    {
+    
+    
+        tempIpad = isIpad1;
+        isIpad1 =false;
+    
+    }
+    
+    
     if (isIpad1)
     {
     glBindFramebuffer(GL_FRAMEBUFFER, fbo);
@@ -261,7 +272,11 @@ void CubeRenderer::renderTick(){
     glDisable (GL_DEPTH_TEST);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     
-    if (useAO) renderAO();
+    if (useAO) {
+    
+        isIpad1 =tempIpad;
+        //renderAO();
+    }
 
 };
 void CubeRenderer::prepForFlatDraw(){
