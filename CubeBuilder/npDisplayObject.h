@@ -39,7 +39,7 @@ public:
     float alpha;
     ofMatrix4x4 globalMatrix; 
     
-    npDisplayObject() { setPos(0.0f,0.0f,0.0f) ; parent =NULL ;texture =-1;scale =1;rotation=0 ;alpha=1;renderalpha=1;touchEnabled =true;touchChildren =true;visible =true;}
+    npDisplayObject() { setPos(0.0f,0.0f,0.0f) ;numChildren =0; parent =NULL ;texture =-1;scale =1;rotation=0 ;alpha=1;renderalpha=1;touchEnabled =true;touchChildren =true;visible =true;}
 
     void updateLocalMatrix();
     virtual void resetData();
@@ -67,7 +67,7 @@ public:
     virtual bool isTouching(npTouch &touch){return false;};
     
     
-    
+    int numChildren;
     virtual void addChild(npDisplayObject &dp);
     virtual void removeChild(npDisplayObject &dp);
     virtual int getChildIndex(npDisplayObject &dp);

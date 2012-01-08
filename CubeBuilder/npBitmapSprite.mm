@@ -21,12 +21,12 @@ void  npBitmapSprite::getData( vector <float> &vec)
  
   if(!visible)return;
     if(renderalpha==0)return;
-//    int pos  = vec.size();
+
     ///set vector
    
      vec.insert (vec.end(), data,data+36);
-   
-    for(int i=0; i<children.size();i++)
+ 
+    for(int i=0; i<numChildren;++i)
     {
     
         children[i]->getData(vec);
@@ -150,11 +150,11 @@ void npBitmapSprite::setUV(float u  , float v ,float  uSize,float vSize)
 void npBitmapSprite::resetData()
 {
     if(uvWidth==0)uvWidth =0.1;
-     if(uvHeight==0)uvHeight =0.1;
-      globalMatrix  = localMatrix;
+    if(uvHeight==0)uvHeight =0.1;
+    globalMatrix  = localMatrix;
     if(parent )
     {
-       renderalpha  =alpha*parent->renderalpha;
+        renderalpha  =alpha*parent->renderalpha;
         globalMatrix*=parent->globalMatrix;
     }else
     {
@@ -162,10 +162,10 @@ void npBitmapSprite::resetData()
     
     }
     
- p1t = globalMatrix.preMult(p1);
+    p1t = globalMatrix.preMult(p1);
     p2t = globalMatrix.preMult(p2);
     p3t = globalMatrix.preMult(p3);
-     p4t = globalMatrix.preMult(p4);
+    p4t = globalMatrix.preMult(p4);
   
     
      //set data

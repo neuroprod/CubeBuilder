@@ -11,7 +11,7 @@ bool  npDisplayObject::checkTouch(npTouch &touch)
 {
     if(!visible)return false;
     if(touchChildren){
-    int numChildren = children.size();
+   
     for (int i=numChildren-1; i>=0 ;i--)
     {
         if( children[i]->checkTouch(touch)) return true;
@@ -28,6 +28,7 @@ void npDisplayObject::addChild(npDisplayObject &dp)
     
     dp.parent  =this;
     children.push_back(&dp);
+    numChildren = children.size();
    
 }
 void npDisplayObject::removeChild(npDisplayObject &dp)
@@ -35,7 +36,7 @@ void npDisplayObject::removeChild(npDisplayObject &dp)
     int index =  getChildIndex(dp);
     children[index]->parent  =NULL;
     children.erase (children.begin()+index);
-
+    numChildren = children.size();
 }
 
 bool  npDisplayObject::update(bool parentIsDirty )
@@ -58,7 +59,7 @@ bool  npDisplayObject::update(bool parentIsDirty )
         
     }
     
-    int numChildren = children.size();
+   
   
     
     for (int i=0; i< numChildren ;i++)
@@ -86,10 +87,13 @@ void npDisplayObject::resetData()
 }
 void npDisplayObject::updateLocalMatrix()
 {
+    
+    
+ 
 //blabla do transform
-localMatrix.makeIdentityMatrix();
-     
-    localMatrix.glTranslate (x,y,z);
+    localMatrix.makeTranslationMatrix(x, y, z);
+   // localMatrix.makeIdentityMatrix();
+    //localMatrix.glTranslate (x,y,z);
     if(rotation!=0)
     localMatrix.glRotate(rotation, 0, 0, 1);
     if(scale!=1)
@@ -100,7 +104,7 @@ void npDisplayObject::getData( vector <float> &vec )
 {
   if(!visible)return;
    
-    for(int i=0; i<children.size();i++)
+    for(int i=0; i<numChildren;i++)
     {
         
         children[i]->getData(vec);
@@ -109,11 +113,11 @@ void npDisplayObject::getData( vector <float> &vec )
 }
 int npDisplayObject::getChildIndex(npDisplayObject &dp)
 {
-    const  int size = children.size();
+
     npDisplayObject * pointer = &dp;
     
     int i ;
-    for (i =0;i< size;++i)
+    for (i =0;i< numChildren;++i)
     {
         if(children[i ] == pointer ) return i;
     

@@ -80,7 +80,7 @@
     else {
     
       cout<<"hasnocam " ;
-       Model::getInstance()->isIpad1 =false ;
+       Model::getInstance()->isIpad1 =true ;
     }
     cout<<"\n " ;
     

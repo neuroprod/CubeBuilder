@@ -359,10 +359,11 @@ void UIdisplaylist::openOverlayCompleet(npEvent *e)
 }
 void UIdisplaylist::hideOverlayCompleet(npEvent *e)
 {
+    cout << "\nhidecomplete\n";
     mainInfoBack.visible =false;
     mainInfoBack.isDirty =true;
    
-    
+    isDirty=true;
 }
 void UIdisplaylist::clearOverLayEvent(npEvent *e)
 {

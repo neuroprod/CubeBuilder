@@ -52,8 +52,11 @@ void CubeRenderer::setup(){
 	glBindRenderbuffer(GL_RENDERBUFFER, rbuffer);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
 	
-	glGenFramebuffers(1, &fbo);
+	
+    
+    glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);	
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER,rbuffer);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, flatTexture, 0);
     
     GLint status =glCheckFramebufferStatus(GL_FRAMEBUFFER);

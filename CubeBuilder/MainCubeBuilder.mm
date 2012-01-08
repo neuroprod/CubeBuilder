@@ -198,7 +198,7 @@ void MainCubeBuilder::setTouches(vector<npTouch> &touches)
     int currentState  = model->currentState;
     
     
-    for(int i =0;i<touches.size();i++ )
+    for(int i =0;i<touches.size();++i)
     {
         
         if(touches[i].phase ==NP_TOUCH_STOP && touches[i].target)
@@ -217,14 +217,14 @@ void MainCubeBuilder::setTouches(vector<npTouch> &touches)
                     touches[i].target->dispatchEvent(ti );
                     
                 }
-            touches[i].target =NULL;
+                touches[i].target =NULL;
         }
-        else{
+        else if (touches[i].phase ==NP_TOUCH_START)
+        {
             
             if( !interfaceHandler->checkTouch(touches[i]))
             {
-               //if(touches[i].target ==NULL)
-               // {
+               
                     if (currentState<10)
                     {
                         if(cubeRenderer->getPoint(touches[i].x,touches[i ].y))
@@ -242,9 +242,69 @@ void MainCubeBuilder::setTouches(vector<npTouch> &touches)
                         camera->checkTouch(touches[i]);
                         
                     }
-                //}
+              
             }
             
+        }else///move
+        {
+            if(touches[i].target)
+            {
+                if( !interfaceHandler->checkTouch(touches[i]))
+                {
+                
+                  /*  if (currentState<10)
+                    {
+                        if(cubeRenderer->getPoint(touches[i].x,touches[i ].y))
+                        {
+                            cubeHandler->touchedCube(cubeRenderer->currentCubeIndex,cubeRenderer->currentCubeSide,touches[i].phase);
+                        
+                        } 
+                        else 
+                        {
+                            previewCube->setPos(10000 , -10000,-10000);
+                        } 
+                    }
+                    else  if (currentState<20)
+                    {
+                    
+                        camera->checkTouch(touches[i]);
+                    
+                    }*/
+                
+                }
+        
+            }else
+            {
+            
+            
+            
+                if (currentState<10)
+                {
+                    if(cubeRenderer->getPoint(touches[i].x,touches[i ].y))
+                    {
+                        cubeHandler->touchedCube(cubeRenderer->currentCubeIndex,cubeRenderer->currentCubeSide,touches[i].phase);
+                        
+                    } 
+                    else 
+                    {
+                        previewCube->setPos(10000 , -10000,-10000);
+                    } 
+                }
+                else  if (currentState<20)
+                {
+                    
+                    camera->checkTouch(touches[i]);
+                    
+                }
+
+            
+            
+            
+            }
+        
+        
+        
+        
         }
     }
     
