@@ -143,7 +143,6 @@ void MainCubeBuilder::draw ()
         model->useAO =false;
         cubeRenderer->prepForAODraw();
         flatRenderer->draw();
-        cout << "drawAO";
     }
     if(model->takeSnapshot)
     {

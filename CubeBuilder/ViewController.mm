@@ -277,7 +277,7 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     
-   cout<< "\ntouch";
+  
     for (UITouch *itouch in touches) 
     {
         itouches.size();

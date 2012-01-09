@@ -56,7 +56,7 @@
     
     
     NSData *img = UIImagePNGRepresentation(self.imageView.image);
-    cout <<"imageDAtaSize" <<img.length;
+   
     NSData *cube= [NSKeyedArchiver archivedDataWithRootObject:array];
     
     
@@ -147,7 +147,7 @@
     
     // then make the uiimage from that
     UIImage *myImage = [UIImage imageWithCGImage:imageRef];
-   // cout << "makeimage";
+   
    /* CGSize *newSize
     
     UIGraphicsBeginImageContext(newSize);
