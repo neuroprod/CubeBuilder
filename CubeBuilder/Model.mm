@@ -49,11 +49,12 @@ void Model::clearCubes ()
 {
      currentLoadID =-1;
     isDirty =true;
-    setColor(24);// red;
+   // setColor(24);// red;
     cubeHandler->clearCubes();
     camera->zoom = -10;
     camera->reset();
-    
+    colorMenu->resetColors();
+    setColor(24);
 }
 
 void  Model::setLoadData(int *dataCube,int size)
@@ -71,6 +72,9 @@ void  Model::setLoadData(int *dataCube,int size)
     camera->zoom =camera->tempzoom*2.0;
     camera->fit(true,0);
       
+    
+      colorMenu->resetColors();
+    setColor(24);
 }
 
 
@@ -116,7 +120,7 @@ void  Model::resolveCenter()
 void Model::setColor(int colorid)
 {
  
-    
+    cancelOverlay();
     cubeHandler->setColor(colorid);
    colorHolder->setColor(colorid);
     colorMenu->setColor(colorid);

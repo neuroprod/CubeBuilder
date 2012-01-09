@@ -106,11 +106,11 @@ void ColorMenu::setup()
     btns[3]->setColor(41);
     btns[4]->setColor(42);
     btns[5]->setColor(65);
-    btns[6]->setColor(0);
+    btns[6]->setColor(66);
     btns[7]->setColor(33);
-    btns[8]->setColor(66);
+    btns[8]->setColor(0);
     btns[9]->setColor(69);
-    btns[9]->setColor(69);
+  //  btns[9]->setColor(69);
     
     
     openColorsBtn.setup(23);
@@ -158,6 +158,20 @@ void ColorMenu::setColor(int colorid)
     btns[0 ]->setSelected(true);
     
     
+}
+void ColorMenu::resetColors()
+{
+    btns[0]->setColor(36);
+    btns[1]->setColor(38);
+    btns[2]->setColor(39);
+    btns[3]->setColor(41);
+    btns[4]->setColor(42);
+    btns[5]->setColor(65);
+    btns[6]->setColor(66);
+    btns[7]->setColor(33);
+    btns[8]->setColor(0);
+    btns[9]->setColor(69);
+
 }
 void ColorMenu::onDownOverlay(npEvent *e){
     

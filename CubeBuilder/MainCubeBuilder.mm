@@ -55,7 +55,7 @@ void MainCubeBuilder::setup()
     backGround  =new BackGround();
     backGround->setup();
     
-    
+    model->backGround =backGround;
     
     model->setColor(24);
     

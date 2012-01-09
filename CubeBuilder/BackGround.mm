@@ -31,7 +31,7 @@ void BackGround::setup()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA , 1024,1024, 0, GL_RGBA, GL_UNSIGNED_BYTE, imagedata);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA , 1024,512, 0, GL_RGBA, GL_UNSIGNED_BYTE, imagedata);
     
     free(imagedata);
     
@@ -94,7 +94,14 @@ void BackGround::setup()
     
 
 }
-void BackGround::setColor(){}
+void BackGround::setColor(int BgID)
+{
+    if (bgID ==BgID) return;
+    
+    bgID =BgID;
+    setOrientation(currentOrr);
+
+}
 
 
 void BackGround::renderTick()
@@ -146,7 +153,7 @@ void BackGround::renderTick()
 }
 void BackGround::setOrientation(int orientation)
 {
-    
+    currentOrr =orientation;
     float  uvX ;
     float  uvY ;
     float uvHeight ;
@@ -158,39 +165,39 @@ void BackGround::setOrientation(int orientation)
     float  h2;
     float  w2;
     
+    //384
     
+
+   float ofz=0;
+    if( bgID ==1)ofz = 0.377;
     
-    //landscape
-    if ( orientation==1)
-    {
-        
         w = 768;
         h = 1024;
         
-        w2= 768;
+        w2= 1024;
         h2 = 1024;
         
-        uvX = 0;
+        uvX = ofz;
         uvY = 0;
         uvHeight =1;
-        uvWidth =w/h;
+        uvWidth =0.370;
+        
+
+    
+   
+    //landscape
+    if ( orientation==1)
+    {
+         worldMatrix.makeOrtho2DMatrix(0-256,w2-256,h2,0); 
+        worldMatrix.postMultRotate(90, 0, 0, 1);
+      
     }
     //portrait
     if ( orientation ==0)
     {
-        w = 768;
-        h = 1024;
-        
-        w2= 768;
-        h2 = 1024;
-        
-        uvX = 0;
-        uvY = 0;
-        uvHeight =1;
-        uvWidth =w/h;
-        
+              worldMatrix.makeOrtho2DMatrix(0,w2,h2,0);   
     }
-    worldMatrix.makeOrtho2DMatrix(0,w2,h2,0);
+   
     
     
     data[0] =0 ;

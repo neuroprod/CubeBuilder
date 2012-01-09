@@ -51,7 +51,7 @@ class ColorMenu:public npDisplayObject
 
     
     void onDownOverlay(npEvent *e);
-        
+    void resetColors();
  
     void hideComplete(npEvent *e);
     void setOverlay(int currentOverLay);

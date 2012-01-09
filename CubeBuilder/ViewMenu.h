@@ -50,7 +50,7 @@ class ViewMenu:public npDisplayObject
     
     npBitmapSprite line2;
     
-    TogleIcon snapShot;
+    TogleIcon backgroundBtn;
     
     
     void onDownfit(npEvent *e);
@@ -61,7 +61,7 @@ class ViewMenu:public npDisplayObject
     void onDownleft(npEvent *e);
     void onDownright(npEvent *e);
     
-    void onSnapShot(npEvent *e);
+    void onBGSwitch(npEvent *e);
     
     void setBottom(int bot);
     float bottomPos;

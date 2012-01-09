@@ -47,7 +47,7 @@ class UIdisplaylist: public npBitmapSprite
     SelectIconBtn moveBtn;
     TapBtn viewBtn;
     
-     TapBtn menuBtn;
+    // TapBtn menuBtn;
      TapBtn redoBtn;
      TapBtn undoBtn;
     ZoomHolder zoomHolder;

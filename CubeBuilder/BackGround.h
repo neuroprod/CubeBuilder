@@ -25,16 +25,16 @@ class BackGround
     float * data;
 public:
     
-    BackGround(){isDirty=true;};
+    BackGround(){isDirty=true;bgID =0;};
     void setup();
-    void setColor();
+    void setColor(int bgID);
     void renderTick();
     void prepForFlatDraw();
     void setOrientation(int orientation);
     
     bool isDirty;
-
-
+    int bgID;
+    int currentOrr ;
 };
 
 

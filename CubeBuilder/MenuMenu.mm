@@ -54,7 +54,7 @@ void MenuMenu::setup()
     
     
     
-    w =512-64;
+    w =512-64-36;
     
     rollout.setSize( 64, 64,-32,-32);
     rollout.setUVauto(0,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
@@ -64,15 +64,15 @@ void MenuMenu::setup()
     w-=32;
     
     
-    int startX =32-16;
+    int startX =32-16+3;
     int margin =60;
     int marginS =40;
     
-    remove.setup(17);
-   remove.x = startX;
-    addChild(remove);
-    makeCallBack(MenuMenu,onDownremove,callremove );
-    remove.addEventListener(TOUCH_UP_INSIDE , callremove);
+    snapshot.setup(15);
+    snapshot.x = startX;
+    addChild( snapshot);
+    makeCallBack(MenuMenu,onDownsnapshot ,callsnapshot);
+    snapshot.addEventListener(TOUCH_UP_INSIDE , callsnapshot);
     startX+=marginS;
     
     line1.setSize(6, 64);
@@ -81,6 +81,7 @@ void MenuMenu::setup()
     addChild( line1);
     
     startX+=marginS;
+   
 
     
     save.setup(18);
@@ -88,7 +89,7 @@ void MenuMenu::setup()
     addChild(save);
     makeCallBack(MenuMenu,onDownsave ,callsave );
     save.addEventListener(TOUCH_UP_INSIDE , callsave);
-    startX+=margin;
+    startX+=margin-6;
     
     
     load.setup(19);
@@ -96,6 +97,17 @@ void MenuMenu::setup()
     addChild(load);
     makeCallBack(MenuMenu,onDownload ,calload );
     load.addEventListener(TOUCH_UP_INSIDE , calload);
+    
+    startX+=margin-6;
+    
+    remove.setup(17);
+    remove.x = startX;
+    addChild(remove);
+    makeCallBack(MenuMenu,onDownremove,callremove );
+    remove.addEventListener(TOUCH_UP_INSIDE , callremove);
+  
+    
+    
     startX+=marginS;
     
     line2.setSize(6, 64);
@@ -119,21 +131,15 @@ void MenuMenu::setup()
     
     startX+=marginS;
     
-    snapshot.setup(15);
-     snapshot.x = startX;
-    addChild( snapshot);
-    makeCallBack(MenuMenu,onDownsnapshot ,callsnapshot);
-     snapshot.addEventListener(TOUCH_UP_INSIDE , callsnapshot);
-    
-    
-    startX+=marginS;
+  /*
+   
     
     line4.setSize(6, 64);
     line4.setUVauto(128,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     line4.x = startX;
     addChild( line4);
     
-    startX+=marginS;
+    startX+=marginS;*/
     
    info.setup(21);
     info.x = startX;

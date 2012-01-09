@@ -27,13 +27,13 @@
         
         
        myButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        myButton.frame = CGRectMake(310-64+7+5, +5, 64, 64); // position in the parent view and set the size of the button
+        myButton.frame = CGRectMake(310-64+7, +5, 64, 64); // position in the parent view and set the size of the button
         [myButton setTitle:@"Delete" forState:UIControlStateNormal];
         // add targets and actions
         UIImage * btnImage = [UIImage imageNamed:@"deleteBtn.png"];
         [myButton setImage:btnImage forState:UIControlStateNormal];
 
-        myButton.alpha =0.6;
+       // myButton.alpha =0.6;
         
         [myButton addTarget:self action:@selector(doDelete:) forControlEvents:UIControlEventTouchUpInside];
        

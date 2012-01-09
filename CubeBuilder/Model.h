@@ -17,7 +17,7 @@
 #include "ColorHolder.h"
 #include "ColorMenu.h"
 #include "TapBtn.h"
-
+#include "BackGround.h"
 
 #define STATE_ADD 1
 #define STATE_REMOVE 2
@@ -89,6 +89,15 @@ public:
     TapBtn *undoBtn;
     
     bool isIpad1;
+    
+    BackGround *backGround;
+    
+    void setBackGround(int bgId)
+    {
+        backGround->setColor(bgId);
+    
+    }
+    
 };
 
 #endif

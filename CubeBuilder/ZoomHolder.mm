@@ -10,8 +10,8 @@
 void ZoomHolder::setup()
 {
 
-    setSize( 64, 64*3.5);
-    setUVauto(64*7,64*5,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
+    setSize( 64, 64*4.5);
+    setUVauto(64*7,64*4,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
 
 
 

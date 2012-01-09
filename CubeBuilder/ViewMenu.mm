@@ -87,21 +87,10 @@ void ViewMenu::setup()
        
     
     
+
+   
+    
  
-    snapShot.setup(15);
-    snapShot.x = startX;
-    addChild(snapShot);
-    makeCallBack(ViewMenu,onSnapShot,callsnap);
-    snapShot.addEventListener(TOUCH_UP_INSIDE , callsnap);
-    
-       startX+=marginS;
-    
-    line2.setSize( 6, 64);
-    line2.setUVauto(128,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
-    line2.x = startX;
-    addChild( line2); 
-    
-       startX+=marginS;
     
     fit.setup(8);
     fit.x = startX;
@@ -167,10 +156,22 @@ void ViewMenu::setup()
     right.addEventListener(TOUCH_UP_INSIDE , callright);
     startX+=marginS;
 
+ 
     
+    line2.setSize( 6, 64);
+    line2.setUVauto(128,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
+    line2.x = startX;
+    addChild( line2); 
     
+    startX+=marginS;
     
+     backgroundBtn.setup(16);
+     backgroundBtn.x = startX;
+    addChild( backgroundBtn);
+    makeCallBack(ViewMenu,onBGSwitch,callbg);
+     backgroundBtn.addEventListener(TOUCH_UP_INSIDE , callbg);
     
+    backgroundBtn.setSelected(1);    
     
     
    // startX+=margin;
@@ -244,15 +245,20 @@ void ViewMenu::onDownright(npEvent *e){
     
 }
 
-void ViewMenu::onSnapShot(npEvent *e){
+void ViewMenu::onBGSwitch(npEvent *e){
 
-     
-        OverlayEvent event;
-        event.name ="setOverlay";
-        event.overlayType =16;
-        
-        dispatchEvent(event);
-   
+    if (  model->backGround->bgID ==0)
+    {
+        model->setBackGround(1);
+      backgroundBtn.setSelected(0);
+    }
+    else
+    {
+        model->setBackGround(0);
+    
+        backgroundBtn.setSelected(1);
+    }
+    
    
     
 }
