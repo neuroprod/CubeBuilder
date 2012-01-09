@@ -305,9 +305,22 @@ static sqlite3_stmt *deleteStmt = nil;
     
     
     sqlite3_close(DB);
+    NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString  *documentsDirectory = [paths objectAtIndex:0];  
+    
+    NSString  *filePath = [NSString stringWithFormat:@"%@/%i.png", documentsDirectory,key];
     
     
     
+    NSFileManager *fileMgr = [NSFileManager defaultManager];
+    NSError *error;
+    if ([fileMgr removeItemAtPath:filePath error:&error] != YES){
+        NSLog(@"Unable to delete file: %@", [error localizedDescription]);
+    }else
+    {
+    
+        NSLog(@"file deleted");
+    }
 }
 
 

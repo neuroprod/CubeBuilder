@@ -143,11 +143,16 @@
     CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
     
     // make the cgimage
-    CGImageRef imageRef = CGImageCreate(w , h, bitsPerComponent, bitsPerPixel, bytesPerRow, colorSpaceRef, bitmapInfo, provider, NULL, NO, renderingIntent);
-    
+    CGImageRef imageRef = CGImageCreate(w , h, bitsPerComponent, bitsPerPixel, bytesPerRow, colorSpaceRef, bitmapInfo, provider, NULL, YES, renderingIntent);
+    int rw=310;
+    CGContextRef bitmap = CGBitmapContextCreate(NULL, rw, rw, 8, 4 * rw, colorSpaceRef, kCGImageAlphaPremultipliedFirst);
+    CGContextDrawImage(bitmap, CGRectMake(0, 0, rw, rw), imageRef);
+     CGImageRef ref = CGBitmapContextCreateImage(bitmap);
     // then make the uiimage from that
-    UIImage *myImage = [UIImage imageWithCGImage:imageRef];
-   
+    UIImage *myImage = [UIImage imageWithCGImage:ref];
+ 
+    
+   // UIImage *myImage = [ imageRef resizedImageWithContentMode:UIViewContentModeScaleAspectFit        bounds:CGSizeMake(310, 310)  interpolationQuality:1 ];
    /* CGSize *newSize
     
     UIGraphicsBeginImageContext(newSize);
