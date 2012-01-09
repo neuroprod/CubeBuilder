@@ -100,6 +100,7 @@ void MainCubeBuilder::update ()
     }
     if (model->useAO)
     {
+        
     cubeRenderer->isDirty =true;
     cubeRenderer->useAO=true;
     }
@@ -141,8 +142,18 @@ void MainCubeBuilder::draw ()
     
     if (cubeRenderer->useAO     || model->keepAO){
         model->useAO =false;
+        if(!model->isIpad1)
+        {
         cubeRenderer->prepForAODraw();
-        flatRenderer->draw();
+            flatRenderer->draw();
+        
+        }else
+        {
+            model->keepAO =false;
+            cubeRenderer->useAO =false;
+               cubeRenderer-> isDirty =false ;
+        }
+        
     }
     if(model->takeSnapshot)
     {

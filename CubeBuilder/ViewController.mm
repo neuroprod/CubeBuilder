@@ -68,21 +68,21 @@
 {
    
     [super viewDidLoad];
-    cout<<"\n " ;
+    //cout<<"\n " ;
     if ( [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
 		
 	{	
-          cout<<"hascam " ;
+        //  cout<<"hascam " ;
         Model::getInstance()->isIpad1 =false;
           
         
     }
     else {
     
-      cout<<"hasnocam " ;
+      //cout<<"hasnocam " ;
        Model::getInstance()->isIpad1 =true ;
     }
-    cout<<"\n " ;
+    //cout<<"\n " ;
     
     
     

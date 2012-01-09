@@ -66,7 +66,7 @@ void CubeRenderer::setup(){
     
   
     
-    //if(!isIpad1){
+    if(!isIpad1){
     glGenFramebuffers(1, &sampleFramebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, sampleFramebuffer);
     
@@ -84,7 +84,7 @@ void CubeRenderer::setup(){
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
     cout <<"Failed to make complete framebuffer object "<<glCheckFramebufferStatus(GL_FRAMEBUFFER)<< "\n";
     
-   // }
+    }
     
     vertexData= new GLfloat[720000];
 
@@ -169,7 +169,7 @@ void CubeRenderer::setup(){
     setupIDCubes();
     
     useAO=false;
- setupAO();
+ if (!isIpad1)setupAO();
     
 };
 
@@ -408,8 +408,7 @@ void CubeRenderer::setOrientation(int orientation)
     vpHID =vpH/2;
     camera->setOrientation(orientation);
  
-//if (!useAO)return;
-    
+    if (isIpad1 ) return;    
     float  uvX ;
     float  uvY ;
     float uvHeight ;
@@ -749,7 +748,8 @@ void CubeRenderer::prepForAODraw()
 
 void CubeRenderer::renderAO()
 {
-    
+    if (isIpad1)return;
+
     model->camera->setDepthRange();
     
         OpenGLErrorChek::chek("beforerrr");
