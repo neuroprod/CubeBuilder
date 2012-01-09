@@ -77,7 +77,7 @@ void BackGround::setup()
     
     glBindAttribLocation(program, ATTRIB_UV, "uv");
     pLoader->linkProgram();
-    
+    delete pLoader;
     glUseProgram(program);
     
     

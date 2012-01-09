@@ -13,7 +13,10 @@ void npEventDispatcher::addEventListener(string name  ,TnpEventFunctor* functor 
   //  npEvent e;
    // functor->Call(&e );
     
-    pair <string , TnpEventFunctor* > myPair (name, functor);
+    pair <string , TnpEventFunctor * > myPair;
+    myPair.first = name;
+     myPair.second = functor;
+    //= new pair <string , TnpEventFunctor * >(name, functor);
     pairs.push_back( myPair);
     hasEventListeners =true;
   
@@ -37,8 +40,11 @@ void npEventDispatcher::dispatchEvent(npEvent &event)
     
         if (searchVal.compare(pairs[i].first)==0 )
         {
+            // cout <<"call "<< pairs[i]->first<<" "<< pairs[i]->second<<"\n";
             pairs[i ].second->Call(&event);
-        
+           
+            
+            
         
         }
     }

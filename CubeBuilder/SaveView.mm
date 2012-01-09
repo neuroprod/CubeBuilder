@@ -63,8 +63,7 @@
     [[SaveDataModel getInstance] saveData:img cubeData:cube ];
     
     Model::getInstance()->cancelOverlay();
-
-
+    
 }
 
 
@@ -152,25 +151,19 @@
     UIImage *myImage = [UIImage imageWithCGImage:ref];
  
     
-   // UIImage *myImage = [ imageRef resizedImageWithContentMode:UIViewContentModeScaleAspectFit        bounds:CGSizeMake(310, 310)  interpolationQuality:1 ];
-   /* CGSize *newSize
-    
-    UIGraphicsBeginImageContext(newSize);
-    [myImage drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();    
-    UIGraphicsEndImageContext();
-*/
+ 
+    CGContextRelease(bitmap );
     
     
+    CGImageRelease(imageRef);
     
-    
-    
-    
-    
-    
+    CGDataProviderRelease(provider);
     
     
     [imageView setImage:myImage];  
+    
+    delete [] buffer2;
+   // [myImage release];
     
     if ( Model::getInstance()->currentLoadID ==-1)
     {

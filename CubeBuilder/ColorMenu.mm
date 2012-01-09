@@ -18,9 +18,12 @@ void ColorMenu::setSelected(bool sel, float delay)
         mijnTween.init(this,NP_EASE_IN_SINE,200,delay);
         
         mijnTween.addProperty( &y,bottomPos );
-        npTweener::addTween(mijnTween);
         makeCallBack(ColorMenu, hideComplete ,hideCall);
         mijnTween.addEventListener(NP_TWEEN_COMPLETE , hideCall );
+        
+        npTweener::addTween(mijnTween);
+        
+        
         
         
     }else 

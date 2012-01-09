@@ -23,7 +23,7 @@ public:
    static vector<npTween> tweens;
     
     
-    static void addTween(npTween tween,bool overrideTarget =true);
+    static void addTween(npTween &tween,bool overrideTarget =true);
     
     static void update();
 

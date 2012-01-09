@@ -151,7 +151,7 @@ void CubeRenderer::setup(){
     glBindAttribLocation(programMain, ATTRIB_NORMAL, "normal");
     glBindAttribLocation(programMain, ATTRIB_COLOR, "color");
     pLoader->linkProgram();
-    
+    delete pLoader;
     glUseProgram(programMain);
    
     
@@ -297,7 +297,7 @@ void CubeRenderer::setupIDCubes()
     glBindAttribLocation(programID, ATTRIB_NORMAL, "color");
     
     pLoader->linkProgram();
-
+delete pLoader;
     glUseProgram(programID);
     
     
@@ -553,7 +553,7 @@ void CubeRenderer::setupAO()
     glBindAttribLocation(programDepth, ATTRIB_VERTEX, "position");
   
     pLoader->linkProgram();
-    
+    delete pLoader;
     glUseProgram(programDepth);
     
     uWorldMatrixDepth= glGetUniformLocation(programDepth, "worldMatrix");
@@ -604,7 +604,7 @@ void CubeRenderer::setupAO()
     
     glBindAttribLocation(programBlur, ATTRIB_UV_BLUR, "uv");
     pLoaderBlur->linkProgram();
-    
+    delete pLoaderBlur;
     glUseProgram(programBlur);
     
     
@@ -652,7 +652,7 @@ void CubeRenderer::setupAO()
     
     glBindAttribLocation(programBlur2, ATTRIB_UV_BLUR, "uv");
     pLoaderBlur2->linkProgram();
-    
+    delete pLoaderBlur2;
     glUseProgram(programBlur2);
     
     
@@ -758,7 +758,7 @@ void CubeRenderer::renderAO()
     glViewport(0,vpY, vpW, vpH);
     glBindFramebuffer(GL_FRAMEBUFFER, sampleFramebuffer);
   /// glBindFramebuffer(GL_FRAMEBUFFER,fboDepth);
-    glClearColor(0.0, 0.0, 0.0, 0.0);
+   // glClearColor(0.0, 0.0, 0.0, 0.0);
     
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     
@@ -804,7 +804,7 @@ void CubeRenderer::renderAO()
     
    
     
-     glClearColor(0.0, 0.0, 0.0, 0.0);
+    // glClearColor(0.0, 0.0, 0.0, 0.0);
      glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glUseProgram(programBlur);
     
@@ -841,7 +841,7 @@ void CubeRenderer::renderAO()
     
     
     
-    glClearColor(0.0, 0.0, 0.0, 0.0);
+    //glClearColor(0.0, 0.0, 0.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glUseProgram(programBlur2);
     

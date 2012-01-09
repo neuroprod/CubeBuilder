@@ -19,7 +19,11 @@ class TnpEventFunctor
 {
 public:
     
-
+   // virtual  ~TnpEventFunctor()
+    //{
+      //  cout << "delete functor22";
+    //}
+    
     virtual void Call( npEvent* event)=0;       
 };
 
@@ -38,10 +42,7 @@ public:
         pt2Object = _pt2Object;  
         fpt=_fpt; 
     };
-    ~npEventFunctor()
-    {
-  
-    }
+ 
   
     virtual void Call( npEvent* event)
     { 
@@ -55,12 +56,43 @@ public:
 class npEventDispatcher
 {
    
-    vector< pair <string , TnpEventFunctor* > > pairs ;
+    vector< pair <string , TnpEventFunctor* >  > pairs ;
 public:
     
     bool hasEventListeners;
-    npEventDispatcher() :pairs(NULL) {}
-    virtual ~npEventDispatcher() {}
+    npEventDispatcher() :pairs(NULL) {
+    
+    
+    }
+    virtual ~npEventDispatcher() {
+        
+       /*// return; 
+        cout <<"\n";
+        for(int i=0;i<pairs.size();i++)
+        {
+            
+          // pairs[i ]->first =="ddd"; 
+          //delete  pairs[i ]->second;
+            cout <<"del- "<< pairs[i ]->first<<" "<<pairs[i ]->second << "\n"  ;     
+            
+        }
+       //pairs.clear();
+       */
+    
+    }
+    void removeAllEvents()
+    {
+        for(int i=0;i<pairs.size();i++)
+        {
+            
+            // pairs[i ]->first =="ddd"; 
+            delete  pairs[i ].second;
+           // cout <<"del- "<< pairs[i ]->first<<" "<<pairs[i ]->second << "\n"  ;     
+            
+        }
+        pairs.clear();
+    
+    }
     void addEventListener(string name  ,TnpEventFunctor* functor );
     void removeEventListener(string name ,TnpEventFunctor* functor );
     

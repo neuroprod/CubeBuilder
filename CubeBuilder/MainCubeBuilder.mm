@@ -82,7 +82,7 @@ void MainCubeBuilder::update ()
         
       
     }
-    if (frameCount==6){
+    if (frameCount==10){
        
         
         npEvent *e;
@@ -124,7 +124,7 @@ void MainCubeBuilder::draw ()
     // cout << "\ndirties: "<< cubeRenderer->isDirty << " "<<interfaceHandler->isDirty << " "<<backGround->isDirty <<" " <<cubeHandler->isDirty<<"\n";
     if (model->renderHit) cubeRenderer->drawIDcubes()  ;
  
-    glClearColor(1.0f,1.0f, 1.0f, 0.0f);
+  //  glClearColor(1.0f,1.0f, 1.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable (GL_BLEND); 
   
@@ -199,7 +199,7 @@ void MainCubeBuilder::draw ()
     flatRenderer->stop ();
       
     glDisable  (GL_BLEND); 
-    glClearColor(0.0f,0.0f, 0.0f, 0.0f);
+   // glClearColor(0.0f,0.0f, 0.0f, 0.0f);
      model->isDirty =false;
 }
 

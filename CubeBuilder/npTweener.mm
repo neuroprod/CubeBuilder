@@ -22,6 +22,7 @@ vector<npTween> npTweener::tweens;
             npEvent e;
             e.name =NP_TWEEN_COMPLETE;
                 tweens[i].dispatchEvent(e );
+                tweens[i].removeAllEvents();
             }
             tweens.erase (  tweens.begin()+i );
             s = tweens.size();
@@ -33,7 +34,7 @@ vector<npTween> npTweener::tweens;
   
 
 }
-void  npTweener::addTween(npTween tween,bool overrideTarget )
+void  npTweener::addTween(npTween &tween,bool overrideTarget )
 {
   int s = tweens.size();
     for (int i=0 ; i< s ;++i)
@@ -42,6 +43,11 @@ void  npTweener::addTween(npTween tween,bool overrideTarget )
         {
             if( overrideTarget)
             {
+               
+                if ( tweens[i].hasEventListeners){
+                   
+                    tweens[i].removeAllEvents();
+                }
                 tweens.erase (  tweens.begin()+i );
                 s = tweens.size();
                 i--;

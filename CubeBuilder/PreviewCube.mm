@@ -26,7 +26,7 @@ void PreviewCube::setup(){
     glBindAttribLocation(programMain, ATTRIB_VERTEX, "position");
    
     pLoader->linkProgram();
-    
+    delete pLoader;
     glUseProgram(programMain);
     
     
