@@ -24,8 +24,7 @@ bool npTween::update(int currentTime)
         {
         
            npTweenParam param =  params[i];
-           *param.property = (*this.*easeFunction)(time,param.startValue,param.changeValue,_time);
-            
+           *param.property = (*this.*easeFunction)(time,param.startValue,param.changeValue,_time);  
          
         }
         

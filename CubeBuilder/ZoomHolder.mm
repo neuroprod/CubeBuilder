@@ -27,7 +27,7 @@ bool ZoomHolder::isTouching(npTouch &touch)
         if( touch.phase==1)
         {
             float move =startY-(float)touch.y;
-            model->camera->setZoomMove(move);
+            model->camera->setZoomMove(move/5.0);
             //if (move >2) model->renderHit =true;
             startY =(float)touch.y;
         }

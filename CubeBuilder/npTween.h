@@ -56,7 +56,7 @@ public:
     float (npTween::*easeFunction)(float,float,float,float) ;
 
     
-    /// easing functions
+    /// easing functions, Robert Penner is the man!
     
     inline float easeNone (float t ,float  b,float  c,float  d){
         return c*t/d + b;
@@ -102,7 +102,7 @@ enum
     NP_EASE_IN_BACK,
     NP_EASE_OUT_BACK,
     NP_EASE_IN_EXPO,
-    NP_EASE_OUT_EXPO,
+    NP_EASE_OUT_EXPO, 
     NP_EASE_OUT_BACK_SOFT
 
 };

@@ -29,8 +29,8 @@ public:
         GLenum errCode;
         errCode = glGetError();
         if ((errCode ) != GL_NO_ERROR) {
-            cout << "\n GL ERROR "<< pos;
-            cout << ": "<< errCode;
+            cout << "\n GL ERROR at: "<< pos;
+            cout << " code: "<< errCode;
             if(errCode == GL_INVALID_ENUM)cout <<" GL_INVALID_ENUM";
             if(errCode == GL_INVALID_VALUE)cout <<"GL_INVALID_VALUE";
             if(errCode == GL_INVALID_OPERATION)cout <<"GL_INVALID_OPERATION";
@@ -49,8 +49,8 @@ public:
         GLenum errCode;
         errCode = glGetError();
         if ((errCode ) != GL_NO_ERROR) {
-        cout << "\n GL ERROR "<< pos;
-        cout << ": "<< errCode;
+        cout << "\n GL ERROR at: "<< pos;
+        cout << " code: "<< errCode;
         if(errCode == GL_INVALID_ENUM)cout <<" GL_INVALID_ENUM";
         if(errCode == GL_INVALID_VALUE)cout <<"GL_INVALID_VALUE";
         if(errCode == GL_INVALID_OPERATION)cout <<"GL_INVALID_OPERATION";

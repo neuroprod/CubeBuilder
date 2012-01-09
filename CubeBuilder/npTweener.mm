@@ -19,10 +19,10 @@ vector<npTween> npTweener::tweens;
         if( tweens[i].update(time))
         {
             if ( tweens[i].hasEventListeners){
-            npEvent e;
-            e.name =NP_TWEEN_COMPLETE;
+                npEvent e;
+                e.name =NP_TWEEN_COMPLETE;
                 tweens[i].dispatchEvent(e );
-                tweens[i].removeAllEvents();
+                tweens[i].removeAllEvents();/// memory leak hack ->remove if you keep your tweens allocated, or fix this
             }
             tweens.erase (  tweens.begin()+i );
             s = tweens.size();
@@ -46,7 +46,7 @@ void  npTweener::addTween(npTween &tween,bool overrideTarget )
                
                 if ( tweens[i].hasEventListeners){
                    
-                    tweens[i].removeAllEvents();
+                    tweens[i].removeAllEvents();/// memory leak hack ->remove if you keep your tweens allocated, or fix this
                 }
                 tweens.erase (  tweens.begin()+i );
                 s = tweens.size();

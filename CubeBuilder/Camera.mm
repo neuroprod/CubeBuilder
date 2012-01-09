@@ -9,7 +9,7 @@
 #include "Camera.h"
 
 
-
+#include <algorithm>
 
 Camera::Camera()
 {
@@ -38,7 +38,7 @@ Camera::Camera()
     currentCenterY =0;
     currentCenterZ =0;
     
-    zoom =-10;
+    zoom =-3;
     
     centerMatrix.setTranslation( currentCenterX,  currentCenterY,  currentCenterZ);
     
@@ -75,7 +75,7 @@ void Camera::update()
     
     
     zoomMatrix.makeIdentityMatrix();
-    zoomMatrix.translate(0.0,0,zoom );
+    zoomMatrix.translate(0.0,0,zoom*zoom*-1 );
     
    /*
     centerMatrix.setTranslation( currentCenterX,  currentCenterY,  currentCenterZ);
@@ -159,17 +159,18 @@ void Camera::checkTouch(npTouch &touch)
         else
         {
         
-           
+            float factor  =!(10<minDepth)?10:minDepth;
+            //cout << " "<<factor;
             float moveX =  touch.x-prevX;
             float moveY = prevY -touch.y;
         
             ofVec4f vecX= normalMatrix.postMult(ofVec4f(1,0,0,0));
-            vecX/=100;
-            vecX*=moveX;
+            vecX/=1000;
+            vecX*=moveX*(factor);
         
             ofVec4f vecY= normalMatrix.postMult(ofVec4f(0,1,0,0));
-            vecY/=100;
-            vecY*=moveY;
+            vecY/=1000;
+            vecY*=moveY*(factor);
         
             currentCenterX+=vecX.x +vecY.x;
             currentCenterY +=vecX.y+vecY.y;
@@ -473,7 +474,7 @@ void Camera::fit(bool dotween,int lock){
     if (lock!=0){
         worldMatrix.makeIdentityMatrix();
         zoomMatrix.makeIdentityMatrix();
-        zoomMatrix.translate(0.0,0,tempzoom  );
+        zoomMatrix.translate(0.0,0,tempzoom*tempzoom*-1  );
         worldMatrix.preMult(zoomMatrix);
         worldMatrix.preMult( normalMatrix);
         worldMatrix.preMult(centerMatrix);

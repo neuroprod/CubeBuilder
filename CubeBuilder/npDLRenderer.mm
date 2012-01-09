@@ -87,9 +87,9 @@ void npDLRenderer::render(npDisplayObject * displayObject)
     glDisableVertexAttribArray(ATTRIB_UV);
 
     glUseProgram(0);
-        glDisable  (GL_BLEND); 
+    glDisable  (GL_BLEND); 
   
-       OpenGLErrorChek::chek(10);
+       
 
  }
 void  npDLRenderer::setSize(float w,float h)
