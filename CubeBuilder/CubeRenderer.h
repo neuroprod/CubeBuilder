@@ -53,6 +53,7 @@ class CubeRenderer
      GLuint textureDepth;
     GLint uWorldMatrixDepth;
     GLint uPerspectiveMatrixDepth;
+    GLint uNormalMatrixDepth;
     
     GLint uMinDepth;
     GLint uDepthRange;

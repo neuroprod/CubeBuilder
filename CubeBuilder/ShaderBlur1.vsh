@@ -11,7 +11,7 @@ attribute vec3 uv;
 
 uniform mat4 worldMatrix;
 
-varying vec3 uvVarying;
+varying vec2 uvVarying;
 
 
 
@@ -21,7 +21,4 @@ void main()
     gl_Position =worldMatrix*position;
     uvVarying.x=uv.x;
      uvVarying.y=1.0-uv.y;
-    
-     
-    
-}
+ }

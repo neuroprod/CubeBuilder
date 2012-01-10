@@ -7,12 +7,17 @@
 //
 
 attribute vec4 position;
+attribute vec4 normal;
 
+
+
+uniform mat4 normalMatrix;
 uniform mat4 worldMatrix;
 uniform mat4 perspectiveMatrix;
 uniform float minDepth;
 uniform float depthRange;
-varying vec3 colorVarying;
+
+varying vec4 colorVarying;
 
 void main()
 {
@@ -24,11 +29,12 @@ void main()
     vec4 worldSpace = worldMatrix*position;
     gl_Position =perspectiveMatrix*worldSpace;
 
+    vec4 N = normalMatrix *normal;
     
     
     float d = 1.0-(worldSpace.z+minDepth )/depthRange;
-   
+    
   
-     colorVarying  = vec3(d,d,d);
+     colorVarying  = vec4(N.xyz,d);
 
 }

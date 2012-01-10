@@ -400,8 +400,8 @@ void Camera::fit(bool dotween,int lock){
     
 
     if(lock==1){
-     tempzoom =zoom;   
-       
+        tempzoom =zoom *zoom*-1  ;
+         cout  << "start "<< zoom << " " << tempzoom <<endl;
         centerMatrix.setTranslation( -model->center.x,  -model->center.y, -model->center.z);
          worldMatrix.makeIdentityMatrix();
         worldMatrix.preMult(zoomMatrix);
@@ -468,13 +468,13 @@ void Camera::fit(bool dotween,int lock){
     }
     float dx = maxx-minx;
     float dy =maxy-miny;
-    zoomf =sqrt( (dx*dx)+(dy*dy) )/(4.0 * tan(45.0/360.0 *3.1415));
+    zoomf =sqrtf ( (dx*dx)+(dy*dy) )/(4.0 * tan(45.0/360.0 *3.1415));
     tempzoom *=zoomf;
      
     if (lock!=0){
         worldMatrix.makeIdentityMatrix();
         zoomMatrix.makeIdentityMatrix();
-        zoomMatrix.translate(0.0,0,tempzoom*tempzoom*-1  );
+        zoomMatrix.translate(0.0,0,tempzoom  );
         worldMatrix.preMult(zoomMatrix);
         worldMatrix.preMult( normalMatrix);
         worldMatrix.preMult(centerMatrix);
@@ -482,22 +482,23 @@ void Camera::fit(bool dotween,int lock){
     }
     if (!dotween)
     {
-        currentCenterX =-model->center.x;
+       currentCenterX =-model->center.x;
         currentCenterY =-model->center.y;
         currentCenterZ =-model->center.z;
         centerMatrix.setTranslation( -model->center.x,  -model->center.y, -model->center.z);
-        zoom  =tempzoom ;
+        zoom  =tempzoom;
         isDirty =true;
+        cout << "noTween\n";
     
     }else
     {
         npTween mijnTween;
         mijnTween.init(this,NP_EASE_OUT_SINE,400,0);
-        
+        cout  << "Tween "<< tempzoom <<endl;
         mijnTween.addProperty(&currentCenterX,-model->center.x);
         mijnTween.addProperty(&currentCenterY,-model->center.y);
         mijnTween.addProperty(&currentCenterZ,-model->center.z );
-        mijnTween.addProperty(&zoom,tempzoom  );
+        mijnTween.addProperty(&zoom,sqrtf(-tempzoom)*-1);
         makeCallBack(Camera,setComplete,call );
         mijnTween.addEventListener( NP_TWEEN_COMPLETE , call);
         

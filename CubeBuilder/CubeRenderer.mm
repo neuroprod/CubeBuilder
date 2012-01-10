@@ -551,13 +551,15 @@ void CubeRenderer::setupAO()
     
     
     glBindAttribLocation(programDepth, ATTRIB_VERTEX, "position");
-  
+    glBindAttribLocation(programDepth, ATTRIB_NORMAL, "normal");
     pLoader->linkProgram();
     delete pLoader;
     glUseProgram(programDepth);
     
     uWorldMatrixDepth= glGetUniformLocation(programDepth, "worldMatrix");
     uPerspectiveMatrixDepth= glGetUniformLocation(programDepth, "perspectiveMatrix");
+     uNormalMatrixDepth= glGetUniformLocation(programDepth, "normalMatrix");
+    
     uDepthRange= glGetUniformLocation(programDepth, "depthRange");
     uMinDepth= glGetUniformLocation(programDepth, "minDepth");
  
@@ -742,7 +744,7 @@ void CubeRenderer::setupAO()
 
 void CubeRenderer::prepForAODraw()
 {
-  glBindTexture(GL_TEXTURE_2D, textureBlur2);
+  glBindTexture(GL_TEXTURE_2D, textureBlur);
     useAO =false;
 }
 
@@ -752,13 +754,13 @@ void CubeRenderer::renderAO()
 
     model->camera->setDepthRange();
     
-        OpenGLErrorChek::chek("beforerrr");
+    
     glEnable (GL_DEPTH_TEST);
       
     glViewport(0,vpY, vpW, vpH);
     glBindFramebuffer(GL_FRAMEBUFFER, sampleFramebuffer);
   /// glBindFramebuffer(GL_FRAMEBUFFER,fboDepth);
-   // glClearColor(0.0, 0.0, 0.0, 0.0);
+   glClearColor(0.0, 1.0, 0.0,1.0);
     
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     
@@ -767,6 +769,7 @@ void CubeRenderer::renderAO()
     
     glUniformMatrix4fv(uWorldMatrixDepth, 1,0, camera->worldMatrix.getPtr());
     glUniformMatrix4fv(uPerspectiveMatrixDepth, 1, 0, camera->perspectiveMatrix.getPtr());
+    glUniformMatrix4fv(uNormalMatrixDepth, 1, 0, camera->normalMatrix.getPtr());
     
     glUniform1f(uMinDepth,  model->camera->minDepth);
     glUniform1f(uDepthRange,- model->camera->depthRange);
@@ -775,6 +778,11 @@ void CubeRenderer::renderAO()
 
     glEnableVertexAttribArray(ATTRIB_VERTEX);
     glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 12,(GLvoid*) (sizeof(float) * 0));
+    
+    glEnableVertexAttribArray(ATTRIB_NORMAL);
+    glVertexAttribPointer(ATTRIB_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 12,(GLvoid*) (sizeof(float) * 3));
+
+    
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,indexBuffer);   
     glDrawElements(GL_TRIANGLES, 36* cubeHandler->cubes.size(), GL_UNSIGNED_SHORT, (void*)0);
@@ -831,8 +839,8 @@ void CubeRenderer::renderAO()
 
     
     glDrawArrays(GL_TRIANGLES, 0, 6);
-    
-    
+     glClearColor(0.0, 0.0, 0.0, 0.0);
+    return;
     
     
     glBindFramebuffer(GL_FRAMEBUFFER, fboBlur2);

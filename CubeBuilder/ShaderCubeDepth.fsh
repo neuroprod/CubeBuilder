@@ -9,7 +9,7 @@
 
 
 
-varying mediump vec3 colorVarying;
+varying mediump vec4 colorVarying;
 
 
 void main()
@@ -18,7 +18,7 @@ void main()
     
     
     
-   gl_FragColor = vec4(colorVarying,1.0);
+   gl_FragColor = colorVarying;
    
  
     
