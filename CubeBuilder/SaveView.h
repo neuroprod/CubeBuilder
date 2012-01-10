@@ -8,16 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
+
+@class ASIFormDataRequest;
 @interface SaveView : UIViewController
 {
 
     IBOutlet UIButton *saveAsNewBtn;
     IBOutlet UIImageView *imageView;
+    ASIFormDataRequest *request;
 }
 
 @property (nonatomic,retain) UIButton *saveAsNewBtn;
 @property (nonatomic,retain) UIImageView *imageView;
+@property (nonatomic,retain) ASIFormDataRequest *request;
+
 - (IBAction)cancel:(id)sender;
 -(IBAction)save:(id)sender;
 -(IBAction)saveAsNew:(id)sender;
+
+-(IBAction)saveOnline:(id)sender;
 @end

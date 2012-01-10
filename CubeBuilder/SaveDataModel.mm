@@ -134,9 +134,12 @@ static sqlite3_stmt *deleteStmt = nil;
                const void *ptr = sqlite3_column_blob(statement, 0);
                  int size = sqlite3_column_bytes(statement, 0);
                  NSData * data = [[NSData alloc] initWithBytes:ptr length:size];
+                
+                cout <<"bytes " <<data.length;
                  NSArray *dataCubes =(NSArray *)[NSKeyedUnarchiver unarchiveObjectWithData:data ];
                 
                 //[dataCubes objectAtIndex:0];
+                    cout <<"  bytes cc  " <<dataCubes.count;
                 int  * dataCube =new int[[dataCubes count]];
                for (int i=0; i< [dataCubes count];i++)
                 {

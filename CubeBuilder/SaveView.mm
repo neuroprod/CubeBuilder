@@ -9,13 +9,14 @@
 #import "SaveView.h"
 #include "Model.h"
 #include "SaveDataModel.h"
+#import "ASIFormDataRequest.h"
 @implementation SaveView
 
 @synthesize saveAsNewBtn;
 @synthesize imageView;
 
 
-
+@synthesize request;
 
 - (IBAction)cancel:(id)sender{Model::getInstance()->cancelOverlay();}
 -(IBAction)save:(id)sender
@@ -204,4 +205,59 @@
     [super dealloc];
 
 }
+
+
+
+
+
+
+
+
+-(IBAction)saveOnline:(id)sender
+{
+
+  [request cancel];
+	[self setRequest:[ASIFormDataRequest requestWithURL:[NSURL URLWithString:@"http://allseeing-i.com/ignore"]]];
+	[request setPostValue:@"test" forKey:@"value1"];
+	[request setPostValue:@"test" forKey:@"value2"];
+	[request setPostValue:@"test" forKey:@"value3"];
+	[request setTimeOutSeconds:20];
+    
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_4_0
+	[request setShouldContinueWhenAppEntersBackground:YES];
+#endif
+	//[request setUploadProgressDelegate:progressIndicator];
+	[request setDelegate:self];
+	[request setDidFailSelector:@selector(uploadFailed:)];
+	[request setDidFinishSelector:@selector(uploadFinished:)];
+	
+	//Create a 256KB file
+	NSData *data = [[[NSMutableData alloc] initWithLength:256*1024] autorelease];
+	NSString *path = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"file"];
+	[data writeToFile:path atomically:NO];
+	
+	//Add the file 8 times to the request, for a total request size around 2MB
+	int i;
+	for (i=0; i<8; i++) {
+		[request setFile:path forKey:[NSString stringWithFormat:@"file-%hi",i]];
+	}
+	
+	[request startAsynchronous];
+	//[resultView setText:@"Uploading data..."];
+
+cout << "start";
+
+}
+
+
+- (void)uploadFailed:(ASIHTTPRequest *)theRequest
+{
+	cout << "faild";
+}
+
+- (void)uploadFinished:(ASIHTTPRequest *)theRequest
+{
+cout << "yeababa";
+}
+
 @end
