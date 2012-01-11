@@ -381,9 +381,9 @@ bool CubeRenderer::getPoint(int x, int y )
     
     int g = (int)pixels[pos+1];
     int b = (int)pixels[pos+2];
-    currentCubeIndex = g*255 +b;
+    currentCubeIndex = g*256 +b;
     
-
+    cout <<" inx " << currentCubeSide<< " " <<g<<" " <<b << " "<< currentCubeIndex<<endl ;
     return true;
     
 }

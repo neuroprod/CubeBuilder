@@ -299,8 +299,8 @@
 #endif
 	[request setUploadProgressDelegate:progressIndicator];
 	[request setDelegate:self];
-	[request setDidFailSelector:@selector(uploadFailed:)];
-	[request setDidFinishSelector:@selector(uploadFinished:)];
+	[request setDidFailSelector:@selector(downloadFailed:)];
+	[request setDidFinishSelector:@selector(downloadFinished:)];
 	[request setTimeOutSeconds:20];
 	
     [request setFile:pathImage forKey:@"image"];
@@ -314,7 +314,7 @@ cout << "start";
 }
 
 
-- (void)uploadFailed:(ASIHTTPRequest *)theRequest
+- (void)downloadFailed:(ASIHTTPRequest *)theRequest
 {
    
     [progressIndicator setHidden:true];
@@ -327,7 +327,7 @@ cout << "start";
     [alert release];
 }
 
-- (void)uploadFinished:(ASIHTTPRequest *)theRequest
+- (void)downloadFinished:(ASIHTTPRequest *)theRequest
 {
   NSLog (@"%@",theRequest.responseString );
 

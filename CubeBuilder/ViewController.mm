@@ -136,6 +136,12 @@
        [galView release];
        galView =NULL;
        
+   }   else if (self.publicGalView.view.superview  ){
+       
+       [self.publicGalView.view removeFromSuperview];
+       [publicGalView release];
+      publicGalView=NULL;
+       
    } 
  
 
