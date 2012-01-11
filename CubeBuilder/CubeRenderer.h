@@ -63,16 +63,10 @@ class CubeRenderer
     GLuint rbufferBlur;
     GLuint programBlur;
     GLuint textureBlur;
+    GLuint textureNoise;
     GLint uWorldMatrixBlur;
-    
-    GLuint fboBlur2;
-    GLuint rbufferBlur2;
-    GLuint programBlur2;
-    GLuint textureBlur2;
-    GLint uWorldMatrixBlur2;
-    
-    
-    
+    GLint hDepth; 
+    GLint hNoise;
     float *data;
     ofMatrix4x4 worldMatrixBlur;
     

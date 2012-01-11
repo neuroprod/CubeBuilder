@@ -7,7 +7,7 @@
 //
 
 #include "CubeRenderer.h"
-
+#include "ImageDataLoader.h"
 // 65535/36 = max 1800
 // 518400  
 
@@ -611,55 +611,29 @@ void CubeRenderer::setupAO()
     
     
     uWorldMatrixBlur= glGetUniformLocation(programBlur, "worldMatrix");
+ hDepth = glGetUniformLocation(programBlur, "texture");
+     hNoise = glGetUniformLocation(programBlur, "textureNoise");
+    
+    
+    cout << "\nsetup"<<  hDepth <<" "<< hNoise <<"\n";
+    ImageDataLoader IDloader;
+    GLubyte *imagedata;
+    
+    
+    imagedata = IDloader.loadFile(@"noiseMap.jpg");
+    glGenTextures(1, &textureNoise);
+    glBindTexture(GL_TEXTURE_2D,textureNoise);
+    
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,  GL_LINEAR); 
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA , 1024,1024, 0, GL_RGBA, GL_UNSIGNED_BYTE, imagedata);
+    
+    free(imagedata);
 
-    
-    
-    
-    
-    
-    /*
-     *
-     *
-     *
-     *
-     *
-     *     BLUR2222
-     *
-     */
-    
-    OpenGLErrorChek::chek("blursetup start2");
-    glGenTextures(1, &textureBlur2);
-	glBindTexture(GL_TEXTURE_2D, textureBlur2);
-	
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,  GL_LINEAR);
-    
-    
-    
-	
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA ,width2, height2, 0, GL_RGBA , GL_UNSIGNED_BYTE, NULL);
-    
-    
-	glGenFramebuffers(1, &fboBlur2);
-	glBindFramebuffer(GL_FRAMEBUFFER, fboBlur2);	
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureBlur2, 0);
-    
-    
-    
-    
-    npProgramLoader *pLoaderBlur2 = new npProgramLoader;
-    programBlur2 =    pLoaderBlur2->loadProgram ("ShaderBlur2");
-    
-    glBindAttribLocation(programBlur2, ATTRIB_VERTEX_BLUR, "position");
-    
-    glBindAttribLocation(programBlur2, ATTRIB_UV_BLUR, "uv");
-    pLoaderBlur2->linkProgram();
-    delete pLoaderBlur2;
-    glUseProgram(programBlur2);
-    
-    
-    uWorldMatrixBlur2= glGetUniformLocation(programBlur2, "worldMatrix");
-    
+       
     
     
     
@@ -740,6 +714,32 @@ void CubeRenderer::setupAO()
     data[34] = data[10];
     data[35] = data[11];
 
+    
+    
+    
+    
+    
+    
+    ///
+    for(int i =0;i<32;i++ )
+    {
+   //  pSphere[20] = vec3(-0.010735935, 0.01647018, -0.0062425877);
+        
+        ofVec4f v;
+        v.x =((float )rand()/RAND_MAX -0.5)*2.0;
+          v.y =((float )rand()/RAND_MAX -0.5)*2.0;
+        v.z =2.0;//+(float )rand()/RAND_MAX ;
+        v.normalize();
+    cout <<  "pSphere["<<i<<"] = vec3("<<v.x<<","<< v.y<<"," <<v.z<<");\n";
+    
+    }
+    
+    
+    
+    
+    
+    
+    
 }
 
 void CubeRenderer::prepForAODraw()
@@ -760,7 +760,7 @@ void CubeRenderer::renderAO()
     glViewport(0,vpY, vpW, vpH);
     glBindFramebuffer(GL_FRAMEBUFFER, sampleFramebuffer);
   /// glBindFramebuffer(GL_FRAMEBUFFER,fboDepth);
-   glClearColor(0.0, 1.0, 0.0,1.0);
+   glClearColor(0.0, 0.0, 0.0,0.0);
     
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     
@@ -816,7 +816,18 @@ void CubeRenderer::renderAO()
      glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glUseProgram(programBlur);
     
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, textureNoise);
+    glUniform1i(hNoise, 1);  
+    
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureDepth);
+    
+    glUniform1i(hDepth, 0);
+    
+  
+    
+   // glBindTexture(GL_TEXTURE_2D, textureDepth);
     glUniformMatrix4fv(uWorldMatrixBlur, 1, 0, worldMatrixBlur.getPtr());
     
     
@@ -839,44 +850,10 @@ void CubeRenderer::renderAO()
 
     
     glDrawArrays(GL_TRIANGLES, 0, 6);
-     glClearColor(0.0, 0.0, 0.0, 0.0);
-    return;
     
     
-    glBindFramebuffer(GL_FRAMEBUFFER, fboBlur2);
-   
-    glViewport(0,vpY, vpW, vpH);
-    
-    
-    
-    //glClearColor(0.0, 0.0, 0.0, 0.0);
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    glUseProgram(programBlur2);
-    
-    glBindTexture(GL_TEXTURE_2D, textureBlur);
-    glUniformMatrix4fv(uWorldMatrixBlur2, 1, 0, worldMatrixBlur.getPtr());
-    
-    
-    GLfloat *pointer2 =data;
-    
-    glVertexAttribPointer(ATTRIB_VERTEX_BLUR, 3, GL_FLOAT, 0, 6*sizeof(GLfloat), pointer2);
-    glEnableVertexAttribArray(ATTRIB_VERTEX_BLUR);
-    
-    
-    pointer2 +=3;
-    glVertexAttribPointer(ATTRIB_UV_BLUR, 3, GL_FLOAT, 0, 6*sizeof(GLfloat), pointer2);
-    glEnableVertexAttribArray(ATTRIB_UV_BLUR);
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-
+    glClearColor(0.0, 0.0, 0.0, 0.0);
+  
 
     
     glUseProgram(0);
@@ -887,6 +864,7 @@ void CubeRenderer::renderAO()
     
     glBindTexture(GL_TEXTURE_2D, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glClearColor(0.0, 0.0, 0.0, 0.0);
     
 
 }

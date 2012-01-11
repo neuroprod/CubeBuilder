@@ -32,9 +32,9 @@ void main()
     vec4 N = normalMatrix *normal;
     
     
-    float d = 1.0-(worldSpace.z+minDepth )/depthRange;
+    float d = (worldSpace.z+minDepth )/(depthRange*2.0) ;
     
   
-     colorVarying  = vec4(N.xyz,d);
+     colorVarying  = vec4(N.xyz,1.0-d );
 
 }

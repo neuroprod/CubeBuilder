@@ -32,6 +32,8 @@
 		013B860014BC7D4B000661F6 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 013B85FF14BC7D4A000661F6 /* libz.dylib */; };
 		013B860214BC7D6B000661F6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013B860114BC7D6A000661F6 /* MobileCoreServices.framework */; };
 		013B860714BC8088000661F6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013B860614BC8087000661F6 /* SystemConfiguration.framework */; };
+		013B860914BD87BF000661F6 /* noiseMap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 013B860814BD87BF000661F6 /* noiseMap.jpg */; };
+		013B861014BDE140000661F6 /* PublicGalView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 013B860F14BDE13F000661F6 /* PublicGalView.mm */; };
 		018755CE14A8AC0E00E8CEFB /* ShaderCubeMain.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 018755CC14A8AC0E00E8CEFB /* ShaderCubeMain.fsh */; };
 		018755CF14A8AC0E00E8CEFB /* ShaderCubeMain.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 018755CD14A8AC0E00E8CEFB /* ShaderCubeMain.vsh */; };
 		018755D614A9B6E100E8CEFB /* ShaderFlatDPpng.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 018755D414A9B6E100E8CEFB /* ShaderFlatDPpng.fsh */; };
@@ -149,6 +151,9 @@
 		013B85FF14BC7D4A000661F6 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		013B860114BC7D6A000661F6 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		013B860614BC8087000661F6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		013B860814BD87BF000661F6 /* noiseMap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = noiseMap.jpg; sourceTree = "<group>"; };
+		013B860E14BDE13E000661F6 /* PublicGalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicGalView.h; sourceTree = "<group>"; };
+		013B860F14BDE13F000661F6 /* PublicGalView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PublicGalView.mm; sourceTree = "<group>"; };
 		018755CA14A8995D00E8CEFB /* cbColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cbColor.h; sourceTree = "<group>"; };
 		018755CB14A8A91600E8CEFB /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		018755CC14A8AC0E00E8CEFB /* ShaderCubeMain.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShaderCubeMain.fsh; sourceTree = "<group>"; };
@@ -368,6 +373,8 @@
 				01155A0314B5F03900CDD8B7 /* HorImageGal.mm */,
 				01155A0914B5F54400CDD8B7 /* ImageCell.h */,
 				01155A0A14B5F54400CDD8B7 /* ImageCell.mm */,
+				013B860E14BDE13E000661F6 /* PublicGalView.h */,
+				013B860F14BDE13F000661F6 /* PublicGalView.mm */,
 			);
 			name = uikitcrapp;
 			sourceTree = "<group>";
@@ -570,6 +577,7 @@
 		018F87BC14A491A5004C9D6F /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				013B860814BD87BF000661F6 /* noiseMap.jpg */,
 				013B85D714BB2882000661F6 /* background.jpg */,
 				013B85D914BB2889000661F6 /* mainmap.png */,
 				013B85DB14BB2A79000661F6 /* deleteBtn.png */,
@@ -655,6 +663,7 @@
 				013B85D814BB2882000661F6 /* background.jpg in Resources */,
 				013B85DA14BB2889000661F6 /* mainmap.png in Resources */,
 				013B85DC14BB2A79000661F6 /* deleteBtn.png in Resources */,
+				013B860914BD87BF000661F6 /* noiseMap.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -719,6 +728,7 @@
 				013B85F814BC79FD000661F6 /* ASIInputStream.m in Sources */,
 				013B85F914BC79FD000661F6 /* ASINetworkQueue.m in Sources */,
 				013B85FE14BC7C98000661F6 /* Reachability.m in Sources */,
+				013B861014BDE140000661F6 /* PublicGalView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

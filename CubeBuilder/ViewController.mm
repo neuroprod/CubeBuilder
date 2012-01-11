@@ -17,7 +17,7 @@
 #include <vector>
 #include "npTouch.h"
 #include "ViewSettings.h"
-
+#include "PublicGalView.h"
 
 
 
@@ -31,7 +31,7 @@
    SaveView *saveView;
    GalleryView *galView;
     
-    
+    PublicGalView *publicGalView;
     
     
     MainCubeBuilder *main ;
@@ -47,7 +47,7 @@
 @property (retain,nonatomic) SaveView *saveView;
 @property (retain,nonatomic)  GalleryView *galView;
 @property (retain,nonatomic) SaveDataModel *saveData;
-
+@property (retain,nonatomic) PublicGalView *publicGalView;
 
 - (void)setupGL;
 - (void)tearDownGL;
@@ -58,7 +58,7 @@
 @implementation ViewController
 
 
-
+@synthesize publicGalView;
 @synthesize saveData;
 @synthesize saveView;
 @synthesize clearView;
@@ -184,11 +184,25 @@
                   
           [clearV release];
       }
-      NSLog(@"setBackGround");
+      galView.view.frame = CGRectMake(0, height2-LOADVIEW_HEIGHT/2, width2*2, LOADVIEW_HEIGHT);
+      [self.view insertSubview:galView.view atIndex:0];
+  } 
+      
+      else  if (viewID==13)
+      {
+          if (self.publicGalView ==NULL){
+              PublicGalView *clearV =  [[PublicGalView alloc] init];
+              clearV.view = [[UIView alloc] initWithFrame:CGRectMake(0, height2-LOADVIEW_HEIGHT/2, width2*2, LOADVIEW_HEIGHT)];
+              
+              self.publicGalView = clearV;
+              
+              [clearV release];
+          }
+          publicGalView.view.frame = CGRectMake(0, height2-LOADVIEW_HEIGHT/2, width2*2, LOADVIEW_HEIGHT);
+          [self.view insertSubview:publicGalView.view atIndex:0];
       
        
-     galView.view.frame = CGRectMake(0, height2-LOADVIEW_HEIGHT/2, width2*2, LOADVIEW_HEIGHT);
-      [self.view insertSubview:galView.view atIndex:0];
+    
       
   }
    
@@ -237,6 +251,7 @@
      if (self.clearView !=NULL){clearView.view.frame = CGRectMake(width2-CLEARVIEW_WIDHT/2, height2-CLEARVIEW_HEIGHT/2, CLEARVIEW_WIDHT, CLEARVIEW_HEIGHT);}
     
     if (self.galView !=NULL){galView.view.frame =    CGRectMake(0, height2-LOADVIEW_HEIGHT/2, width2*2, LOADVIEW_HEIGHT);}
+    if (self.publicGalView !=NULL){publicGalView.view.frame =    CGRectMake(0, height2-LOADVIEW_HEIGHT/2, width2*2, LOADVIEW_HEIGHT);}
     return YES;
   
 }

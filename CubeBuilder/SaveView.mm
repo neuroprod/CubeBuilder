@@ -10,17 +10,23 @@
 #include "Model.h"
 #include "SaveDataModel.h"
 #import "ASIFormDataRequest.h"
-@implementation SaveView
+#include <sstream>
 
+
+@implementation SaveView
+@synthesize saveOnlineBtn;
 @synthesize saveAsNewBtn;
 @synthesize imageView;
-
+@synthesize progressIndicator;
+@synthesize saveBtn;
+@synthesize textField;
 
 @synthesize request;
 
 - (IBAction)cancel:(id)sender{Model::getInstance()->cancelOverlay();}
 -(IBAction)save:(id)sender
 {
+    
     int *cubeData =Model::getInstance()->cubeHandler->getCubeData();
     int size  = Model::getInstance()->cubeHandler->cubes.size()*4;
        NSMutableArray * array = [[NSMutableArray alloc] initWithCapacity:size];
@@ -42,12 +48,14 @@
       [[SaveDataModel getInstance] saveDataCurrent:img cubeData:cube ];
     }
     Model::getInstance()->cancelOverlay();
-    
+    [saveBtn setEnabled:false];
     //[[SaveDataModel getInstance] getAllData];
 
 }
 -(IBAction)saveAsNew:(id)sender
 {
+   
+
     int *cubeData =Model::getInstance()->cubeHandler->getCubeData();
     int size  = Model::getInstance()->cubeHandler->cubes.size()*4;
     NSMutableArray * array = [[NSMutableArray alloc] initWithCapacity:size];
@@ -200,8 +208,14 @@
 }
 -(void) dealloc
 {
-    [saveAsNewBtn release];
-    [imageView release];
+    [ saveOnlineBtn release];
+    [ saveAsNewBtn release];
+    [ imageView release];
+    [ progressIndicator release];
+    [saveBtn release];
+    [ textField release];
+   //[saveAsNewBtn release];
+   // [imageView release];
     [super dealloc];
 
 }
@@ -210,37 +224,87 @@
 
 
 
+-(IBAction)resignFR :(id)sender
+{
 
+    [sender resignFirstResponder]; 
+}
 
 
 -(IBAction)saveOnline:(id)sender
 {
+    
+    if([textField.text isEqualToString: @""]){textField.text =@"Anonymous";} ;
+    
+    ///
+    
+    
+        [progressIndicator setHidden:false];
+      [saveOnlineBtn setEnabled:false];
+    
+    int *cubeData =Model::getInstance()->cubeHandler->getCubeData();
+   int size  = Model::getInstance()->cubeHandler->cubes.size()*4;
+    
+    string str;
+    stringstream outS;
+    for ( int i = 0 ; i < size; i ++ ){
+        outS << cubeData[i] <<" ";
+    }
+    str= outS.str();
+    const char* cstr1 = str.c_str();
+    
+    
+    NSString* strNS= [NSString stringWithUTF8String:cstr1];
+    
+	NSData *cube= [strNS dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    
+    
+    
+    
+    /* int size  = Model::getInstance()->cubeHandler->cubes.size()*4;
+     NSMutableArray * array = [[NSMutableArray alloc] initWithCapacity:size];
+     for ( int i = 0 ; i < size; i ++ )
+     [array addObject:[NSNumber numberWithInt:cubeData[i]]];
+     
+     */
+    
+    NSData *img = UIImageJPEGRepresentation(self.imageView.image,0.8);
+    
+    // NSData *cube= [NSKeyedArchiver archivedDataWithRootObject:array];
+    
+    
+    NSString *pathData = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"dataTemp.txt"];
+	[cube writeToFile:pathData atomically:NO ];
+    
+    
+    
+    NSString *pathImage = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"imgTemp.jpg"];
+	[img writeToFile:pathImage atomically:NO];
 
+    
+    
+    
+    
+    
+    
   [request cancel];
-	[self setRequest:[ASIFormDataRequest requestWithURL:[NSURL URLWithString:@"http://allseeing-i.com/ignore"]]];
-	[request setPostValue:@"test" forKey:@"value1"];
-	[request setPostValue:@"test" forKey:@"value2"];
-	[request setPostValue:@"test" forKey:@"value3"];
-	[request setTimeOutSeconds:20];
+	[self setRequest:[ASIFormDataRequest requestWithURL:[NSURL URLWithString:@"http://cubeconstruct.net/process"]]];
+	[request setPostValue:textField.text forKey:@"name"];
+	
     
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_4_0
 	[request setShouldContinueWhenAppEntersBackground:YES];
 #endif
-	//[request setUploadProgressDelegate:progressIndicator];
+	[request setUploadProgressDelegate:progressIndicator];
 	[request setDelegate:self];
 	[request setDidFailSelector:@selector(uploadFailed:)];
 	[request setDidFinishSelector:@selector(uploadFinished:)];
+	[request setTimeOutSeconds:20];
 	
-	//Create a 256KB file
-	NSData *data = [[[NSMutableData alloc] initWithLength:256*1024] autorelease];
-	NSString *path = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"file"];
-	[data writeToFile:path atomically:NO];
-	
-	//Add the file 8 times to the request, for a total request size around 2MB
-	int i;
-	for (i=0; i<8; i++) {
-		[request setFile:path forKey:[NSString stringWithFormat:@"file-%hi",i]];
-	}
+    [request setFile:pathImage forKey:@"image"];
+	[request setFile:pathData forKey:@"data"];
 	
 	[request startAsynchronous];
 	//[resultView setText:@"Uploading data..."];
@@ -252,12 +316,23 @@ cout << "start";
 
 - (void)uploadFailed:(ASIHTTPRequest *)theRequest
 {
-	cout << "faild";
+   
+    [progressIndicator setHidden:true];
+    Model::getInstance()->cancelOverlay();
+
+    UIAlertView *alert  =[[UIAlertView alloc] initWithTitle:@"Sorry :)" message:@"I can't seem to connect to the server, you need to be online to save to the public gallery" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+
+    
+    [alert show];
+    [alert release];
 }
 
 - (void)uploadFinished:(ASIHTTPRequest *)theRequest
 {
-cout << "yeababa";
+  NSLog (@"%@",theRequest.responseString );
+
+    [progressIndicator setHidden:true];
+    Model::getInstance()->cancelOverlay();
 }
 
 @end

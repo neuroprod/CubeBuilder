@@ -56,10 +56,19 @@
     
    [[SaveDataModel getInstance] getAllData];
     
+    
+    UILabel *scoreLabel = [ [UILabel alloc ] initWithFrame:CGRectMake(10.0, 5.0, 80.0, 20.0) ];
+    scoreLabel.textAlignment =  UITextAlignmentCenter;
+    scoreLabel.textColor = [UIColor colorWithRed:0.8 green:0.0 blue:0.0 alpha:1.0];
+    scoreLabel.font = [UIFont fontWithName:@"Helvetica-Bold"  size:(20.0)  ];
+    scoreLabel.text = @"LOAD"; 
+    [self.view addSubview:scoreLabel];
+   
+    
     gal =[[HorImageGal alloc] init];
     CGRect frame = self.view.frame;
     gal.view.transform = CGAffineTransformMakeRotation(M_PI/2.0);
-    gal.view .frame = CGRectMake(0, 0, frame.size.width, frame.size.height);   
+    gal.view .frame = CGRectMake(0,30, frame.size.width, frame.size.height);   
     NSMutableArray* galArray =  [[SaveDataModel getInstance] savedData ];
     
 

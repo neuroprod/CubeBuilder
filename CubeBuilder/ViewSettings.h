@@ -9,11 +9,11 @@
 #ifndef CubeConstruct_ViewSettings_h
 #define CubeConstruct_ViewSettings_h
 
-#define CLEARVIEW_WIDHT 300
+#define CLEARVIEW_WIDHT 260
 #define CLEARVIEW_HEIGHT 200
 
 
-#define SAVEVIEW_WIDHT 424
+#define SAVEVIEW_WIDHT 350
 #define SAVEVIEW_HEIGHT 520
 
 
