@@ -219,7 +219,13 @@ void MainCubeBuilder::setTouches(vector<npTouch> &touches)
 {
     int currentState  = model->currentState;
     
+    int mtGuestureCount =0;
+    for(int i =0;i<touches.size();++i)
+    {
+        if(touches[i].phase ==NP_TOUCH_MOVE && touches[i].target ==NULL){mtGuestureCount++;}
     
+    }
+    if (mtGuestureCount >1) cout << "ROTATEMOVE WATHEVER\n";
     for(int i =0;i<touches.size();++i)
     {
         
@@ -271,29 +277,7 @@ void MainCubeBuilder::setTouches(vector<npTouch> &touches)
         {
             if(touches[i].target)
             {
-                if( !interfaceHandler->checkTouch(touches[i]))
-                {
-                
-                  /*  if (currentState<10)
-                    {
-                        if(cubeRenderer->getPoint(touches[i].x,touches[i ].y))
-                        {
-                            cubeHandler->touchedCube(cubeRenderer->currentCubeIndex,cubeRenderer->currentCubeSide,touches[i].phase);
-                        
-                        } 
-                        else 
-                        {
-                            previewCube->setPos(10000 , -10000,-10000);
-                        } 
-                    }
-                    else  if (currentState<20)
-                    {
-                    
-                        camera->checkTouch(touches[i]);
-                    
-                    }*/
-                
-                }
+                interfaceHandler->checkTouch(touches[i]);             
         
             }else
             {
