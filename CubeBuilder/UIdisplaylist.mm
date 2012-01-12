@@ -263,6 +263,11 @@ void UIdisplaylist::setOverlay(npEvent *e)
         menuMenu.setSelected(false);
         viewMenu.setSelected(false);
          model->keepAO =true;
+        
+        if(type ==14)   model->prepForSaveImage();
+       
+          //[[NSNotificationCenter defaultCenter] postNotificationName:@"setOverView" object:[NSNumber numberWithInt:currentOverLay]]; 
+        
         return;
     }
      viewMenu.setSelected(false);
@@ -352,8 +357,12 @@ void UIdisplaylist::openOverlayCompleet(npEvent *e)
     {
         model->prepForSaveShow();
       
+    } if ( currentOverLay  ==14)
+    {
+     
     }
     else{
+        
       [[NSNotificationCenter defaultCenter] postNotificationName:@"setOverView" object:[NSNumber numberWithInt:currentOverLay]]; 
         
     }

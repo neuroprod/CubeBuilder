@@ -24,7 +24,7 @@
 
 #include "Camera.h"
 #include "Model.h"
-
+//#define USEAO 0
 
 class MainCubeBuilder: public npEventDispatcher
 {

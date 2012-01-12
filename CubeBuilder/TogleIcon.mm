@@ -9,6 +9,7 @@
 
 #include "TogleIcon.h"
 #include "SettingsCubeBuilder.h"
+#include "Model.h"
 void TogleIcon::setup(int iconID)
 {
     setSize( 64, 64);
@@ -36,7 +37,7 @@ void TogleIcon::setSelected(bool sel )
     if (sel){ iconSel.visible =true;}
     else { iconSel.visible =false;}
     isDirty  =true;
-    
+   if(sel) Model::getInstance()->playSound(SOUND_HIT_BTN);
     isSelected  =sel; 
 
 }
@@ -44,7 +45,7 @@ void TogleIcon::onDown(npEvent *e)
 {
 
 
-
+ 
 }
 void TogleIcon::onUp(npEvent *e)
 {

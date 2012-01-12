@@ -101,7 +101,7 @@
    model->isDirty =true;
    
       GLubyte *pixeldata  = model->pixeldata;
-    GLubyte *buffer2 = (GLubyte *) malloc(768*1024*4);
+    GLubyte *buffer2 = (GLubyte *) malloc(768*768*4);
    
     int wS;
     int hS;
@@ -309,7 +309,6 @@
 	[request startAsynchronous];
 	//[resultView setText:@"Uploading data..."];
 
-cout << "start";
 
 }
 

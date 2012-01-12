@@ -169,7 +169,9 @@ void CubeRenderer::setup(){
     setupIDCubes();
     
     useAO=false;
+#if (defined USEAO)
  if (!isIpad1)setupAO();
+#endif
     
 };
 
@@ -383,8 +385,7 @@ bool CubeRenderer::getPoint(int x, int y )
     int b = (int)pixels[pos+2];
     currentCubeIndex = g*256 +b;
     
-    cout <<" inx " << currentCubeSide<< " " <<g<<" " <<b << " "<< currentCubeIndex<<endl ;
-    return true;
+      return true;
     
 }
 
@@ -407,7 +408,11 @@ void CubeRenderer::setOrientation(int orientation)
     vpWID =vpW/2;
     vpHID =vpH/2;
     camera->setOrientation(orientation);
- 
+
+
+#if (defined USEAO)
+    
+    
     if (isIpad1 ) return;    
     float  uvX ;
     float  uvY ;
@@ -456,7 +461,7 @@ void CubeRenderer::setOrientation(int orientation)
     
     
     worldMatrixBlur.makeOrtho2DMatrix(0,w2,h2,0);
-   
+
     
     data[0] =0 ;
     data[1] =0 ;
@@ -507,7 +512,7 @@ void CubeRenderer::setOrientation(int orientation)
     data[33] = data[9];
     data[34] = data[10];
     data[35] = data[11];
-    
+#endif   
 }
 
 
@@ -719,7 +724,7 @@ void CubeRenderer::setupAO()
     
     
     
-    
+    return;
     ///
     for(int i =0;i<32;i++ )
     {
@@ -730,7 +735,7 @@ void CubeRenderer::setupAO()
           v.y =((float )rand()/RAND_MAX -0.5)*2.0;
         v.z =2.0;//+(float )rand()/RAND_MAX ;
         v.normalize();
-    cout <<  "pSphere["<<i<<"] = vec3("<<v.x<<","<< v.y<<"," <<v.z<<");\n";
+   //cout <<  "pSphere["<<i<<"] = vec3("<<v.x<<","<< v.y<<"," <<v.z<<");\n";
     
     }
     
@@ -750,6 +755,7 @@ void CubeRenderer::prepForAODraw()
 
 void CubeRenderer::renderAO()
 {
+#if (defined USEAO)
     if (isIpad1)return;
 
     model->camera->setDepthRange();
@@ -865,7 +871,7 @@ void CubeRenderer::renderAO()
     glBindTexture(GL_TEXTURE_2D, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glClearColor(0.0, 0.0, 0.0, 0.0);
-    
+#endif   
 
 }
 

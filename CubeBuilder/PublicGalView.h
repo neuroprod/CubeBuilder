@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HorImageGal.h"
+#import "HorImageGalPublic.h"
 
 @class ASIFormDataRequest ;
 @interface PublicGalView : UIViewController
@@ -15,7 +15,7 @@
 ASIFormDataRequest *request;
 
 }
-@property (nonatomic, retain)  HorImageGal *gal;
+@property (nonatomic, retain)  HorImageGalPublic *gal;
 @property (nonatomic,retain) ASIFormDataRequest *request;
 @end
 

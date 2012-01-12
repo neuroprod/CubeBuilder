@@ -62,4 +62,5 @@ void ColorBtn::setSelected(bool sel)
 void ColorBtn::touchColor(npEvent *e)
 {
     model->setColor(colorID);
+     model->playSound(SOUND_HIT_BTN);
 }

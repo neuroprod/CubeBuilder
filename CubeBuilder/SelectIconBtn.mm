@@ -9,7 +9,7 @@
 #include "SelectIconBtn.h"
 #include "SettingsCubeBuilder.h"
 #include "npTweener.h"
-
+#include "Model.h"
 void SelectIconBtn::setSelected(bool sel )
 {
     if(sel ) {
@@ -106,7 +106,7 @@ void SelectIconBtn::onDown(npEvent *e)
     
     mijnTween2.addProperty( &selected.x,64-8);
     npTweener::addTween(mijnTween2);
-    
+    Model::getInstance()->playSound(SOUND_HIT_BTN);
 }
 
 void SelectIconBtn::onUp(npEvent *e )

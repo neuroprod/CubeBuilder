@@ -10,7 +10,7 @@
 #import "ClearView.h"
 #import "SaveView.h"
 #import "GalleryView.h"
-
+#import "SaveDataModel.h" 
 #include "MainCubeBuilder.h"
 #include "SaveDataModel.h"
 #include <iostream>
@@ -210,7 +210,11 @@
        
     
       
-  }
+      }
+      else  if (viewID==14)
+      {
+      [[SaveDataModel getInstance] saveImage  ];
+      }
    
 
 }

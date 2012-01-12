@@ -30,6 +30,13 @@
 #define STATE_MENU 22
 
 
+
+
+#define SOUND_ADD_CUBE 0
+#define SOUND_REMOVE_CUBE 0
+#define SOUND_PAINT_CUBE 0
+#define SOUND_HIT_BTN 1
+#define SOUND_CAMERA 2
 class CubeHandler;
 class ColorMenu;
 class ColorHolder;
@@ -91,12 +98,15 @@ public:
     bool isIpad1;
     
     BackGround *backGround;
-    
+    void prepForSaveImage();
+    int snapType;
     void setBackGround(int bgId)
     {
         backGround->setColor(bgId);
     
     }
+    
+    void  playSound(int soundID);
     
 };
 

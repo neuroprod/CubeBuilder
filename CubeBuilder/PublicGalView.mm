@@ -9,7 +9,7 @@
 #import "PublicGalView.h"
 
 
-#import "HorImageGal.h"
+#import "HorImageGalPublic.h"
 #import "ASIFormDataRequest.h"
 #include "Model.h"
 @implementation PublicGalView
@@ -53,7 +53,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-  
+  [[NSURLCache sharedURLCache] setMemoryCapacity:1024*1024*10];
     Model * model =Model::getInstance();
     model->isDirty =true;
     
@@ -112,7 +112,18 @@
     
     NSArray *arr =[obj allValues];
     
+    gal =[[HorImageGalPublic alloc] init];
+    CGRect frame = self.view.frame;
+    gal.view.transform = CGAffineTransformMakeRotation(M_PI/2.0);
+    gal.view .frame = CGRectMake(0,30, frame.size.width, frame.size.height);   
+        
+    NSDictionary *test = [arr objectAtIndex:0];
+    NSString *im =  [test objectForKey:@"image" ]; 
+    NSLog(@"%@",im);
+    NSArray* reversed = [[arr reverseObjectEnumerator] allObjects];
+    gal.arr = reversed ;
     
+    [self.view addSubview:gal.view];
     
     /*
     cout << arr.count << "<-numitems";

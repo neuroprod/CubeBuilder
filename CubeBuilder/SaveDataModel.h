@@ -31,5 +31,7 @@ using namespace std;
 -(void )getAllData;
 -(void )getCubeData:(int )key;
 -(void) deleteSaved: (int) key;
+
+-(void) saveImage;
 -(void)initDB;
 @end

@@ -8,7 +8,7 @@
 
 #include "TapBtn.h"
 #include "SettingsCubeBuilder.h"
-
+#include "Model.h"
 
 void TapBtn::setup(int iconID)
 {
@@ -97,7 +97,7 @@ void TapBtn::setSelected(bool sel )
 void TapBtn::onDown(npEvent *e)
 {
    if (isSelected) return;
-   
+    Model::getInstance()->playSound(SOUND_HIT_BTN);
     over.visible =true;
     over.isDirty =true;  
 }

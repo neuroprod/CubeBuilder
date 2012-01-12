@@ -8,6 +8,11 @@
 //
 
 #include "Model.h"
+#import <AudioToolbox/AudioToolbox.h>
+
+
+
+
 
 Model* Model::m_pSingleton = NULL;
 
@@ -41,9 +46,17 @@ void Model::setCurrentState(int state )
 }
 void Model::prepForSaveShow()
 {
+    snapType =0;
      useAO =true;
     takeSnapshot =true;
     
+}
+void Model::prepForSaveImage()
+{
+    snapType=1;
+    useAO =true;
+  takeSnapshot =true;
+
 }
 void Model::clearCubes ()
 {
@@ -51,12 +64,33 @@ void Model::clearCubes ()
     isDirty =true;
    // setColor(24);// red;
     cubeHandler->clearCubes();
-    camera->zoom = -10;
+    camera->zoom = -3;
     camera->reset();
     colorMenu->resetColors();
     setColor(24);
 }
-
+void  Model::playSound(int soundID)
+{
+    NSString *path;
+    
+    if (soundID == SOUND_ADD_CUBE){
+        path = [[NSBundle mainBundle] pathForResource:@"woody_click" ofType:@"wav"];
+    }else if (soundID == SOUND_HIT_BTN){
+        path = [[NSBundle mainBundle] pathForResource:@"pop_click3" ofType:@"wav"];
+    }else if (soundID == SOUND_CAMERA){
+        path = [[NSBundle mainBundle] pathForResource:@"Camera" ofType:@"mp3"];
+    }
+    else 
+    {return;}
+   
+  
+        SystemSoundID audioEffect;
+        NSURL *pathURL = [NSURL fileURLWithPath : path];
+        AudioServicesCreateSystemSoundID((CFURLRef) pathURL, &audioEffect);
+        AudioServicesPlaySystemSound(audioEffect);
+   
+   
+}
 void  Model::setLoadData(int *dataCube,int size)
 {
 

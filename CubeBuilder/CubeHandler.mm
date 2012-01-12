@@ -43,7 +43,7 @@ void CubeHandler::touchedCube(int cubeIndex,int cubeSide,int touchPhase)
         
             if (cubeSide==150)addCube(pos.x , pos.y, pos.z+1);
             if (cubeSide==160)addCube(pos.x , pos.y, pos.z-1);
-            
+             Model::getInstance()->playSound(SOUND_ADD_CUBE);
            
         }else 
         {
@@ -61,6 +61,7 @@ void CubeHandler::touchedCube(int cubeIndex,int cubeSide,int touchPhase)
 
         
         }
+         
     
     }
 
@@ -72,6 +73,7 @@ void CubeHandler::touchedCube(int cubeIndex,int cubeSide,int touchPhase)
             //cout << " \ntouchADD" << touchPhase << " "<< cubeSide<<" "<<cubeIndex <<" \n";
             removeCube(cubeIndex);
             previewCube->setPos(10000 , 10000, 10000);
+             Model::getInstance()->playSound(SOUND_REMOVE_CUBE);
             
         }else
         {
@@ -83,6 +85,7 @@ void CubeHandler::touchedCube(int cubeIndex,int cubeSide,int touchPhase)
 
         }
         
+        
     }
 
 
@@ -93,7 +96,7 @@ void CubeHandler::touchedCube(int cubeIndex,int cubeSide,int touchPhase)
         {
             setCubeColor(cubeIndex);
             previewCube->setPos(10000 , 10000, 10000);
-            
+               Model::getInstance()->playSound(SOUND_PAINT_CUBE);
         }else 
         {
         
@@ -122,6 +125,7 @@ resetUndo();
 
 void CubeHandler::addCube(float x, float y, float z)
 {
+    
     int s =cubes.size();
     if (s !=0){
         Cube *cubeT  =cubes[s-1];

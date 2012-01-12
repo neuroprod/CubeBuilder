@@ -81,24 +81,9 @@ static sqlite3_stmt *deleteStmt = nil;
                 NSInteger primaryKey = sqlite3_column_int(statement, 0);
                // NSString *name = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 1)];
                 NSNumber* n =  [NSNumber numberWithInt:primaryKey];
-                cout << n.intValue <<"\n";
-               /* const void *ptr = sqlite3_column_blob(statement, 2);
-                int size = sqlite3_column_bytes(statement, 2);
-                NSData * data = [[NSData alloc] initWithBytes:ptr length:size];
-                NSArray *dataCubes =(NSArray *)[NSKeyedUnarchiver unarchiveObjectWithData:data ];
-                
-                const void *ptr2 = sqlite3_column_blob(statement, 3);
-                int size2 = sqlite3_column_bytes(statement, 3);
-                NSData * dataImage = [[NSData alloc] initWithBytes:ptr2 length:size2];
-*/
-               // NSLog(@"found stuff");
+            
                 [savedData addObject:n ];
-                /*
-                
-                const void *ptr2 = sqlite3_column_blob(statement, 3);
-                int size2 = sqlite3_column_bytes(statement, 3);
-                NSData * data2 = [[NSData alloc] initWithBytes:ptr2 length:size2];
-                NSArray *songs_arr =(NSArray *)[NSKeyedUnarchiver unarchiveObjectWithData:data2 ];*/
+             
               
             } 
             
@@ -135,11 +120,9 @@ static sqlite3_stmt *deleteStmt = nil;
                  int size = sqlite3_column_bytes(statement, 0);
                  NSData * data = [[NSData alloc] initWithBytes:ptr length:size];
                 
-                cout <<"bytes " <<data.length;
+              
                  NSArray *dataCubes =(NSArray *)[NSKeyedUnarchiver unarchiveObjectWithData:data ];
                 
-                //[dataCubes objectAtIndex:0];
-                    cout <<"  bytes cc  " <<dataCubes.count;
                 int  * dataCube =new int[[dataCubes count]];
                for (int i=0; i< [dataCubes count];i++)
                 {
@@ -147,9 +130,7 @@ static sqlite3_stmt *deleteStmt = nil;
                    dataCube [i]= [a intValue];
                 }
                 Model::getInstance()->setLoadData(dataCube,[dataCubes count]);
-               //delete [] dataCube;
-                //[data release];
-                //[dataCubes release];
+            
                 
             } 
             
@@ -326,6 +307,104 @@ static sqlite3_stmt *deleteStmt = nil;
     }
 }
 
+- (void) saveImage 
+{
+  
+    
+    /*
+     [UIImage imageWithData: imageData  ];
+UIImageWriteToSavedPhotosAlbum(  [UIImage imageWithData: imageData  ], self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    */
+      Model::getInstance()->playSound(SOUND_CAMERA);
+      [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(processImage:) userInfo:nil repeats:NO];
+}
+- (void)processImage:(id)sender {
+   
+    
+   GLubyte *pixeldata  = Model::getInstance()->pixeldata;
+    GLubyte *buffer2 = new GLubyte[ 768*1024*4];
+    
+    cout << "xxxx"<< (int ) pixeldata[1]<<" "<< (int ) buffer2[1];
+    
+      
+   
+    
+    int h =768;
+    int w =768;
+   
+    if (Model::getInstance()->pixelW ==1024)
+    {
+        h =768;
+        w  =1024;
+        
+        
+    }else
+    {
+        h =1024;
+        w  =768;
+        
+        
+    }
+    
+    
+    
+    for(int y = 0; y < h; y++)
+    {
+        for(int x = 0; x < w * 4; x++)
+        {
+          
+            buffer2[(h-1 - y) * w * 4 + x] = pixeldata[y * 4 * w + x];
+        }
+    }
+  
+    delete [] pixeldata;
+    // make data provider with data.
+    CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, buffer2, 768*1024*4, NULL);
+    
+    // prep the ingredients
+    int bitsPerComponent = 8;
+    int bitsPerPixel = 32;
+    int bytesPerRow = 4 * w;
+    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
+    CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;
+    CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
+    
+    // make the cgimage
+    CGImageRef imageRef = CGImageCreate(w , h, bitsPerComponent, bitsPerPixel, bytesPerRow, colorSpaceRef, bitmapInfo, provider, NULL, YES, renderingIntent);
+    
+    CGContextRef bitmap = CGBitmapContextCreate(NULL, w,h, 8, 4 * w, colorSpaceRef, kCGImageAlphaPremultipliedFirst);
+    CGContextDrawImage(bitmap, CGRectMake(0, 0, w, h), imageRef);
+    CGImageRef ref = CGBitmapContextCreateImage(bitmap);
+    // then make the uiimage from that
+    UIImage *myImage = [UIImage imageWithCGImage:ref];
+    
+    UIImageWriteToSavedPhotosAlbum(myImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    
+    
+    CGContextRelease(bitmap );
+    
+    
+    CGImageRelease(imageRef);
+    
+    CGDataProviderRelease(provider);
+    
+    
+    
+    delete [] buffer2;
+
+     
+  
+
+
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error 
+  contextInfo:(void *)contextInfo
+{
+   
+      //Model::getInstance()->playSound(SOUND_WOOSH);
+    Model::getInstance()->cancelOverlay();
+}
 
 
 static SaveDataModel *sharedSingleton =nil;

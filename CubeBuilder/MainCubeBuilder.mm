@@ -8,11 +8,17 @@
 
 #include "MainCubeBuilder.h"
 
-
+//#define USEAO 0
 void MainCubeBuilder::setup()
 {
   
+#if (defined USEAO)
+    cout << "11111\n";
     
+#else
+     cout << "2222\n";
+    
+#endif
     model =Model::getInstance();
     model->isDirty =true; 
     
@@ -139,7 +145,11 @@ void MainCubeBuilder::draw ()
   // }
     cubeRenderer->prepForFlatDraw();
     flatRenderer->draw();
+#if (defined USEAO)
+ 
+
     
+
     if (cubeRenderer->useAO     || model->keepAO){
         model->useAO =false;
         if(!model->isIpad1)
@@ -155,6 +165,7 @@ void MainCubeBuilder::draw ()
         }
         
     }
+#endif
     if(model->takeSnapshot)
     {
         
@@ -184,10 +195,10 @@ void MainCubeBuilder::draw ()
         model->takeSnapshot =false;
         draw ();
         
-        
-        
-        
-         [[NSNotificationCenter defaultCenter] postNotificationName:@"setOverView" object:[NSNumber numberWithInt:11]]; 
+        cout <<"snap"<< (int )data[1];
+          //  [[NSNotificationCenter defaultCenter] postNotificationName:@"setOverView" object:[NSNumber numberWithInt:11]]; 
+        if (model->snapType==0)[[NSNotificationCenter defaultCenter] postNotificationName:@"setOverView" object:[NSNumber numberWithInt:11]]; 
+         if (model->snapType==1)[[NSNotificationCenter defaultCenter] postNotificationName:@"setOverView" object:[NSNumber numberWithInt:14]]; 
        return;
     }
     
