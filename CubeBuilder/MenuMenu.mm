@@ -54,7 +54,7 @@ void MenuMenu::setup()
     
     
     
-    w =512-64-36;
+    w =512-64-36+40+64;
     
     rollout.setSize( 64, 64,-32,-32);
     rollout.setUVauto(0,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
@@ -68,19 +68,7 @@ void MenuMenu::setup()
     int margin =60;
     int marginS =40;
     
-    snapshot.setup(15);
-    snapshot.x = startX;
-    addChild( snapshot);
-    makeCallBack(MenuMenu,onDownsnapshot ,callsnapshot);
-    snapshot.addEventListener(TOUCH_UP_INSIDE , callsnapshot);
-    startX+=marginS;
-    
-    line1.setSize(6, 64);
-    line1.setUVauto(128,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
-    line1.x = startX;
-    addChild( line1);
-    
-    startX+=marginS;
+  
    
 
     
@@ -124,6 +112,22 @@ void MenuMenu::setup()
     galery.addEventListener(TOUCH_UP_INSIDE , callgalery);
     startX+=marginS;
     
+    line1.setSize(6, 64);
+    line1.setUVauto(128,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
+    line1.x = startX;
+    addChild( line1);
+    
+    startX+=marginS;
+    
+    snapshot.setup(15);
+    snapshot.x = startX;
+    addChild( snapshot);
+    makeCallBack(MenuMenu,onDownsnapshot ,callsnapshot);
+    snapshot.addEventListener(TOUCH_UP_INSIDE , callsnapshot);
+   
+    
+    startX+=marginS;
+    
     line3.setSize(6, 64);
     line3.setUVauto(128,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     line3.x = startX;
@@ -131,15 +135,7 @@ void MenuMenu::setup()
     
     startX+=marginS;
     
-  /*
-   
-    
-    line4.setSize(6, 64);
-    line4.setUVauto(128,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
-    line4.x = startX;
-    addChild( line4);
-    
-    startX+=marginS;*/
+
     
    info.setup(21);
     info.x = startX;
@@ -147,27 +143,25 @@ void MenuMenu::setup()
     makeCallBack(MenuMenu,onDowninfo  ,callinfo);
     info.addEventListener(TOUCH_UP_INSIDE , callinfo);
     
+    startX+=marginS;
     
-    /*
-    remove;
+    line5.setSize(6, 64);
+    line5.setUVauto(128,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
+    line5.x = startX;
+    addChild( line5);
     
-    npBitmapSprite line1;
-    
-    TogleIcon save ;
-    TogleIcon load;
-    
-    
-    npBitmapSprite line2;
-    TogleIcon galery;
+    startX+=marginS;
     
     
-    npBitmapSprite line3;
-    TogleIcon snapshot;
     
-    npBitmapSprite line4;
-    TogleIcon info;
-      */  
+    sound.setup(1);
+    sound.x = startX;
+    addChild(sound);
+    makeCallBack(MenuMenu,onDownSound  ,callsound);
+    sound.addEventListener(TOUCH_UP_INSIDE , callsound);
     
+    
+       
     
 }
 
@@ -222,6 +216,11 @@ void MenuMenu::onDowninfo(npEvent *e){
     
     dispatchEvent(event);
 
+}
+void MenuMenu::onDownSound(npEvent *e){
+    
+    model->isSound =!model->isSound;
+    sound.setSelected(model->isSound );
 }
 
 void MenuMenu::setOverlay(int currentOverLay)

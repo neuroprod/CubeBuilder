@@ -24,6 +24,7 @@ Model::Model() {
     renderHit =true;
     useAO =false;
     keepAO =false;
+    isSound =false;
 }
 Model::~Model() { }
 
@@ -71,6 +72,7 @@ void Model::clearCubes ()
 }
 void  Model::playSound(int soundID)
 {
+    if (isSound)return;
     NSString *path;
     
     if (soundID == SOUND_ADD_CUBE){

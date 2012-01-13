@@ -192,9 +192,8 @@ void UIdisplaylist::setup()
 
 void UIdisplaylist::closeAllOverlays(npEvent *e)
 {
-   // setOpen(true);
-    closeOverlay.visible =false;
-    closeOverlay.isDirty =true;
+  
+   
     closeCurrentOverLay();
       
 }
@@ -244,6 +243,7 @@ void UIdisplaylist::setOverlay(npEvent *e)
     int tarH=0;
     if (type == -1)
     {
+        
         closeCurrentOverLay();
        
         return;
@@ -383,9 +383,13 @@ void UIdisplaylist::clearOverLayEvent(npEvent *e)
 }
 void UIdisplaylist::closeCurrentOverLay()
 {
-    
+   
     if( mainInfoBack.visible ==false &&  currentOverLay  !=14) return;
     // hide overlayView
+    
+    closeOverlay.visible =false;
+    closeOverlay.isDirty =true;
+    
     setOpen(true);
     if ( currentOverLay  ==1)
     {
@@ -493,7 +497,7 @@ void UIdisplaylist::setView(npEvent *e )
     if (model->currentState == STATE_ADD || model->currentState ==STATE_PAINT)delay=200;
     
     viewMenu.setSelected(true,delay);
-      menuMenu.setSelected(true);
+      menuMenu.setSelected(true,delay);
     viewBtn.setSelected(true);
     if (model->camera->didMove)viewMenu.clear();
     

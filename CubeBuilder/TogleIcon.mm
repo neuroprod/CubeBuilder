@@ -27,7 +27,9 @@ void TogleIcon::setup(int iconID)
     iconSel.setUVauto(iconID*64,64,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
     addChild(iconSel);
     iconSel.visible =false;
-
+    
+    makeCallBack(TogleIcon,onDown,call );
+    addEventListener(TOUCH_DOWN , call);
 
 }
 void TogleIcon::setSelected(bool sel )
@@ -37,14 +39,14 @@ void TogleIcon::setSelected(bool sel )
     if (sel){ iconSel.visible =true;}
     else { iconSel.visible =false;}
     isDirty  =true;
-   if(sel) Model::getInstance()->playSound(SOUND_HIT_BTN);
+  // if(sel) Model::getInstance()->playSound(SOUND_HIT_BTN);
     isSelected  =sel; 
 
 }
 void TogleIcon::onDown(npEvent *e)
 {
 
-
+Model::getInstance()->playSound(SOUND_HIT_BTN);
  
 }
 void TogleIcon::onUp(npEvent *e)

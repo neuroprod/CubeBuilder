@@ -31,7 +31,10 @@ class MainCubeBuilder: public npEventDispatcher
 public:
     MainCubeBuilder(){currentorientation =100;};
     
-    void setup();
+    void setup1();
+     void setup2();
+     void setup3();
+    void start();
     void update();
     void draw();
     void setTouches(vector<npTouch> &touches);
@@ -54,7 +57,7 @@ public:
     Camera * camera;
     Model *model;
     bool isDirty;
-    int frameCount;
+   
     
     int pixelW;
     int pixelH;

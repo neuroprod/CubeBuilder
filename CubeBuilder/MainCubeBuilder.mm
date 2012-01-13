@@ -9,16 +9,10 @@
 #include "MainCubeBuilder.h"
 
 //#define USEAO 0
-void MainCubeBuilder::setup()
+void MainCubeBuilder::setup1()
 {
   
-#if (defined USEAO)
-    cout << "11111\n";
-    
-#else
-     cout << "2222\n";
-    
-#endif
+
     model =Model::getInstance();
     model->isDirty =true; 
     
@@ -36,9 +30,16 @@ void MainCubeBuilder::setup()
     flatRenderer->setup();
     
  
+   }
+void MainCubeBuilder::setup2()
+{
+    
+   
+    
+    
     cubeHandler =new CubeHandler();
     cubeHandler->setup();
-     
+    
     model->cubeHandler = cubeHandler;
     
     cubeRenderer =new CubeRenderer();
@@ -48,16 +49,23 @@ void MainCubeBuilder::setup()
     
     cubeHandler->vertexBuffer =cubeRenderer->vertexBuffer;
     cubeHandler->addCube(0,0,0);
-
+    
     previewCube =new PreviewCube();
     previewCube->setup();
     
     cubeRenderer->previewCube  = previewCube;
     
     cubeHandler->previewCube =previewCube;
-  
-  
-        
+    
+    
+   }
+
+void MainCubeBuilder::setup3 ()
+{
+    
+    
+       
+    
     backGround  =new BackGround();
     backGround->setup();
     
@@ -66,7 +74,7 @@ void MainCubeBuilder::setup()
     model->setColor(24);
     
     
-   
+    
     
     glClearColor(0.0f,0.0f, 0.0f, 0.0f);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -75,26 +83,28 @@ void MainCubeBuilder::setup()
     glCullFace(GL_BACK);
     
     OpenGLErrorChek::chek("mainsetup");
-    frameCount =0;
+    
+    
+    model->renderHit =true;
+    backGround->isDirty =true;
+    
+
+    
+    
+    
+  //  interfaceHandler->display.setOpen(true);
+    
+   
 }
-
-
+void MainCubeBuilder::start()
+{
+    npEvent *e;
+    interfaceHandler->display.setAdd(e );
+    interfaceHandler->display.setOpen(true);
+}
 void MainCubeBuilder::update ()
 {
-    frameCount++;
-    if (frameCount==1){
-        model->renderHit =true;
-        backGround->isDirty =true;
-        
-      
-    }
-    if (frameCount==10){
-       
-        
-        npEvent *e;
-        interfaceHandler->display.setAdd(e );
-        interfaceHandler->display.setOpen(true);
-    }
+  
     npTweener::update();
    
     interfaceHandler->renderTick();
@@ -107,8 +117,8 @@ void MainCubeBuilder::update ()
     if (model->useAO)
     {
         
-    cubeRenderer->isDirty =true;
-    cubeRenderer->useAO=true;
+   // cubeRenderer->isDirty =true;
+   // cubeRenderer->useAO=true;
     }
     cubeHandler->update();
     if (previewCube->isDirty)cubeRenderer->isDirty =true;
@@ -401,7 +411,7 @@ void MainCubeBuilder::setOrientation(int orientation)
     interfaceHandler->setOrientation(currentorientation);
    
     backGround->setOrientation(currentorientation);
-    
+    cout << "set";
     
 
 }

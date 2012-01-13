@@ -39,6 +39,9 @@
     vector <npTouch > ntouches;
     int width2;
     int height2;
+    
+    int setupPos;
+    int orientation;
 
 }
 @property (strong, nonatomic) EAGLContext *context;
@@ -80,7 +83,7 @@
     else {
     
       //cout<<"hasnocam " ;
-       Model::getInstance()->isIpad1 =true ;
+       Model::getInstance()->isIpad1 =false ;
     }
     //cout<<"\n " ;
     
@@ -103,14 +106,14 @@
     
     
     main =new MainCubeBuilder();
-    main->setup();
+   // main->setup();
     
     
-    
+    setupPos =0;
 
     
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setOverView:) name:@"setOverView" object:nil];
- [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideOverView:) name:@"hideOverView" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideOverView:) name:@"hideOverView" object:nil];
     
 }
 
@@ -239,8 +242,29 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     
-  
-    if (!main) return YES;
+    if(setupPos!=100)
+    {
+    
+        if(interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown  || interfaceOrientation == UIInterfaceOrientationPortrait )
+        {
+              cout <<"\nOOOO\n";
+            orientation =0;
+            width2 =768/2;
+            height2 =1024/2;
+            
+        }else
+        {
+             cout <<"\n111111111\n";
+            width2 =1024/2;
+            height2 =768/2;
+            orientation =1;
+            
+        }
+    
+    
+    
+        return YES;
+    }
  
     if(interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown  || interfaceOrientation == UIInterfaceOrientationPortrait )
     {
@@ -284,15 +308,56 @@
 
 - (void)update
 {
-     main->update();
+    if (setupPos==100){ 
+        main->update();
+        return;
+    }
+   else if(setupPos==0)
+    {
+        //main->setup1();
+        setupPos++;
+    }
+   else  if(setupPos==1)
+    {
+        main->setup1();
+        setupPos++;
+    }
+   else  if(setupPos==2)
+    {
+        main->setup2();
+        setupPos++;
+    }
+    else if(setupPos==3)
+    {
+        main->setup3();
+        setupPos++;
+    } 
+    else if(setupPos==4)
+    {
+        main->setOrientation(orientation);
+                main->update();
+        
+        setupPos=99;
+        
+    }
+   else  if(setupPos==99)
+    {
+        //main->setOrientation(orientation);
+        main->update();
+        setupPos=100;
+        main->start();
+        
+    }
+   
     
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
+    if (setupPos==100){
 
     main->draw();
-  
+    }
     
 }
 
@@ -331,6 +396,7 @@
         }
         
     }
+      if ( setupPos==100) 
    main->setTouches(ntouches);
     
 }
@@ -374,6 +440,7 @@
         }
         
     }
+    if ( setupPos==100) 
     main->setTouches(ntouches);
 }
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -397,6 +464,7 @@
         }
         
     }
+    if ( setupPos==100) 
     main->setTouches(ntouches);
     //clean;
     for(int i=0;i< itouches.size();++i)
@@ -436,6 +504,7 @@
         }
         
     }
+      if ( setupPos==100) return;
     main->setTouches(ntouches);
     //clean;
     for(int i=0;i< itouches.size();++i)

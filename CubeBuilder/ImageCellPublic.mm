@@ -24,12 +24,13 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-      self.frame = CGRectMake(7, 5, 310, 310);
+      self.frame = CGRectMake(0, 0, 310, 200);
+        
         image = [[UIImageView alloc] initWithFrame:CGRectMake(7, 5, 310, 310)];
         
         [self addSubview:image];
         
-        
+      // self.clipsToBounds =YES;
         
     
         myButton2 = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -39,6 +40,7 @@
         
         UIImage * btnImage2 = [UIImage imageNamed:@"openBtn.png"];
         [myButton2 setImage:btnImage2 forState:UIControlStateNormal];
+       //myButton2.clipsToBounds =YES;
         
         
         [myButton2 addTarget:self action:@selector(doOpen:) forControlEvents:UIControlEventTouchUpInside];
@@ -53,7 +55,7 @@
         
         
         self.selectedBackgroundView = [[[UIImageView alloc] init] autorelease];
-        self.clipsToBounds =true;
+       
     }
     return self;
 }

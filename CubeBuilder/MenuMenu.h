@@ -42,22 +42,17 @@ class MenuMenu:public npDisplayObject
     
     
     TogleIcon remove;
-    
     npBitmapSprite line1;
-    
     TogleIcon save ;
     TogleIcon load;
-
-    
     npBitmapSprite line2;
     TogleIcon galery;
-  
-    
     npBitmapSprite line3;
     TogleIcon snapshot;
-    
     npBitmapSprite line4;
     TogleIcon info;
+     npBitmapSprite line5;
+    TogleIcon sound;
     
     void onDowngalery(npEvent *e);
     void onDownremove(npEvent *e);
@@ -65,6 +60,7 @@ class MenuMenu:public npDisplayObject
     void onDownload(npEvent *e);
     void onDownsnapshot(npEvent *e);
     void onDowninfo(npEvent *e);
+    void onDownSound(npEvent *e);
     void hideComplete(npEvent *e);
     void setOverlay(int currentOverLay);
  

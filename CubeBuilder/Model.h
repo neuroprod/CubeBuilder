@@ -107,7 +107,7 @@ public:
     }
     
     void  playSound(int soundID);
-    
+    bool isSound;
 };
 
 #endif

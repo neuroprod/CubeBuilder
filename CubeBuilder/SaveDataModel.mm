@@ -321,10 +321,10 @@ UIImageWriteToSavedPhotosAlbum(  [UIImage imageWithData: imageData  ], self, @se
 - (void)processImage:(id)sender {
    
     
-   GLubyte *pixeldata  = Model::getInstance()->pixeldata;
+    GLubyte *pixeldata  = Model::getInstance()->pixeldata;
     GLubyte *buffer2 = new GLubyte[ 768*1024*4];
     
-    cout << "xxxx"<< (int ) pixeldata[1]<<" "<< (int ) buffer2[1];
+   // cout << "xxxx"<< (int ) pixeldata[1]<<" "<< (int ) buffer2[1];
     
       
    
@@ -393,7 +393,7 @@ UIImageWriteToSavedPhotosAlbum(  [UIImage imageWithData: imageData  ], self, @se
     delete [] buffer2;
 
      
-  
+   Model::getInstance()->cancelOverlay();
 
 
 }
@@ -401,9 +401,10 @@ UIImageWriteToSavedPhotosAlbum(  [UIImage imageWithData: imageData  ], self, @se
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error 
   contextInfo:(void *)contextInfo
 {
+
    
       //Model::getInstance()->playSound(SOUND_WOOSH);
-    Model::getInstance()->cancelOverlay();
+   // Model::getInstance()->cancelOverlay();
 }
 
 
