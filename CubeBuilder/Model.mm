@@ -78,7 +78,7 @@ void  Model::playSound(int soundID)
     if (soundID == SOUND_ADD_CUBE){
         path = [[NSBundle mainBundle] pathForResource:@"woody_click" ofType:@"wav"];
     }else if (soundID == SOUND_HIT_BTN){
-        path = [[NSBundle mainBundle] pathForResource:@"pop_click3" ofType:@"wav"];
+        path = [[NSBundle mainBundle] pathForResource:@"pop_click2" ofType:@"wav"];
     }else if (soundID == SOUND_CAMERA){
         path = [[NSBundle mainBundle] pathForResource:@"Camera" ofType:@"mp3"];
     }

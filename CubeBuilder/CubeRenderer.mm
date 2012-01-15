@@ -31,7 +31,7 @@ enum {
 void CubeRenderer::setup(){
     
     model = Model::getInstance();
-    
+   
     isIpad1 =model->isIpad1;
     glGenTextures(1, &flatTexture);
 	glBindTexture(GL_TEXTURE_2D, flatTexture);
@@ -65,8 +65,10 @@ void CubeRenderer::setup(){
 
     
   
-    
+     sizeFactor=3;
     if(!isIpad1){
+        
+    sizeFactor=2;
     glGenFramebuffers(1, &sampleFramebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, sampleFramebuffer);
     
@@ -85,21 +87,24 @@ void CubeRenderer::setup(){
     cout <<"Failed to make complete framebuffer object "<<glCheckFramebufferStatus(GL_FRAMEBUFFER)<< "\n";
     
     }
-    
-    vertexData= new GLfloat[720000];
+    int numV=720000;
+    int numI =90000;
+    GLushort * indexData;
+    GLfloat * vertexData;
+    vertexData= new GLfloat[numV];
 
     
-   /* for (int i=0; i <720000;i++) 
-    {
-        vertexData[i ] =0;
-    }*/ 
-        
-  //  65535/24 =2500 cubus
+    glGenBuffers(1, &vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*numV,vertexData, GL_DYNAMIC_DRAW);
+     delete []vertexData;
     
-    indexData =new GLushort[90000];
+    
+    
+    indexData =new GLushort[numI];
     
  int count =0;
-    for (int i=0; count<90000; i+=4) 
+    for (int i=0; count<numI; i+=4) 
     {
         indexData[count] =i;
         count++;
@@ -124,15 +129,12 @@ void CubeRenderer::setup(){
         count++;
     }
   
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*720000,vertexData, GL_DYNAMIC_DRAW);
-    
+   
     glGenBuffers(1,&indexBuffer  );
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,indexBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort)*90000,indexData, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort)*numI,indexData, GL_STATIC_DRAW);
 
-    delete []vertexData;
+   
     delete []indexData;
    /*glEnableVertexAttribArray(GLKVertexAttribPosition);
     glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 24, BUFFER_OFFSET(0));
@@ -312,7 +314,7 @@ delete pLoader;
     glUseProgram(0);
 
     
-    pixels =new GLubyte[1024* 768*2];
+    pixels =new GLubyte[1024* 768*4/sizeFactor];
 
 }
 void CubeRenderer::drawIDcubes()
@@ -373,7 +375,7 @@ void CubeRenderer::drawIDcubes()
 bool CubeRenderer::getPoint(int x, int y )
 {
     ofVec4f vec;
-    int pos =(        x/2 +((vpHID-y/2)*vpWID ))*4;
+    int pos =(        x/sizeFactor +((vpHID-y/sizeFactor)*vpWID ))*4;
     
     int a = (int)pixels[pos+3];
     if (a ==0) return false;
@@ -405,8 +407,8 @@ void CubeRenderer::setOrientation(int orientation)
         vpH = 1024;
         vpY = 0;
     }
-    vpWID =vpW/2;
-    vpHID =vpH/2;
+    vpWID =vpW/sizeFactor;
+    vpHID =vpH/sizeFactor;
     camera->setOrientation(orientation);
 
 

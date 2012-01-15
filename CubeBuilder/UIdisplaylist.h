@@ -53,16 +53,18 @@ class UIdisplaylist: public npBitmapSprite
     ZoomHolder zoomHolder;
     
     npBitmapSprite closeOverlay;
-    
+      npBitmapSprite firstR;
+       npBitmapSprite firstR2;
     ViewMenu viewMenu;
     ColorMenu colorMenu;
     MenuMenu menuMenu;
     
     ColorHolder colorHolder;
     
-    Slice9Sprite mainInfoBack;
+    
     
 public :
+    Slice9Sprite mainInfoBack;
     int orientation;
     int  currentOverLay ;
     int oldType;
@@ -93,6 +95,8 @@ public :
     bool isOpen ;
     void setOpen(bool open,float delay =0);
     void closeAllOverlays(npEvent *e);
+    void closeFirstRun();
+      void firstComplete(npEvent *e );
 };
 
 

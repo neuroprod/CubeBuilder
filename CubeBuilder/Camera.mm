@@ -24,7 +24,8 @@ Camera::Camera()
     
     */
     
-    
+    zoom =-40;
+
     tempRotY=30; 
    currentRotY =30;
     tempRotX =60;
@@ -38,7 +39,7 @@ Camera::Camera()
     currentCenterY =0;
     currentCenterZ =0;
     
-    zoom =-3;
+    
     
     centerMatrix.setTranslation( currentCenterX,  currentCenterY,  currentCenterZ);
     
@@ -109,7 +110,7 @@ void Camera::update()
     worldMatrix.preMult(centerMatrix);
     
     
-    setDepthRange();
+   setDepthRange();
     
     
     isDirty =false;
@@ -143,45 +144,34 @@ void Camera::checkTouch(npTouch &touch)
                 touchPointer =NULL;
             }
         }
-    }else
+    }
+    //move
+    else
     {
-      
-        if( touch.phase==0)
+        if(!touchPointer)
         {
+            if( touch.phase==0)
+            {
 
-            touchPointer =&touch;
+                touchPointer =&touch;
             
-            prevX =touch.x;
-            prevY =touch.y;  
+                prevX =touch.x;
+                prevY =touch.y;  
             
             
+            }
         }
-        else
+        else if(touchPointer ==&touch )
         {
         
-            float factor  =!(10<minDepth)?10:minDepth;
-            //cout << " "<<factor;
+                       //cout << " "<<factor;
             float moveX =  touch.x-prevX;
             float moveY = prevY -touch.y;
         
-            ofVec4f vecX= normalMatrix.postMult(ofVec4f(1,0,0,0));
-            vecX/=1000;
-            vecX*=moveX*(factor);
-        
-            ofVec4f vecY= normalMatrix.postMult(ofVec4f(0,1,0,0));
-            vecY/=1000;
-            vecY*=moveY*(factor);
-        
-            currentCenterX+=vecX.x +vecY.x;
-            currentCenterY +=vecX.y+vecY.y;
-            currentCenterZ += vecX.z+vecY.z;
-            
-            
+            setMove(moveX, moveY);
             prevX =touch.x;
             prevY =touch.y;  
-
-             didMove =true;
-            isDirty =true;
+            
             if( touch.phase==2)
             {   
                 touchPointer =NULL;
@@ -190,7 +180,32 @@ void Camera::checkTouch(npTouch &touch)
         }
     }
     
+    
 }
+void Camera::setMove(float moveX,float moveY )
+{
+    float factor  =!(10<minDepth)?10:minDepth;
+    ofVec4f vecX= normalMatrix.postMult(ofVec4f(1,0,0,0));
+    vecX/=1000;
+    vecX*=moveX*(factor);
+    
+    ofVec4f vecY= normalMatrix.postMult(ofVec4f(0,1,0,0));
+    vecY/=1000;
+    vecY*=moveY*(factor);
+    
+    currentCenterX+=vecX.x +vecY.x;
+    currentCenterY +=vecX.y+vecY.y;
+    currentCenterZ += vecX.z+vecY.z;
+    
+    
+    
+    didMove =true;
+    isDirty =true;
+
+
+}
+
+
 /// OLD REAL TRACKBALL-> SUCKS
 /*
 void Camera::setRotate(int lx,int ly)
@@ -288,14 +303,6 @@ void Camera::startRotate(int lx,int ly)
  void makeMatrix(int lx,int ly);
 void Camera::setOrientation(int orientation)
 { 
-    if (orientation==0)
-    {
-        perspectiveMatrix.makePerspectiveMatrix(60.0,768.0/1024.0,0.1, 1000.0);
-    }
-    else
-    {
-        perspectiveMatrix.makePerspectiveMatrix(45.0,1024.0/768,0.1, 1000.0);        
-    }
     currentOrientation =orientation;
     isDirty =true;
 }
@@ -398,7 +405,14 @@ void Camera::reset()
 }
 void Camera::fit(bool dotween,int lock){
     
-
+    if (currentOrientation==0)
+    {
+        perspectiveMatrix.makePerspectiveMatrix(60.0,768.0/1024.0,0.1,5000);
+    }
+    else
+    {
+        perspectiveMatrix.makePerspectiveMatrix(45.0,1024.0/768,0.1,5000);        
+    }
     if(lock==1){
         tempzoom =zoom *zoom*-1  ;
          cout  << "start "<< zoom << " " << tempzoom <<endl;
@@ -470,10 +484,12 @@ void Camera::fit(bool dotween,int lock){
     float dy =maxy-miny;
     zoomf =sqrtf ( (dx*dx)+(dy*dy) )/(4.0 * tan(45.0/360.0 *3.1415));
     tempzoom *=zoomf;
-     
+   
     if (lock!=0){
         worldMatrix.makeIdentityMatrix();
         zoomMatrix.makeIdentityMatrix();
+        cout  << "update "<< tempzoom<<endl;
+
         zoomMatrix.translate(0.0,0,tempzoom  );
         worldMatrix.preMult(zoomMatrix);
         worldMatrix.preMult( normalMatrix);
@@ -494,7 +510,7 @@ void Camera::fit(bool dotween,int lock){
     {
         npTween mijnTween;
         mijnTween.init(this,NP_EASE_OUT_SINE,400,0);
-        cout  << "Tween "<< tempzoom <<endl;
+        cout  << "Tween "<< sqrtf(-tempzoom)*-1<<endl;
         mijnTween.addProperty(&currentCenterX,-model->center.x);
         mijnTween.addProperty(&currentCenterY,-model->center.y);
         mijnTween.addProperty(&currentCenterZ,-model->center.z );
@@ -568,7 +584,22 @@ void   Camera::setZoomMove(float move)
     didMove =true;
 }
 
-
+void   Camera::setZoomStart()
+{
+      zoom =-40;
+    npTween mijnTween;
+    mijnTween.init(this,NP_EASE_OUT_SINE,800,300);
+    
+    mijnTween.addProperty(&zoom,-3 );
+      
+    makeCallBack(Camera,setComplete,call );
+    mijnTween.addEventListener( NP_TWEEN_COMPLETE , call);
+    
+    npTweener::addTween(mijnTween);
+    
+    
+  
+}
 
 
 
@@ -625,18 +656,32 @@ void  Camera::setDepthRange()
 //depthRange
     
     depthRange = maxDepth-minDepth;
+    float dmCam =-0.1;
+    if (maxDepth+2<-0.1)dmCam =maxDepth+2;
+    //cout<<" " << minDepth <<"  "<<maxDepth<<"\n";
+    if (currentOrientation==0)
+    {
+        perspectiveMatrix.makePerspectiveMatrix(60.0,768.0/1024.0,-dmCam, minDepth);
+    }
+    else
+    {
+        perspectiveMatrix.makePerspectiveMatrix(45.0,1024.0/768,-dmCam,minDepth);        
+    }
+ 
+    
+    
    
 }    
 void Camera::projectD (ofVec4f vec )
 {
     ofVec4f mpm= worldMatrix.preMult( vec);
-    vec= perspectiveMatrix.preMult(  mpm);
+    //vec= perspectiveMatrix.preMult(  mpm);
     
 
     
     
-    if(vec.z<minDepth)minDepth =vec.z;
-    if(vec.z>maxDepth)maxDepth=vec.z;
+    if(mpm.z<minDepth)minDepth =mpm.z;
+    if(mpm.z>maxDepth)maxDepth=mpm.z;
     
   
     

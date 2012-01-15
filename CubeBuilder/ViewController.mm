@@ -7,10 +7,14 @@
 //
 
 #import "ViewController.h"
+
 #import "ClearView.h"
 #import "SaveView.h"
+#import "infoView.h"
 #import "GalleryView.h"
+
 #import "SaveDataModel.h" 
+
 #include "MainCubeBuilder.h"
 #include "SaveDataModel.h"
 #include <iostream>
@@ -25,14 +29,13 @@
 @interface ViewController ()  {
   
     
-   
+    UIImageView *startView;
     
     ClearView *clearView;
-   SaveView *saveView;
-   GalleryView *galView;
-    
+    SaveView *saveView;
+    GalleryView *galView;
     PublicGalView *publicGalView;
-    
+    InfoView*infoView;
     
     MainCubeBuilder *main ;
     vector <UITouch *> itouches;
@@ -45,47 +48,59 @@
 
 }
 @property (strong, nonatomic) EAGLContext *context;
-
+@property (retain,nonatomic)  UIImageView *startView;
 @property (retain,nonatomic) ClearView *clearView;
 @property (retain,nonatomic) SaveView *saveView;
 @property (retain,nonatomic)  GalleryView *galView;
 @property (retain,nonatomic) SaveDataModel *saveData;
 @property (retain,nonatomic) PublicGalView *publicGalView;
-
+@property (retain,nonatomic) InfoView *infoView;
 - (void)setupGL;
 - (void)tearDownGL;
 -(void)  updateTouche:(int) index;
 -(void) showView:(NSInteger)viewID;
+
 @end
 
 @implementation ViewController
 
-
+@synthesize startView;
 @synthesize publicGalView;
 @synthesize saveData;
 @synthesize saveView;
 @synthesize clearView;
 @synthesize galView;
+@synthesize infoView;
 @synthesize context = _context;
 - (void)viewDidLoad
 {
    
     [super viewDidLoad];
-    //cout<<"\n " ;
+    
+    UIImage *img = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"startPort" ofType:@"png"]];
+    
+    startView = [[UIImageView alloc] initWithImage:img];
+    [self.view addSubview:startView];
+    
+    
+    
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+
+   
     if ( [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
 		
 	{	
-        //  cout<<"hascam " ;
+       
         Model::getInstance()->isIpad1 =false;
           
         
     }
     else {
     
-      //cout<<"hasnocam " ;
-       Model::getInstance()->isIpad1 =false ;
+     
+       Model::getInstance()->isIpad1 =true ;
     }
-    //cout<<"\n " ;
+  
     
     
     
@@ -103,7 +118,7 @@
     
     saveData= [SaveDataModel getInstance];
     [saveData initDB];
-    
+    // Model::getInstance()->firstRun =true;
     
     main =new MainCubeBuilder();
    // main->setup();
@@ -144,6 +159,12 @@
        [self.publicGalView.view removeFromSuperview];
        [publicGalView release];
       publicGalView=NULL;
+       
+   }  else if (self.infoView.view.superview  ){
+       
+       [self.infoView.view removeFromSuperview];
+       [infoView release];
+       infoView=NULL;
        
    } 
  
@@ -214,6 +235,24 @@
     
       
       }
+      else  if (viewID==15)
+      {
+        
+          if (self.infoView==NULL){
+              InfoView *clearV =  [[InfoView alloc] initWithNibName:@"InfoView" bundle:nil];
+           
+              
+              self.infoView = clearV;
+              
+              [clearV release];
+          }
+          infoView.view.frame =CGRectMake(width2-INFO_WIDTH/2, height2-INFO_HEIGHT/2, INFO_WIDTH, INFO_HEIGHT);
+          [self.view insertSubview:infoView.view atIndex:0];
+          
+          
+          
+          
+      }
       else  if (viewID==14)
       {
       [[SaveDataModel getInstance] saveImage  ];
@@ -247,14 +286,21 @@
     
         if(interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown  || interfaceOrientation == UIInterfaceOrientationPortrait )
         {
-              cout <<"\nOOOO\n";
+            
             orientation =0;
             width2 =768/2;
             height2 =1024/2;
             
         }else
         {
-             cout <<"\n111111111\n";
+            if (orientation==0)
+            {
+                UIImage *img = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"startLand" ofType:@"png"]];
+              
+                startView.image =img;
+                startView.frame = CGRectMake(0, 0, 1024, 768);
+            
+            }
             width2 =1024/2;
             height2 =768/2;
             orientation =1;
@@ -286,6 +332,10 @@
     
     if (self.galView !=NULL){galView.view.frame =    CGRectMake(0, height2-LOADVIEW_HEIGHT/2, width2*2, LOADVIEW_HEIGHT);}
     if (self.publicGalView !=NULL){publicGalView.view.frame =    CGRectMake(0, height2-LOADVIEW_HEIGHT/2, width2*2, LOADVIEW_HEIGHT);}
+    
+    if (self.infoView !=NULL){infoView.view.frame =  CGRectMake(width2-INFO_WIDTH/2, height2-INFO_HEIGHT/2, INFO_WIDTH, INFO_HEIGHT);}
+    
+    
     return YES;
   
 }
@@ -308,6 +358,8 @@
 
 - (void)update
 {
+    
+    //cout<< setupPos;
     if (setupPos==100){ 
         main->update();
         return;
@@ -331,8 +383,20 @@
     {
         main->setup3();
         setupPos++;
-    } 
-    else if(setupPos==4)
+    } else if(setupPos==4)
+    {
+        main->setOrientation(orientation);
+        main->update1();
+        setupPos++;
+    
+    }else if(setupPos==5)
+    {
+        main->setOrientation(orientation);
+        main->update2();
+        setupPos=10;
+        
+    }
+    else if(setupPos==10)
     {
         main->setOrientation(orientation);
                 main->update();
@@ -345,12 +409,21 @@
         //main->setOrientation(orientation);
         main->update();
         setupPos=100;
-        main->start();
-        
-    }
+        [UIView animateWithDuration:0.8
+                              delay: 0.0
+                            options: UIViewAnimationOptionCurveEaseIn
+                         animations:^{
+                             startView.alpha = 0.0;
+                         }
+                         completion:^(BOOL finished){
+                               main->start();
+                         }];
+
+       }
    
     
 }
+
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {

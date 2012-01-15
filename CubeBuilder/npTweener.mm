@@ -8,12 +8,15 @@
 
 #include "npTweener.h"
 vector<npTween> npTweener::tweens;
+
+float npTweener::speedFactor =1.0f;
+
  void npTweener::update()
 {
     int s = tweens.size();
    
     if (s==0) return;
-    int time =  npTimer::getCurrentTime() ;
+    int time =  npTimer::getCurrentTime()*speedFactor ;
     for (int i=0 ; i< s ;++i)
     {
         if( tweens[i].update(time))
@@ -63,7 +66,7 @@ void  npTweener::addTween(npTween &tween,bool overrideTarget )
     
     }
     
-    tween.startTime = npTimer::getCurrentTime() ;
+    tween.startTime = npTimer::getCurrentTime() *speedFactor;
     tweens.push_back(tween ); 
 
 }

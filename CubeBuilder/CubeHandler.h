@@ -41,7 +41,7 @@ public:
   void clearCubes();  
     cbColor currentColor;
     
-    GLfloat vertexData[518400];
+   
     GLuint vertexBuffer;
     
     vector <Cube *> cubes ;
@@ -63,6 +63,7 @@ public:
     
     vector<UndoObj> undoVec;
     vector<UndoObj> redoVec;
+    bool doClean;
 };
 
 

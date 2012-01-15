@@ -108,6 +108,9 @@ public:
     
     void  playSound(int soundID);
     bool isSound;
+    
+    bool firstRun;
+    
 };
 
 #endif

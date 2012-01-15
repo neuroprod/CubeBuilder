@@ -75,7 +75,7 @@ void InterfaceHandler::prepForFlatDraw()
 
 bool InterfaceHandler::checkTouch(npTouch &touch)
 {
-
+    if (Model::getInstance()->firstRun)return false;
     return display.checkTouch(touch);
 }
 

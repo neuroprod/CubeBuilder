@@ -21,7 +21,7 @@ class npTweener
 public:
     npTweener(){};
    static vector<npTween> tweens;
-    
+    static float speedFactor;
     
     static void addTween(npTween &tween,bool overrideTarget =true);
     

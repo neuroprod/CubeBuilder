@@ -139,7 +139,8 @@ void UIdisplaylist::setup()
     
     
     closeOverlay.setSize( 1024, 1024,0,0);
-    closeOverlay.setUV(0,0,0.01,0.01);
+    closeOverlay.setUV(0, 64.0*3/1024.0,0.002,0.005);
+    closeOverlay.alpha =0.7;
     addChild(closeOverlay);
     closeOverlay.visible =false;
     makeCallBack( UIdisplaylist,closeAllOverlays ,overCCall );
@@ -183,8 +184,21 @@ void UIdisplaylist::setup()
     initBtns();
     model->colorHolder = &colorHolder;
     model->colorMenu = &colorMenu;
+    if (  model->firstRun)
+    {
+        firstR.setSize(6*64,3*64,NP_ALIGN_BOTTEM);
+        firstR.setUVauto (9*64,2*64,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
+        addChild(firstR);
+        firstR.alpha =0.00;
+  firstR.scale =0.8;
+        
+        firstR2.setSize(6*64,3*64,NP_ALIGN_BOTTEM);
+        firstR2.setUVauto (9*64,5*64,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
+        addChild(firstR2);
+        firstR2.alpha =0.00;
+        firstR2.scale =0.8;
     
-   
+    }
    
     //setOpen(true,5000);
     
@@ -197,8 +211,20 @@ void UIdisplaylist::closeAllOverlays(npEvent *e)
     closeCurrentOverLay();
       
 }
+
 void UIdisplaylist::setOpen(bool open,float delay )
 {
+    if ( model->firstRun)
+    {
+        npTween mijnTweenO;
+        mijnTweenO.init(&firstR,NP_EASE_OUT_BACK_SOFT,500,1300);
+        mijnTweenO.addProperty( &firstR.alpha,1.0);
+        mijnTweenO.addProperty( &firstR.scale,1.0);
+
+        npTweener::addTween(mijnTweenO);
+
+    
+    }
    // cout<<"\nsetOpen " << open<<"\n";
     if (isOpen ==open)return;
     
@@ -249,9 +275,17 @@ void UIdisplaylist::setOverlay(npEvent *e)
         return;
         
     }  
-    
+    cout <<" "<<type; 
    closeOverlay.visible =true;
+    if(type==1 || type ==14)
+    {
+        closeOverlay.alpha =0.01;
     
+    }else
+    {
+     closeOverlay.alpha =0.7;
+    
+    }
     if(type ==14 || type ==16)
     {
         
@@ -310,8 +344,8 @@ void UIdisplaylist::setOverlay(npEvent *e)
                
     }else  if (type == 15)
     {
-        tarW =300;
-        tarH =300;
+        tarW =INFO_WIDTH+30;
+        tarH =INFO_HEIGHT+30;
         setOpen(false);
     }
     
@@ -348,6 +382,7 @@ void UIdisplaylist::setOverlay(npEvent *e)
 }
 void UIdisplaylist::openOverlayCompleet(npEvent *e)
 {
+    //cout << "overlayCompppp"<< currentOverLay;
     if ( currentOverLay  ==1)
     {
         colorHolder.visible  =true;
@@ -620,6 +655,20 @@ void UIdisplaylist::setOrientation(int _orientation)
     menuMenu.x= centerX- (menuMenu.w/2.0);
     menuMenu.isDirty =true;
     
+    
+    if (  model->firstRun)
+    {
+        firstR.x= centerX;
+        firstR.y= centerY -100;
+        firstR.isDirty =true;
+        
+        
+        firstR2.x= centerX;
+        firstR2.y= centerY -100;
+        firstR2.isDirty =true;
+        
+    }
+    
 }
 
 void UIdisplaylist::initBtns()
@@ -702,5 +751,49 @@ void UIdisplaylist::initBtns()
     zoomHolder.x = startRightX;
     zoomHolder.y = startLeftY;
     zoomHolder.isDirty =true;
+
+}
+
+void UIdisplaylist::closeFirstRun()
+{
+    npTween mijnTweenaO;
+    mijnTweenaO.init(&firstR,NP_EASE_OUT_BACK_SOFT,200,0);
+    mijnTweenaO.addProperty( &firstR.alpha,0.0);
+   
+    
+    npTweener::addTween(mijnTweenaO);
+
+
+    
+   
+    
+    
+    npTween mijnTween;
+    mijnTween.init(&firstR2,NP_EASE_OUT_BACK_SOFT,500,200);
+    mijnTween.addProperty( &firstR2.alpha,1.0);
+    mijnTween.addProperty( &firstR2.scale,1.0);
+    
+    npTweener::addTween(mijnTween);
+    
+    
+    npTween mijnTween2;
+    mijnTween2.init(&firstR2,NP_EASE_IN_SINE,800,6000);
+    mijnTween2.addProperty( &firstR2.alpha,0.0);
+   mijnTween.addProperty( &firstR2.scale,1.0);
+    makeCallBack(UIdisplaylist, firstComplete, openComp);
+    mijnTween2.addEventListener(NP_TWEEN_COMPLETE, openComp);
+    npTweener::addTween(mijnTween2,false);
+
+  
+}
+
+void UIdisplaylist::firstComplete(npEvent *e )
+{
+   
+    firstR.visible =false;
+    firstR.isDirty =true;
+    firstR2.visible =false;
+    firstR2.isDirty =true;
+    
 
 }

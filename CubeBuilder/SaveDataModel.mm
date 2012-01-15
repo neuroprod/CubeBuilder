@@ -33,7 +33,7 @@ static sqlite3_stmt *deleteStmt = nil;
     
     docsDir = [dirPaths objectAtIndex:0];
     
-    // Build the path to the database file
+    // Build the path to the database file    "datab.db"
     databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent: @"datab.db"]];
     
     NSFileManager *filemgr = [NSFileManager defaultManager];
@@ -57,6 +57,13 @@ static sqlite3_stmt *deleteStmt = nil;
         } else {
             NSLog(@"Failed to open/create database");
         }
+           Model::getInstance()->firstRun  =true;
+    }
+    else
+    {
+    
+        Model::getInstance()->firstRun  =false;
+    
     }
     NSLog(@"DB ok");
     [filemgr release];

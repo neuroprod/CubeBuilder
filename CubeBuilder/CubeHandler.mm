@@ -9,6 +9,7 @@
 #include "CubeHandler.h"
 void CubeHandler::setup()
 {
+    doClean =false;
     lockUndo =false;
     isRedo =false;
     currentColor.set(1,0,0);
@@ -44,6 +45,7 @@ void CubeHandler::touchedCube(int cubeIndex,int cubeSide,int touchPhase)
             if (cubeSide==150)addCube(pos.x , pos.y, pos.z+1);
             if (cubeSide==160)addCube(pos.x , pos.y, pos.z-1);
              Model::getInstance()->playSound(SOUND_ADD_CUBE);
+            doClean =true;
            
         }else 
         {
@@ -322,8 +324,34 @@ void CubeHandler::setCubeColor(int index)
 
 void CubeHandler::clean()
 {
-
-    isDirty =true;
+    if (!doClean)return;
+    cout<< "clean";
+    int l =cubes.size();
+    int l1 =l-1;
+    int j ;
+    for (int i =0; i<l1;i++)
+    {
+        Cube *cube1 = cubes [i ];
+        for ( j =i+1; i<l;i++)
+        {
+            Cube *cube2 = cubes [j ];
+            
+            if(cube2->x ==cube1->x)
+            {
+                if(cube2->y ==cube1->y)
+                {
+                    if(cube2->z ==cube1->z)
+                    {
+                       cout << "FOOUUUUND";
+                    }
+                }
+            }
+            
+        }
+    }
+     cout<< "\n";
+    doClean =false;
+  //  isDirty =true;
 }
 
 

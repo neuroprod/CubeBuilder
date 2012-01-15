@@ -149,7 +149,7 @@ myButton2.frame = CGRectMake(0+7, +5+200,310, 310);
     
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.5f];
-      [UIView setAnimationDuration:0.5f];    image.alpha = 1.0f;
+      image.alpha = 1.0f;
    myButton2.frame = CGRectMake(0+7, +5,310, 310);
     [UIView commitAnimations];
     

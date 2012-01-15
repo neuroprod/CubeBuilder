@@ -103,7 +103,8 @@ public:
     float maxDepth;
     void setDepthRange();
     void projectD(ofVec4f vec );
-
+    void  setZoomStart();
+    void setMove(float x,float y );
 };
 
 #endif

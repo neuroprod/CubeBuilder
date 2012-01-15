@@ -24,41 +24,43 @@ void Cube::setup(int _index, int posx, int posy,int posz,cbColor _color)
     cbColor colorTop ;
     colorTop.setID(_index);
    // data =new float[288];
+    float sizeCubef =0.5f;
+    
     float gCubeVertexData[288] = 
     {
       
-        0.5f+posx, -0.5f+posy, -0.5f+posz,        1.0f, 0.0f, 0.0f,        color.r, color.g, color.b,      110.0f/255.0f, colorTop.g, colorTop.b,
-        0.5f+posx, 0.5f+posy, -0.5f+posz,         1.0f, 0.0f, 0.0f,        color.r, color.g, color.b,      110.0f/255.0f, colorTop.g, colorTop.b,
-        0.5f+posx, -0.5f+posy, 0.5f+posz,         1.0f, 0.0f, 0.0f,        color.r, color.g, color.b,      110.0f/255.0f, colorTop.g, colorTop.b,
-        0.5f+posx, 0.5f+posy, 0.5f+posz,          1.0f, 0.0f, 0.0f,        color.r, color.g, color.b,      110.0f/255.0f, colorTop.g, colorTop.b,
+        sizeCubef+posx, -sizeCubef+posy, -sizeCubef+posz,        1.0f, 0.0f, 0.0f,        color.r, color.g, color.b,      110.0f/255.0f, colorTop.g, colorTop.b,
+        sizeCubef+posx, sizeCubef+posy, -sizeCubef+posz,         1.0f, 0.0f, 0.0f,        color.r, color.g, color.b,      110.0f/255.0f, colorTop.g, colorTop.b,
+        sizeCubef+posx, -sizeCubef+posy, sizeCubef+posz,         1.0f, 0.0f, 0.0f,        color.r, color.g, color.b,      110.0f/255.0f, colorTop.g, colorTop.b,
+        sizeCubef+posx, sizeCubef+posy, sizeCubef+posz,          1.0f, 0.0f, 0.0f,        color.r, color.g, color.b,      110.0f/255.0f, colorTop.g, colorTop.b,
               
   
-        -0.5f+posx, 0.5f+posy, -0.5f+posz,        -1.0f, 0.0f, 0.0f,       color.r, color.g, color.b,      120.0f/255.0f, colorTop.g, colorTop.b,
-        -0.5f+posx, -0.5f+posy, -0.5f+posz,       -1.0f, 0.0f, 0.0f,       color.r, color.g, color.b,      120.0f/255.0f, colorTop.g, colorTop.b,
-        -0.5f+posx, 0.5f+posy, 0.5f+posz,         -1.0f, 0.0f, 0.0f,       color.r, color.g, color.b,      120.0f/255.0f, colorTop.g, colorTop.b,
-        -0.5f+posx, -0.5f+posy, 0.5f+posz,        -1.0f, 0.0f, 0.0f,       color.r, color.g, color.b,      120.0f/255.0f, colorTop.g, colorTop.b,
+        -sizeCubef+posx, sizeCubef+posy, -sizeCubef+posz,        -1.0f, 0.0f, 0.0f,       color.r, color.g, color.b,      120.0f/255.0f, colorTop.g, colorTop.b,
+        -sizeCubef+posx, -sizeCubef+posy, -sizeCubef+posz,       -1.0f, 0.0f, 0.0f,       color.r, color.g, color.b,      120.0f/255.0f, colorTop.g, colorTop.b,
+        -sizeCubef+posx, sizeCubef+posy, sizeCubef+posz,         -1.0f, 0.0f, 0.0f,       color.r, color.g, color.b,      120.0f/255.0f, colorTop.g, colorTop.b,
+        -sizeCubef+posx, -sizeCubef+posy, sizeCubef+posz,        -1.0f, 0.0f, 0.0f,       color.r, color.g, color.b,      120.0f/255.0f, colorTop.g, colorTop.b,
   
         
-        0.5f+posx, 0.5f+posy, -0.5f+posz,         0.0f, 1.0f, 0.0f,        color.r, color.g, color.b,      130.0f/255.0f, colorTop.g, colorTop.b,
-        -0.5f+posx, 0.5f+posy, -0.5f+posz,        0.0f, 1.0f, 0.0f,        color.r, color.g, color.b,      130.0f/255.0f, colorTop.g, colorTop.b,
-        0.5f+posx, 0.5f+posy, 0.5f+posz,          0.0f, 1.0f, 0.0f,        color.r, color.g, color.b,      130.0f/255.0f, colorTop.g, colorTop.b,
-        -0.5f+posx, 0.5f+posy, 0.5f+posz,         0.0f, 1.0f, 0.0f,        color.r, color.g, color.b,      130.0f/255.0f, colorTop.g, colorTop.b,
+        sizeCubef+posx, sizeCubef+posy, -sizeCubef+posz,         0.0f, 1.0f, 0.0f,        color.r, color.g, color.b,      130.0f/255.0f, colorTop.g, colorTop.b,
+        -sizeCubef+posx, sizeCubef+posy, -sizeCubef+posz,        0.0f, 1.0f, 0.0f,        color.r, color.g, color.b,      130.0f/255.0f, colorTop.g, colorTop.b,
+        sizeCubef+posx, sizeCubef+posy, sizeCubef+posz,          0.0f, 1.0f, 0.0f,        color.r, color.g, color.b,      130.0f/255.0f, colorTop.g, colorTop.b,
+        -sizeCubef+posx, sizeCubef+posy, sizeCubef+posz,         0.0f, 1.0f, 0.0f,        color.r, color.g, color.b,      130.0f/255.0f, colorTop.g, colorTop.b,
         
         
-        -0.5f+posx, -0.5f+posy, -0.5f+posz,       0.0f, -1.0f, 0.0f,       color.r, color.g, color.b,      140.0f/255.0f, colorTop.g, colorTop.b,
-        0.5f+posx, -0.5f+posy, -0.5f+posz,        0.0f, -1.0f, 0.0f,       color.r, color.g, color.b,      140.0f/255.0f, colorTop.g, colorTop.b,
-        -0.5f+posx, -0.5f+posy, 0.5f+posz,        0.0f, -1.0f, 0.0f,       color.r, color.g, color.b,      140.0f/255.0f, colorTop.g, colorTop.b,
-        0.5f+posx, -0.5f+posy, 0.5f+posz,         0.0f, -1.0f, 0.0f,       color.r, color.g, color.b,      140.0f/255.0f, colorTop.g, colorTop.b,
+        -sizeCubef+posx, -sizeCubef+posy, -sizeCubef+posz,       0.0f, -1.0f, 0.0f,       color.r, color.g, color.b,      140.0f/255.0f, colorTop.g, colorTop.b,
+        sizeCubef+posx, -sizeCubef+posy, -sizeCubef+posz,        0.0f, -1.0f, 0.0f,       color.r, color.g, color.b,      140.0f/255.0f, colorTop.g, colorTop.b,
+        -sizeCubef+posx, -sizeCubef+posy, sizeCubef+posz,        0.0f, -1.0f, 0.0f,       color.r, color.g, color.b,      140.0f/255.0f, colorTop.g, colorTop.b,
+        sizeCubef+posx, -sizeCubef+posy, sizeCubef+posz,         0.0f, -1.0f, 0.0f,       color.r, color.g, color.b,      140.0f/255.0f, colorTop.g, colorTop.b,
         
-        0.5f+posx, 0.5f+posy, 0.5f+posz,          0.0f, 0.0f, 1.0f,        color.r, color.g, color.b,      150.0f/255.0f, colorTop.g, colorTop.b,
-        -0.5f+posx, 0.5f+posy, 0.5f+posz,         0.0f, 0.0f, 1.0f,        color.r, color.g, color.b,      150.0f/255.0f, colorTop.g, colorTop.b,
-        0.5f+posx, -0.5f+posy, 0.5f+posz,         0.0f, 0.0f, 1.0f,        color.r, color.g, color.b,      150.0f/255.0f, colorTop.g, colorTop.b,
-        -0.5f+posx, -0.5f+posy, 0.5f+posz,        0.0f, 0.0f, 1.0f,        color.r, color.g, color.b,      150.0f/255.0f, colorTop.g, colorTop.b,
+        sizeCubef+posx, sizeCubef+posy, sizeCubef+posz,          0.0f, 0.0f, 1.0f,        color.r, color.g, color.b,      150.0f/255.0f, colorTop.g, colorTop.b,
+        -sizeCubef+posx, sizeCubef+posy, sizeCubef+posz,         0.0f, 0.0f, 1.0f,        color.r, color.g, color.b,      150.0f/255.0f, colorTop.g, colorTop.b,
+        sizeCubef+posx, -sizeCubef+posy, sizeCubef+posz,         0.0f, 0.0f, 1.0f,        color.r, color.g, color.b,      150.0f/255.0f, colorTop.g, colorTop.b,
+        -sizeCubef+posx, -sizeCubef+posy, sizeCubef+posz,        0.0f, 0.0f, 1.0f,        color.r, color.g, color.b,      150.0f/255.0f, colorTop.g, colorTop.b,
         
-        0.5f+posx, -0.5f+posy, -0.5f+posz,        0.0f, 0.0f, -1.0f,       color.r, color.g, color.b,      160.0f/255.0f, colorTop.g, colorTop.b,
-        -0.5f+posx, -0.5f+posy, -0.5f+posz,       0.0f, 0.0f, -1.0f,       color.r, color.g, color.b,      160.0f/255.0f, colorTop.g, colorTop.b,
-        0.5f+posx, 0.5f+posy, -0.5f+posz,         0.0f, 0.0f, -1.0f,       color.r, color.g, color.b,      160.0f/255.0f, colorTop.g, colorTop.b,
-        -0.5f+posx, 0.5f+posy, -0.5f+posz,        0.0f, 0.0f, -1.0f,       color.r, color.g, color.b,      160.0f/255.0f, colorTop.g, colorTop.b,
+        sizeCubef+posx, -sizeCubef+posy, -sizeCubef+posz,        0.0f, 0.0f, -1.0f,       color.r, color.g, color.b,      160.0f/255.0f, colorTop.g, colorTop.b,
+        -sizeCubef+posx, -sizeCubef+posy, -sizeCubef+posz,       0.0f, 0.0f, -1.0f,       color.r, color.g, color.b,      160.0f/255.0f, colorTop.g, colorTop.b,
+        sizeCubef+posx, sizeCubef+posy, -sizeCubef+posz,         0.0f, 0.0f, -1.0f,       color.r, color.g, color.b,      160.0f/255.0f, colorTop.g, colorTop.b,
+        -sizeCubef+posx, sizeCubef+posy, -sizeCubef+posz,        0.0f, 0.0f, -1.0f,       color.r, color.g, color.b,      160.0f/255.0f, colorTop.g, colorTop.b,
     };
   
     

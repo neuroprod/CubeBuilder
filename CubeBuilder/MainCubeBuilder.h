@@ -29,12 +29,14 @@
 class MainCubeBuilder: public npEventDispatcher
 {
 public:
-    MainCubeBuilder(){currentorientation =100;};
+    MainCubeBuilder(){currentorientation =100;isGuesturing=false;};
     
     void setup1();
      void setup2();
      void setup3();
     void start();
+    void update1();
+    void update2();
     void update();
     void draw();
     void setTouches(vector<npTouch> &touches);
@@ -58,7 +60,12 @@ public:
     Model *model;
     bool isDirty;
    
-    
+    vector <npTouch*> gestureTouches;
+    bool isGuesturing;
+    void resolveGesture();
+    float startX;
+    float startY;
+    float startDist;
     int pixelW;
     int pixelH;
 };

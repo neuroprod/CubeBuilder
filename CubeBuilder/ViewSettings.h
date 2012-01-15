@@ -19,4 +19,7 @@
 
 #define LOADVIEW_HEIGHT 330
 
+#define INFO_WIDTH 390
+#define INFO_HEIGHT 390
+
 #endif

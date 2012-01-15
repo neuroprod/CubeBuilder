@@ -54,7 +54,7 @@ void MenuMenu::setup()
     
     
     
-    w =512-64-36+40+64;
+    w =512-64-36+16+64;
     
     rollout.setSize( 64, 64,-32,-32);
     rollout.setUVauto(0,128,STARTMAP_SIZE_W,STARTMAP_SIZE_H);
@@ -154,7 +154,7 @@ void MenuMenu::setup()
     
     
     
-    sound.setup(1);
+    sound.setup(24);
     sound.x = startX;
     addChild(sound);
     makeCallBack(MenuMenu,onDownSound  ,callsound);

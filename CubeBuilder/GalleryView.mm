@@ -63,10 +63,21 @@
     scoreLabel.font = [UIFont fontWithName:@"Helvetica-Bold"  size:(20.0)  ];
     scoreLabel.text = @"LOAD"; 
     [self.view addSubview:scoreLabel];
-   
+     CGRect frame = self.view.frame;
+    if ([[SaveDataModel getInstance] savedData  ].count ==0)
+    {
     
+        
+        UILabel *leegLabel = [ [UILabel alloc ] initWithFrame:CGRectMake( frame.size.width/2 -200, frame.size.height/2 -20,400,20) ];
+       leegLabel.textAlignment =  UITextAlignmentCenter;
+       leegLabel.textColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0];
+       leegLabel.font = [UIFont fontWithName:@"Helvetica-Bold"  size:(20.0)  ];
+        leegLabel.text = @"Your saved cubes will appear here."; 
+        [self.view addSubview:leegLabel];
+        return;
+    }
     gal =[[HorImageGal alloc] init];
-    CGRect frame = self.view.frame;
+  
     gal.view.transform = CGAffineTransformMakeRotation(M_PI/2.0);
     gal.view .frame = CGRectMake(0,30, frame.size.width, frame.size.height);   
     NSMutableArray* galArray =  [[SaveDataModel getInstance] savedData ];

@@ -28,8 +28,7 @@ class CubeRenderer
     
     
     GLuint indexBuffer;
-    GLushort * indexData;
-    GLfloat * vertexData;
+   
     
     
     GLuint programMain;
@@ -75,7 +74,7 @@ class CubeRenderer
     
 public:
     
-    
+    int sizeFactor;
     
     CubeRenderer(){isDirty=true; vpW = 1024;vpH=768;}
     void setup();
