@@ -179,5 +179,10 @@
      [detailViewController release];
      */
 }
-
+-(void)dealloc
+{
+    
+[arr release];
+    [super dealloc];
+}
 @end

@@ -61,14 +61,19 @@ void Model::prepForSaveImage()
 }
 void Model::clearCubes ()
 {
+ 
      currentLoadID =-1;
     isDirty =true;
    // setColor(24);// red;
+   setColor(24);
     cubeHandler->clearCubes();
+    centerOld.set(center);
+     resolveCenter();
     camera->zoom = -3;
     camera->reset();
     colorMenu->resetColors();
     setColor(24);
+    camera->setZoomStart(false);
 }
 void  Model::playSound(int soundID)
 {
@@ -97,9 +102,11 @@ void  Model::setLoadData(int *dataCube,int size)
 {
 
     cubeHandler->setLoadData(dataCube,size);
+  
+   
     
     cancelOverlay();
-    
+    centerOld.set(center);
     resolveCenter();
     camera->reset();
     camera->fit(false,1);

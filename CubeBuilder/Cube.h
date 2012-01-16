@@ -24,7 +24,7 @@ public:
     
     
     
-    void setup(int idex, int posx, int posy,int posz,cbColor color);
+    void setup(int idex, int posx, int posy,int posz,cbColor &color);
     void setCubeIndex(int index);
     void setCubeColor(cbColor color);
     
@@ -33,8 +33,8 @@ public:
    
     cbColor color;
     int cubeIndex;
-    
-    float    data[288];
+   
+    float  data[288];
     
     int x;
     int y;

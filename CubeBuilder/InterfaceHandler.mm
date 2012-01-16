@@ -40,9 +40,7 @@ void InterfaceHandler::setup()
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);	
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, flatTexture, 0);
     
-    //GLint status =glCheckFramebufferStatus(GL_FRAMEBUFFER);    
-    //if(status ==GL_FRAMEBUFFER_COMPLETE)cout << "fbo interface complete\n";
-
+   
 }
 
 void InterfaceHandler::renderTick()

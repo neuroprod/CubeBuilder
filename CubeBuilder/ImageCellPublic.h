@@ -20,7 +20,7 @@ NSURLConnection* connection;
 @property (nonatomic, retain)  UIActivityIndicatorView * actInd;
 @property (nonatomic, retain)  NSString * dataurl;
 
-
+@property(nonatomic,retain)UILabel *nameLabel;
 
 -(void) setData:(NSString *) urlImage naam:(NSString *) naam data:(NSString *) urlData;
 - (void)loadImageFromURL:(NSURL*)url;

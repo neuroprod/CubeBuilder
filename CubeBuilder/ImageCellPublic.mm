@@ -14,7 +14,7 @@
 @implementation ImageCellPublic
 @synthesize image;
 @synthesize actInd;
-
+@synthesize nameLabel;
 @synthesize myButton2;
 
 @synthesize dataurl;
@@ -51,6 +51,14 @@
         actInd.center = CGPointMake(150,150);
         [self addSubview: actInd ];
         
+        
+        nameLabel = [ [UILabel alloc ] initWithFrame:CGRectMake(15.0, 13.0, 300.0, 20.0) ];
+        nameLabel.textAlignment =  UITextAlignmentLeft;
+        nameLabel.textColor =[UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
+        nameLabel.font = [UIFont fontWithName:@"Helvetica-Bold"  size:(16.0)  ];
+        nameLabel.backgroundColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+        nameLabel.text = @""; 
+        [self addSubview:nameLabel];
         self.transform = CGAffineTransformMakeRotation(-M_PI/2.0);
         
         
@@ -66,12 +74,12 @@
     image.alpha = 0.0f;
    //image.image =  [UIImage  imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"loading" ofType:@"png"]];
     NSURL *url = [NSURL URLWithString:urlImage];
-    NSLog(@"load");
+
     [self loadImageFromURL:url ];
-myButton2.frame = CGRectMake(0+7, +5+200,310, 310);
+    myButton2.frame = CGRectMake(0+7, +5+200,310, 310);
         
     
-   
+     nameLabel.text = [NSString stringWithFormat:@"by %@", [naam uppercaseString]]; 
     /*
     cubeID = dataID;
     NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -98,7 +106,7 @@ myButton2.frame = CGRectMake(0+7, +5+200,310, 310);
     NSString *content = [[[NSString alloc] initWithData:dataData   encoding:NSUTF8StringEncoding] autorelease];
    NSArray *chunks = [content  componentsSeparatedByString: @" "];
     
-  
+ 
     int size=chunks.count;
     int *dataCube = new int[size];
     for (int i=0;i<size ;++i)
@@ -109,6 +117,12 @@ myButton2.frame = CGRectMake(0+7, +5+200,310, 310);
     
     }
     Model::getInstance()->setLoadData(dataCube,size);
+    delete []   dataCube; 
+    
+  
+    
+    
+    
 }
 - (void)loadImageFromURL:(NSURL*)url {
     
@@ -160,8 +174,11 @@ myButton2.frame = CGRectMake(0+7, +5+200,310, 310);
 
 
 - (void)dealloc {
+    if (connection != nil){
     [connection cancel];
-    [connection release];
+        [connection release];
+        connection =nil;
+    }
     [data release];
     [super dealloc];
 }

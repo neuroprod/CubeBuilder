@@ -28,12 +28,12 @@ static sqlite3_stmt *deleteStmt = nil;
     NSString *docsDir;
     NSArray *dirPaths;
     
-    // Get the documents directory
+   
     dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     
     docsDir = [dirPaths objectAtIndex:0];
     
-    // Build the path to the database file    "datab.db"
+    //    "datab.db"
     databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent: @"datab.db"]];
     
     NSFileManager *filemgr = [NSFileManager defaultManager];
@@ -65,7 +65,7 @@ static sqlite3_stmt *deleteStmt = nil;
         Model::getInstance()->firstRun  =false;
     
     }
-    NSLog(@"DB ok");
+   
     [filemgr release];
     
 }
@@ -106,8 +106,8 @@ static sqlite3_stmt *deleteStmt = nil;
 
 -(void )getCubeData:(int )key
 {
-    NSLog(@"okedoke");
-    //[savedData removeAllObjects];
+   
+
     const char *dbpath = [databasePath UTF8String];
     sqlite3_stmt    *statement;
     
@@ -136,9 +136,10 @@ static sqlite3_stmt *deleteStmt = nil;
                     NSNumber *a  =(NSNumber *)[dataCubes objectAtIndex:i ] ;
                    dataCube [i]= [a intValue];
                 }
+                 [data release]; 
                 Model::getInstance()->setLoadData(dataCube,[dataCubes count]);
             
-                
+                delete [] dataCube;
             } 
             
             
@@ -179,13 +180,9 @@ static sqlite3_stmt *deleteStmt = nil;
         if(SQLITE_DONE != sqlite3_step(addStmt))
             NSAssert1(0, @"Error while inserting data. '%s'", sqlite3_errmsg(DB));
         else
-            
-            
-            
-            
             sqlite3_reset(addStmt);
         
-        cout << "savedOK";
+       
     }
     
     
@@ -200,8 +197,7 @@ static sqlite3_stmt *deleteStmt = nil;
     
     
     bool r = [imageData  writeToFile:filePath atomically:YES];
-    NSLog(@"%@",filePath);
-    cout << "\n saved"<< r<<" "<< currentFileID <<"\n";
+  
     if (!r )NSLog(@"image not saved");
     
     
@@ -257,8 +253,7 @@ static sqlite3_stmt *deleteStmt = nil;
     
    
     bool r = [imageData  writeToFile:filePath atomically:YES];
-    NSLog(@"%@",filePath);
-    cout << "\n saved"<< r<<" "<< currentFileID <<"\n";
+  
     if (!r )NSLog(@"image not saved");
     
     
@@ -310,7 +305,7 @@ static sqlite3_stmt *deleteStmt = nil;
     }else
     {
     
-        NSLog(@"file deleted");
+      
     }
 }
 
@@ -409,8 +404,11 @@ UIImageWriteToSavedPhotosAlbum(  [UIImage imageWithData: imageData  ], self, @se
   contextInfo:(void *)contextInfo
 {
 
-   
-      //Model::getInstance()->playSound(SOUND_WOOSH);
+   /* if(contextInfo !=NULL){
+        [(id)contextInfo release];
+        contextInfo=nil;
+        c
+    }*///Model::getInstance()->playSound(SOUND_WOOSH);
    // Model::getInstance()->cancelOverlay();
 }
 

@@ -290,12 +290,20 @@
             orientation =0;
             width2 =768/2;
             height2 =1024/2;
+            if (orientation==1)
+            {
+                UIImage *img = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"startPort" ofType:@"png"]];
+                
+                startView.image =img;
+                startView.frame = CGRectMake(0, 0, 768, 1024);
+                
+            }
             
         }else
         {
             if (orientation==0)
             {
-                UIImage *img = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"startLand" ofType:@"png"]];
+                UIImage *img = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"startLandsq" ofType:@"png"]];
               
                 startView.image =img;
                 startView.frame = CGRectMake(0, 0, 1024, 768);
@@ -359,7 +367,7 @@
 - (void)update
 {
     
-    //cout<< setupPos;
+ 
     if (setupPos==100){ 
         main->update();
         return;
@@ -417,6 +425,8 @@
                          }
                          completion:^(BOOL finished){
                                main->start();
+                             [startView removeFromSuperview ];
+                             [startView release];
                          }];
 
        }

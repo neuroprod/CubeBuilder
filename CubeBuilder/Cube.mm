@@ -8,7 +8,7 @@
 
 #include "Cube.h" 
 
-void Cube::setup(int _index, int posx, int posy,int posz,cbColor _color)
+void Cube::setup(int _index, int posx, int posy,int posz,cbColor &_color)
 {
 
     x = posx;
@@ -25,7 +25,7 @@ void Cube::setup(int _index, int posx, int posy,int posz,cbColor _color)
     colorTop.setID(_index);
    // data =new float[288];
     float sizeCubef =0.5f;
-    
+
     float gCubeVertexData[288] = 
     {
       
@@ -60,13 +60,13 @@ void Cube::setup(int _index, int posx, int posy,int posz,cbColor _color)
         sizeCubef+posx, -sizeCubef+posy, -sizeCubef+posz,        0.0f, 0.0f, -1.0f,       color.r, color.g, color.b,      160.0f/255.0f, colorTop.g, colorTop.b,
         -sizeCubef+posx, -sizeCubef+posy, -sizeCubef+posz,       0.0f, 0.0f, -1.0f,       color.r, color.g, color.b,      160.0f/255.0f, colorTop.g, colorTop.b,
         sizeCubef+posx, sizeCubef+posy, -sizeCubef+posz,         0.0f, 0.0f, -1.0f,       color.r, color.g, color.b,      160.0f/255.0f, colorTop.g, colorTop.b,
-        -sizeCubef+posx, sizeCubef+posy, -sizeCubef+posz,        0.0f, 0.0f, -1.0f,       color.r, color.g, color.b,      160.0f/255.0f, colorTop.g, colorTop.b,
+        -sizeCubef+posx, sizeCubef+posy, -sizeCubef+posz,        0.0f, 0.0f, -1.0f,       color.r, color.g, color.b,      160.0f/255.0f, colorTop.g, colorTop.b
     };
-  
+   
     
     memcpy(data, &gCubeVertexData[0], 288*sizeof(float));
    
-   
+    
 }
 
 void Cube::setCubeIndex(int index)

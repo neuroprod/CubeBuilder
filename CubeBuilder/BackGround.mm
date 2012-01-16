@@ -64,7 +64,7 @@ void BackGround::setup()
     
     GLint status =glCheckFramebufferStatus(GL_FRAMEBUFFER);
     
-    if(status ==GL_FRAMEBUFFER_COMPLETE)cout << "fbo back complete\n";
+    if(status !=GL_FRAMEBUFFER_COMPLETE)cout << "fbo back faild\n";
 
 
     

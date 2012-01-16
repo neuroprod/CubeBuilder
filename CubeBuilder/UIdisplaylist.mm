@@ -200,7 +200,7 @@ void UIdisplaylist::setup()
     
     }
    
-    //setOpen(true,5000);
+   
     
 }
 
@@ -225,7 +225,7 @@ void UIdisplaylist::setOpen(bool open,float delay )
 
     
     }
-   // cout<<"\nsetOpen " << open<<"\n";
+ 
     if (isOpen ==open)return;
     
     isOpen =open;
@@ -275,7 +275,7 @@ void UIdisplaylist::setOverlay(npEvent *e)
         return;
         
     }  
-    cout <<" "<<type; 
+   
    closeOverlay.visible =true;
     if(type==1 || type ==14)
     {
@@ -382,7 +382,7 @@ void UIdisplaylist::setOverlay(npEvent *e)
 }
 void UIdisplaylist::openOverlayCompleet(npEvent *e)
 {
-    //cout << "overlayCompppp"<< currentOverLay;
+   
     if ( currentOverLay  ==1)
     {
         colorHolder.visible  =true;

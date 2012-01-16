@@ -104,7 +104,7 @@ void MainCubeBuilder::start()
     interfaceHandler->display.setOpen(true);
     camera->setZoomStart();
     
-    cout <<"STARTFIRSTRUNN?? " << model->firstRun<<endl;
+   // cout <<"STARTFIRSTRUNN?? " << model->firstRun<<endl;
     
 }
 void MainCubeBuilder::update1()
@@ -165,7 +165,7 @@ void MainCubeBuilder::update ()
 void MainCubeBuilder::draw ()
 {
      
-    //cout << frameCount << endl;
+ 
    
     if (!cubeRenderer->isDirty && !interfaceHandler->isDirty && !backGround->isDirty && !model->isDirty){
      //   cubeHandler->clean();
@@ -176,7 +176,7 @@ void MainCubeBuilder::draw ()
     // cout << "\ndirties: "<< cubeRenderer->isDirty << " "<<interfaceHandler->isDirty << " "<<backGround->isDirty <<" " <<cubeHandler->isDirty<<"\n";
     if (model->renderHit) cubeRenderer->drawIDcubes()  ;
  
-  //  glClearColor(1.0f,1.0f, 1.0f, 0.0f);
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable (GL_BLEND); 
   
@@ -184,11 +184,10 @@ void MainCubeBuilder::draw ()
     
     flatRenderer->start();
     
-   // if(!model->takeSnapshot)
-   // {
+  
     backGround->prepForFlatDraw();
     flatRenderer->draw();
-  // }
+ 
     cubeRenderer->prepForFlatDraw();
     flatRenderer->draw();
 #if (defined USEAO)
@@ -241,10 +240,10 @@ void MainCubeBuilder::draw ()
         model->takeSnapshot =false;
         draw ();
         
-        cout <<"snap"<< (int )data[1];
-          //  [[NSNotificationCenter defaultCenter] postNotificationName:@"setOverView" object:[NSNumber numberWithInt:11]]; 
+       
+      
         if (model->snapType==0)[[NSNotificationCenter defaultCenter] postNotificationName:@"setOverView" object:[NSNumber numberWithInt:11]]; 
-         if (model->snapType==1)[[NSNotificationCenter defaultCenter] postNotificationName:@"setOverView" object:[NSNumber numberWithInt:14]]; 
+        if (model->snapType==1)[[NSNotificationCenter defaultCenter] postNotificationName:@"setOverView" object:[NSNumber numberWithInt:14]]; 
        return;
     }
     
@@ -256,7 +255,7 @@ void MainCubeBuilder::draw ()
     flatRenderer->stop ();
       
     glDisable  (GL_BLEND); 
-   // glClearColor(0.0f,0.0f, 0.0f, 0.0f);
+
      model->isDirty =false;
 }
 void MainCubeBuilder::resolveGesture()

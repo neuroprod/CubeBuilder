@@ -72,28 +72,12 @@ void Camera::update()
         normalMatrix.preMultRotate(-tempRotX, 0, 1, 0)  ;
     
     }
-   // cout<<"\n\n" << objectMatrixTemp;
-    
+
     
     zoomMatrix.makeIdentityMatrix();
     zoomMatrix.translate(0.0,0,zoom*zoom*-1 );
     
-   /*
-    centerMatrix.setTranslation( currentCenterX,  currentCenterY,  currentCenterZ);
-    
-    worldMatrix.makeIdentityMatrix();
-     
  
-    
-    normalMatrix.set(objectMatrixTemp);
-    
-    
-    worldMatrix.preMult(zoomMatrix);
-    worldMatrix.preMult(objectMatrixTemp);
-    worldMatrix.preMult(centerMatrix);
-    
-    isDirty =false;*/
-    
     
     
     centerMatrix.setTranslation( currentCenterX,  currentCenterY,  currentCenterZ);
@@ -164,7 +148,7 @@ void Camera::checkTouch(npTouch &touch)
         else if(touchPointer ==&touch )
         {
         
-                       //cout << " "<<factor;
+                    
             float moveX =  touch.x-prevX;
             float moveY = prevY -touch.y;
         
@@ -269,10 +253,10 @@ void Camera::setRotate(int lx,int ly)
     int ofY = panYStart-ly;
     tempRotY = currentRotY -(ofY/4.0);
      tempRotX = currentRotX +(ofX/4.0);
-    // cout<<"\nrot " << tempRotX << " " <<tempRotY<< "\n";
-if(tempRotY<-90) tempRotY=-90;
+
+    if(tempRotY<-90) tempRotY=-90;
     if(tempRotY>90) tempRotY=90;
-   // makeMatrix(tempRotX,tempRotY);
+   
     
     isDirty =true;
     
@@ -399,9 +383,12 @@ void Camera::reset()
     isDirty =true;
     normalMatrix.makeIdentityMatrix();
     normalMatrix.postMultRotate(tempRotY, 1, 0, 0);
-    
+   
     normalMatrix.preMultRotate(-tempRotX, 0, 1, 0)  ;
-
+    currentCenterX=-model->center.x;
+    currentCenterY=-model->center.y;
+    currentCenterZ=-model->center.z;
+ //centerMatrix.setTranslation( -model->center.x,  -model->center.y, -model->center.z);
 }
 void Camera::fit(bool dotween,int lock){
     
@@ -414,10 +401,11 @@ void Camera::fit(bool dotween,int lock){
         perspectiveMatrix.makePerspectiveMatrix(45.0,1024.0/768,0.1,5000);        
     }
     if(lock==1){
+        
+        
         tempzoom =zoom *zoom*-1  ;
-         cout  << "start "<< zoom << " " << tempzoom <<endl;
         centerMatrix.setTranslation( -model->center.x,  -model->center.y, -model->center.z);
-         worldMatrix.makeIdentityMatrix();
+        worldMatrix.makeIdentityMatrix();
         worldMatrix.preMult(zoomMatrix);
         worldMatrix.preMult( normalMatrix);
         worldMatrix.preMult(centerMatrix);
@@ -488,7 +476,7 @@ void Camera::fit(bool dotween,int lock){
     if (lock!=0){
         worldMatrix.makeIdentityMatrix();
         zoomMatrix.makeIdentityMatrix();
-        cout  << "update "<< tempzoom<<endl;
+    
 
         zoomMatrix.translate(0.0,0,tempzoom  );
         worldMatrix.preMult(zoomMatrix);
@@ -504,13 +492,13 @@ void Camera::fit(bool dotween,int lock){
         centerMatrix.setTranslation( -model->center.x,  -model->center.y, -model->center.z);
         zoom  =tempzoom;
         isDirty =true;
-        cout << "noTween\n";
+      
     
     }else
     {
         npTween mijnTween;
         mijnTween.init(this,NP_EASE_OUT_SINE,400,0);
-        cout  << "Tween "<< sqrtf(-tempzoom)*-1<<endl;
+     
         mijnTween.addProperty(&currentCenterX,-model->center.x);
         mijnTween.addProperty(&currentCenterY,-model->center.y);
         mijnTween.addProperty(&currentCenterZ,-model->center.z );
@@ -584,12 +572,18 @@ void   Camera::setZoomMove(float move)
     didMove =true;
 }
 
-void   Camera::setZoomStart()
+void   Camera::setZoomStart(bool isintro )
 {
       zoom =-40;
     npTween mijnTween;
-    mijnTween.init(this,NP_EASE_OUT_SINE,800,300);
     
+    if(isintro){
+    mijnTween.init(this,NP_EASE_OUT_SINE,800,300);
+    }else
+    {
+    mijnTween.init(this,NP_EASE_OUT_SINE,300,300);
+    
+    }
     mijnTween.addProperty(&zoom,-3 );
       
     makeCallBack(Camera,setComplete,call );
@@ -658,7 +652,7 @@ void  Camera::setDepthRange()
     depthRange = maxDepth-minDepth;
     float dmCam =-0.1;
     if (maxDepth+2<-0.1)dmCam =maxDepth+2;
-    //cout<<" " << minDepth <<"  "<<maxDepth<<"\n";
+   
     if (currentOrientation==0)
     {
         perspectiveMatrix.makePerspectiveMatrix(60.0,768.0/1024.0,-dmCam, minDepth);
@@ -685,7 +679,6 @@ void Camera::projectD (ofVec4f vec )
     
   
     
-    // cout << "\n"<< vec;
     
     
 }

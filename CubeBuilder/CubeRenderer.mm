@@ -61,7 +61,7 @@ void CubeRenderer::setup(){
     
     GLint status =glCheckFramebufferStatus(GL_FRAMEBUFFER);
     
-    if(status ==GL_FRAMEBUFFER_COMPLETE)cout << "fbo interface complete\n";
+    if(status !=GL_FRAMEBUFFER_COMPLETE)cout << "fbo interface faild\n";
 
     
   
@@ -369,8 +369,7 @@ void CubeRenderer::drawIDcubes()
     glViewport(0, 0, vpW, vpH);
    model->renderHit =false;
   
-   // cout << "redraw id cubes\n";
-    //OpenGLErrorChek::chek("id cubes");    
+       
 }
 bool CubeRenderer::getPoint(int x, int y )
 {
@@ -622,7 +621,7 @@ void CubeRenderer::setupAO()
      hNoise = glGetUniformLocation(programBlur, "textureNoise");
     
     
-    cout << "\nsetup"<<  hDepth <<" "<< hNoise <<"\n";
+  
     ImageDataLoader IDloader;
     GLubyte *imagedata;
     
@@ -730,14 +729,14 @@ void CubeRenderer::setupAO()
     ///
     for(int i =0;i<32;i++ )
     {
-   //  pSphere[20] = vec3(-0.010735935, 0.01647018, -0.0062425877);
+        //  pSphere[20] = vec3(-0.010735935, 0.01647018, -0.0062425877);
         
         ofVec4f v;
         v.x =((float )rand()/RAND_MAX -0.5)*2.0;
           v.y =((float )rand()/RAND_MAX -0.5)*2.0;
         v.z =2.0;//+(float )rand()/RAND_MAX ;
         v.normalize();
-   //cout <<  "pSphere["<<i<<"] = vec3("<<v.x<<","<< v.y<<"," <<v.z<<");\n";
+        //cout <<  "pSphere["<<i<<"] = vec3("<<v.x<<","<< v.y<<"," <<v.z<<");\n";
     
     }
     

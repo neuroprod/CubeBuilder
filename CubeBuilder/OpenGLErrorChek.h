@@ -25,6 +25,8 @@ public:
     
     static void chek(int pos) 
     {
+        return;
+        
         
         GLenum errCode;
         errCode = glGetError();
@@ -46,6 +48,8 @@ public:
     static void chek(string pos ) 
     {
     
+        return;
+        
         GLenum errCode;
         errCode = glGetError();
         if ((errCode ) != GL_NO_ERROR) {

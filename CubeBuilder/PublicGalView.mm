@@ -57,13 +57,13 @@
     Model * model =Model::getInstance();
     model->isDirty =true;
     
-    UILabel *scoreLabel = [ [UILabel alloc ] initWithFrame:CGRectMake(10.0, 5.0,200.0, 20.0) ];
+   /* UILabel *scoreLabel = [ [UILabel alloc ] initWithFrame:CGRectMake(10.0, 5.0,200.0, 20.0) ];
     scoreLabel.textAlignment =  UITextAlignmentCenter;
     scoreLabel.textColor = [UIColor colorWithRed:0.8 green:0.0 blue:0.0 alpha:1.0];
     scoreLabel.font = [UIFont fontWithName:@"Helvetica-Bold"  size:(20.0)  ];
     scoreLabel.text = @"PUBLIC GALLERY"; 
     [self.view addSubview:scoreLabel];
-    
+    */
       
     
     
@@ -95,7 +95,7 @@
     Model::getInstance()->cancelOverlay();
     
     UIAlertView *alert  =[[UIAlertView alloc] initWithTitle:@"Sorry :)" message:@"I can't seem to connect to the server, you need to be online to use the public gallery" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    
+   //  [theRequest release];
     
     [alert show];
     [alert release];
@@ -112,31 +112,42 @@
     
     NSArray *arr =[obj allValues];
     
+    
+    
+ 
+    
+    
     gal =[[HorImageGalPublic alloc] init];
     CGRect frame = self.view.frame;
     gal.view.transform = CGAffineTransformMakeRotation(M_PI/2.0);
-    gal.view .frame = CGRectMake(0,30, frame.size.width, frame.size.height);   
+    gal.view .frame = CGRectMake(0,0, frame.size.width, frame.size.height);   
         
-    NSDictionary *test = [arr objectAtIndex:0];
-    NSString *im =  [test objectForKey:@"image" ]; 
-    NSLog(@"%@",im);
-    NSArray* reversed = [[arr reverseObjectEnumerator] allObjects];
+    //NSDictionary *test = [arr objectAtIndex:0];
+   // NSString *im =  [test objectForKey:@"image" ]; 
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"date"  ascending:NO];
+    NSMutableArray *arrM =[[NSMutableArray alloc] initWithArray:arr];
+    [arrM sortUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
+    NSArray *reversed = [NSArray arrayWithArray:arrM];
+  //  NSArray *reversed = [[NSArray alloc] init
     gal.arr = reversed ;
-    
+    [descriptor release];
+    [arrM release];
+   
     [self.view addSubview:gal.view];
     
-    /*
-    cout << arr.count << "<-numitems";
-    NSDictionary *test = [arr objectAtIndex:0];
-   NSString *im =  [test objectForKey:@"image" ]; 
-    NSLog(@"%@",im);*/
+    
+    
+   
+    
+    
+    
 }
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    NSLog(@"unloadscroll");
+ 
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -146,6 +157,7 @@
 }
 -(void)dealloc
 {
+    [request cancel];
     [request release ];
     [gal release];
     [super dealloc];

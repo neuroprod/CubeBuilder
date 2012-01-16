@@ -31,7 +31,7 @@ public:
     void touchedCube(int cubeIndex,int cubeSide,int touchPhase);
     
     
-    void addCube(float x, float y, float z);
+    void addCube(float x, float y, float z,bool isClear =false);
     void removeCube(int index);
     void setCubeColor(int index);
     

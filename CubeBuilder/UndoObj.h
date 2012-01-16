@@ -13,6 +13,8 @@ class UndoObj
 {
 
 public:
+    UndoObj(){};
+    ~UndoObj(){};
     int action;
     int colorID;
      int colorIDOld;

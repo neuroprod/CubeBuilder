@@ -37,4 +37,6 @@
 -(IBAction)saveAsNew:(id)sender;
 
 -(IBAction)saveOnline:(id)sender;
+
+- (NSString*)MD5:(NSString *)s;
 @end

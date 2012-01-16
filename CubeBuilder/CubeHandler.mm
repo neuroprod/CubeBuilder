@@ -119,15 +119,15 @@ void CubeHandler::clearCubes()
     cubes.clear();
     model->max.set(0, 0,0);
     model->min.set(0, 0  ,0);
-    addCube(0, 0, 0);
+   addCube(0, 0, 0,true);
   
-    model->resolveCenter();
+    
 resetUndo();
 } 
 
-void CubeHandler::addCube(float x, float y, float z)
+void CubeHandler::addCube(float x, float y, float z,bool isClear)
 {
-    
+   
     int s =cubes.size();
     if (s !=0){
         Cube *cubeT  =cubes[s-1];
@@ -142,9 +142,9 @@ void CubeHandler::addCube(float x, float y, float z)
     
     Cube *cube =new Cube();
     cube->setup(s ,x,y,z,currentColor);
-  
+    
     cubes.push_back(cube );
-   
+  
     if (model->min.x>x)
     {
         model->min.x =x;
@@ -189,6 +189,9 @@ void CubeHandler::addCube(float x, float y, float z)
     
     isDirty =true;
     model->renderHit =true;
+    
+    if (isClear)return;
+    
     UndoObj und;
     
     und.index = s;
@@ -325,7 +328,7 @@ void CubeHandler::setCubeColor(int index)
 void CubeHandler::clean()
 {
     if (!doClean)return;
-    cout<< "clean";
+  
     int l =cubes.size();
     int l1 =l-1;
     int j ;
@@ -357,8 +360,8 @@ void CubeHandler::clean()
 
 void CubeHandler::setColor(int colorid)
 {
-    if(colorid != currentColor.colorID)
-    currentColor =model->colors[colorid];
+    if(colorid != currentColor.colorID) 
+  currentColor =model->colors[colorid];
 
 }
 
@@ -390,7 +393,7 @@ void CubeHandler::setLoadData(int *dataCube,int size)
     {
         int pos =i*4;
         setColor(dataCube[pos]);
-        addCube(dataCube[pos+1], dataCube[pos+2], dataCube[pos+3]);
+        addCube(dataCube[pos+1], dataCube[pos+2], dataCube[pos+3],true);
     
     }
     model->resolveCenter();
@@ -525,7 +528,7 @@ void CubeHandler::tryRedo( npEvent *e)
   
 
     UndoObj und = redoVec[redoVec.size()-1];
-    redoVec.pop_back();
+    redoVec.erase(redoVec.end()-1);
     //ADD
     if(und.action ==0)
     {
@@ -551,7 +554,7 @@ void CubeHandler::tryRedo( npEvent *e)
                     
                 }
             }
-            cout << "\nADDDD WHAS FAIL, But UPDATED?????\n";         
+            cout << "\nADD WAS FAIL, But UPDATED?????\n";         
             removeCube(newIndex);
             
         }

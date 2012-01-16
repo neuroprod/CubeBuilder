@@ -5,7 +5,7 @@
 //  Created by Kris Temmerman on 05/01/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
-
+#import <CommonCrypto/CommonDigest.h>
 #import "SaveView.h"
 #include "Model.h"
 #include "SaveDataModel.h"
@@ -263,17 +263,11 @@
     
     
     
-    /* int size  = Model::getInstance()->cubeHandler->cubes.size()*4;
-     NSMutableArray * array = [[NSMutableArray alloc] initWithCapacity:size];
-     for ( int i = 0 ; i < size; i ++ )
-     [array addObject:[NSNumber numberWithInt:cubeData[i]]];
-     
-     */
+   
     
     NSData *img = UIImageJPEGRepresentation(self.imageView.image,0.8);
     
-    // NSData *cube= [NSKeyedArchiver archivedDataWithRootObject:array];
-    
+     
     
     NSString *pathData = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"dataTemp.txt"];
 	[cube writeToFile:pathData atomically:NO ];
@@ -282,17 +276,19 @@
     
     NSString *pathImage = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"imgTemp.jpg"];
 	[img writeToFile:pathImage atomically:NO];
-
+    int r =rand();
+    
+    NSString *rString = [NSString stringWithFormat:@"%d", r];
+    NSString *tempString = [NSString stringWithFormat:@"developer%d", r];
     
     
-    
-    
-    
+    NSString *hString =[self MD5:tempString];
     
   [request cancel];
 	[self setRequest:[ASIFormDataRequest requestWithURL:[NSURL URLWithString:@"http://cubeconstruct.net/process"]]];
 	[request setPostValue:textField.text forKey:@"name"];
-	
+	[request setPostValue:rString forKey:@"r"];
+    [request setPostValue:hString forKey:@"h"];
     
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_4_0
 	[request setShouldContinueWhenAppEntersBackground:YES];
@@ -305,13 +301,31 @@
 	
     [request setFile:pathImage forKey:@"image"];
 	[request setFile:pathData forKey:@"data"];
+
 	
 	[request startAsynchronous];
 	//[resultView setText:@"Uploading data..."];
 
 
 }
-
+- (NSString*)MD5:(NSString *)s
+{
+    // Create pointer to the string as UTF8
+    const char *ptr = [s UTF8String];
+    
+    // Create byte array of unsigned chars
+    unsigned char md5Buffer[CC_MD5_DIGEST_LENGTH];
+    
+    // Create 16 byte MD5 hash value, store in buffer
+    CC_MD5(ptr, strlen(ptr), md5Buffer);
+    
+    // Convert MD5 value in the buffer to NSString of hex values
+    NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
+    for(int i = 0; i < CC_MD5_DIGEST_LENGTH; i++) 
+        [output appendFormat:@"%02x",md5Buffer[i]];
+    
+    return output;
+}
 
 - (void)downloadFailed:(ASIHTTPRequest *)theRequest
 {
@@ -328,7 +342,7 @@
 
 - (void)downloadFinished:(ASIHTTPRequest *)theRequest
 {
-  NSLog (@"%@",theRequest.responseString );
+
 
     [progressIndicator setHidden:true];
     Model::getInstance()->cancelOverlay();
